@@ -80,9 +80,23 @@ const deleteJobs = asyncHandler(async (req,res)=>{
     res.status(200).json({id: req.params.id})
 })
 
+const getallJobs = asyncHandler(async (req,res)=>{
+    const filter = {}
+    const jobs = await Job.find(filter).sort({ createdAt: 'desc'}).exec();
+    res.status(200).json(jobs)
+})
+
+const filterJobs = asyncHandler(async (req,res)=>{
+    const filter = {tags:{$in:req.body.tags}}
+    const jobs = await Job.find(filter)
+
+    res.status(200).json(jobs)
+})
 module.exports = {
     getJobs,
     setJobs,
     updateJobs,
-    deleteJobs
+    deleteJobs,
+    getallJobs,
+    filterJobs
 }
