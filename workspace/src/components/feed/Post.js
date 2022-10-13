@@ -1,11 +1,12 @@
 import React from 'react'
+import Button from '../Button';
 
 function Post(props){
     return(
         <div>
             <p>{props.text}</p>
-            <button>Like and subscribe</button>
-            <button>I want this job</button>
+            <Button>Like and subscribe</Button>
+            <Button>I want this job</Button>
         </div>
     );
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import Post from '../components/feed/Post.js'
-
+import Button from '../components/Button.js';
 class Jobs extends React.Component{
     state = {
         items: [
@@ -17,7 +17,7 @@ class Jobs extends React.Component{
 
         return (
             <div>
-                <button onClick={() => this.addItem()} type>Add Stuff</button>
+                <Button onClick={() => this.addItem()} type>Add Stuff</Button>
             
                 {items.map((item, i) => <div key={i}>{<Post text={item}></Post>}</div>)}
             </div>
