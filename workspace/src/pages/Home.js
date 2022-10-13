@@ -2,14 +2,22 @@ import React, { useState } from 'react'
 import Popup from '../components/PopupRegister';
 import axios from 'axios'
 import Button from '../components/Button'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+// import {useNavigate} from "react-router-dom";
+
+
 function Home(){
   const[register, registerPopup] = useState(false);
   const[createPost, createPostPopup] = useState(false);
   const[USER_EMAIL, setUSER_EMAIL] = useState('')
   const[USER_PASSWORD, setUSER_PASSWORD] = useState('')
+  const[JWT_TOKEN,setJWT_TOKEN] = useState('')
+  const[SignedIn, setSignedIn] = useState(false)
 
   let API_BASE_URL = 'https://workspace.onrender.com/api/'
   let API_SIGN_IN_URL = 'users/login'
+  // let navigate = useNavigate();
 
   const signup=()=>{
 
@@ -23,9 +31,19 @@ function Home(){
       })
       .then(function(response){
         console.log(response)
-        console.log("ran")
+        toast.dark('Sign in successful')
+        setSignedIn(true)
       }).catch(function(error){
         console.log(error.response.status)
+        // if(error.response.status === 401)
+        // {
+        //   toast.warning('User was not found')
+        // }
+        if(error.response.status === 400)
+        {
+          toast.warning('Invalid Login')
+        }
+        setSignedIn(false)
       })
   }
 
@@ -40,25 +58,31 @@ function Home(){
       })
   }
   return (
+
+    
     <div className = 'container'>
-    <div className='form-control'>
+
+    {!SignedIn && <div className='form-control'>
       <label>Sign In</label>
       <input type ='text' placeholder='Enter your Email' 
       value={USER_EMAIL} 
       onChange={(e) => setUSER_EMAIL(e.target.value)}
       />
-      
-    </div>
-    <div className='form-control'>
+    </div>}
+    
+    {!SignedIn && <div className='form-control'>
       <label>Password</label>
       <input type ='password' placeholder='Enter your Password' 
       value={USER_PASSWORD} 
       onChange={(e) => setUSER_PASSWORD(e.target.value)}
       />
-    </div>
+    </div>}
 
-    <Button color='black' text='Sign in' onClick = {signin}/>
+    {SignedIn && <h1> SIGNED IN AT {USER_EMAIL}</h1>}
 
+    {!SignedIn && <Button color='black' text='Sign in' onClick = {signin}/>}
+  
+    <ToastContainer/>
     </div>
   );
 
