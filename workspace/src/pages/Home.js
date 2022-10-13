@@ -114,9 +114,9 @@ function Home(){
     <div className="App">
             <main>
               <br/><br/>
-              <button onClick={()=> registerPopup(true)}>Register</button>
+              <Button onClick={()=> registerPopup(true)}>Register</Button>
               <br/>
-              <button onClick={()=> createPostPopup(true)}>+</button>
+              <Button onClick={()=> createPostPopup(true)}>+</Button>
             </main>
 
             <Popup trigger={register} setTrigger={registerPopup}></Popup>
