@@ -1,27 +1,26 @@
-import React from 'react'
-import DatePicker from 'react-date-picker'
+import React, { useState } from 'react'
+import Popup from '../components/PopupRegister';
 
 function Home(){
+  const[register, registerPopup] = useState(false);
+  const[createPost, createPostPopup] = useState(false);
     return(
     <div>
         <h1>LOGIN</h1>
-        <form>
-          <label for="fname">First Name:</label>
-          <input type="text" id="fname" name="fname"></input><br/>
+          <div className="App">
+            <main>
+              <br/><br/>
+              <button onClick={()=> registerPopup(true)}>Register</button>
+              <br/>
+              <button onClick={()=> createPostPopup(true)}>+</button>
+            </main>
 
-          <label for="lname">Last Name:</label>
-          <input type="text" id="lname" name="lname"></input><br/>
-          
+            <Popup trigger={register} setTrigger={registerPopup}></Popup>
+            <Popup trigger={createPost} setTrigger={createPostPopup}></Popup>
+          </div> 
+        
 
-
-          <label for="uname">Username</label>
-          <input type="text" id="uname" name="uname"></input><br/>
           
-          <label for="uname">Password</label>
-          <input type="text" id="pword" name="pword"></input><br/>
-          
-          <input type="submit" value="Submit"></input>
-        </form>
     </div>
     );
 }
