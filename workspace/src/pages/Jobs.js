@@ -1,5 +1,4 @@
 import React from 'react'
-import ScrollableFeed from 'react-scrollable-feed';
 import Post from '../components/feed/Post.js'
 
 class Jobs extends React.Component{
@@ -22,9 +21,7 @@ class Jobs extends React.Component{
             <div>
                 <button onClick={() => this.addItem()} type>Add Stuff</button>
             
-                <ScrollableFeed>
                 {items.map((item, i) => <div key={i}>{<Post text={item}></Post>}</div>)}
-                </ScrollableFeed>
             </div>
         );
     }

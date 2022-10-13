@@ -6,7 +6,6 @@ import Jobs from './pages/Jobs'
 import Profile from './pages/Profile'
 import Components1 from './components/Components1'
 import { Redirect, Switch } from "react-router-dom";
-import ScrollableFeed from 'react-scrollable-feed';
 
 function App() {
   return (

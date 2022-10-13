@@ -24,8 +24,9 @@ function Home(){
       .then(function(response){
         console.log(response)
         console.log("ran")
+      }).catch(function(error){
+        console.log(error.response.status)
       })
-    console.log(USER_EMAIL+" BRUH " + USER_PASSWORD)
   }
 
   const test=()=>{
