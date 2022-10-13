@@ -3,11 +3,9 @@ import Post from '../components/feed/Post.js'
 
 class Jobs extends React.Component{
     state = {
-        isAtBottom: true,
         items: [
             'Item 1', 'Item 2','Big'
         ],
-        interval: undefined,
       };
     addItem() {
         this.setState(prevState => ({
@@ -15,7 +13,7 @@ class Jobs extends React.Component{
         }));
     }
     render() {
-        const { isAtBottom, items, interval } = this.state;
+        const { items } = this.state;
 
         return (
             <div>
