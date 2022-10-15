@@ -1,10 +1,11 @@
 import React from 'react'
+import Button from './Button';
 import './Popup.css'
-function PopUpCreatePost(trigger) {
+function PopUpCreatePost(props) {
   return (props.trigger)?(
     <div className='popup'>
         <div className='popup-inner'>
-            <button className='close' onClick={()=>props.setTrigger(false)}>close</button>
+            <Button className='close' text='Close' onClick={()=>props.setTrigger(false)}></Button>
             {props.children}
             <br/><br/>
             <form>

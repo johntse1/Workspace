@@ -17,7 +17,7 @@ class Jobs extends React.Component{
 
         return (
             <div>
-                <Button onClick={() => this.addItem()} type>Add Stuff</Button>
+                <Button text='Add Stuff' onClick={() => this.addItem()} type></Button>
             
                 {items.map((item, i) => <div key={i}>{<Post text={item}></Post>}</div>)}
             </div>

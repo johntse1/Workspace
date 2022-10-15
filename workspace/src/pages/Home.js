@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
-import Popup from '../components/PopupRegister';
 import axios from 'axios'
 import Button from '../components/Button'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+import Popup from '../components/PopupRegister';
+import PopUpCreatePost from '../components/PopUpCreatePost';
 // import {useNavigate} from "react-router-dom";
 
 
@@ -82,8 +84,7 @@ function Home(){
 
   
   return (
-
-    
+     
     <div className = 'container'>
       <h1> Log in </h1>
     {(!SignUp && !SignedIn) && <div className='form-control'>
@@ -104,24 +105,18 @@ function Home(){
 
     {SignedIn && <h1> SIGNED IN AT {USER_EMAIL}</h1>}
 
-
-
     {!SignedIn && <Button color='black' text='Sign in' onClick = {signin}/>}
-
-    {!SignedIn && <Button color='black' text='Register instead' onClick = {registerUser}/>}
+    {!SignedIn && <Button color='black' text='Register instead' onClick = {registerPopup}/>}
 
     <ToastContainer/>
     <div className="App">
             <main>
               <br/><br/>
-              <Button onClick={()=> registerPopup(true)}>Register</Button>
-              <br/>
-              <Button onClick={()=> createPostPopup(true)}>+</Button>
+              <Button text='+'  onClick={()=> createPostPopup(true) }></Button>
             </main>
-
             <Popup trigger={register} setTrigger={registerPopup}></Popup>
-            <Popup trigger={createPost} setTrigger={createPostPopup}></Popup>
-          </div> 
+            <PopUpCreatePost trigger={createPost} setTrigger={createPostPopup}></PopUpCreatePost>
+    </div> 
     </div>
           
     );

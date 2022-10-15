@@ -4,7 +4,7 @@ import {Route, Link} from 'react-router-dom';
 import NavBar from './components/navigation/NavBar';
 import Jobs from './pages/Jobs'
 import Profile from './pages/Profile'
-import Components1 from './components/Components1'
+import Components1 from './pages/DefaultPage'
 import { Redirect, Switch } from "react-router-dom";
 
 function App() {

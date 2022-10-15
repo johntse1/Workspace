@@ -5,8 +5,8 @@ function Post(props){
     return(
         <div>
             <p>{props.text}</p>
-            <Button>Like and subscribe</Button>
-            <Button>I want this job</Button>
+            <Button text='Not interested'></Button>
+            <Button text='I want this job'></Button>
         </div>
     );
 }
