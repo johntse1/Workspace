@@ -13,11 +13,11 @@ code {
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap');
 
-* {
+/* * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-}
+} */
 
 body {
   font-family: 'Poppins', sans-serif;
@@ -33,12 +33,12 @@ body {
   border-radius: 5px;
 }
 
-.header {
+/* .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
-}
+} */
 
 .btn {
   display: inline-block;
@@ -121,9 +121,10 @@ body {
 .form-control-check input {
   flex: 2;
   height: 20px;
-}
+} 
 
-footer {
+ footer {
   margin-top: 30px;
   text-align: center;
-}
+} 
+
