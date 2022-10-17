@@ -16,7 +16,6 @@ function Home(){
   const[USER_PASSWORD, setUSER_PASSWORD] = useState('')
   const[JWT_TOKEN,setJWT_TOKEN] = useState('')
   const[SignedIn, setSignedIn] = useState(false)
-  const[SignUp,setSignedUp] = useState(false)
   const[USER_NAME, setUSER_NAME] = useState('')
 
   let API_BASE_URL = 'https://workspace.onrender.com/api/'
@@ -35,6 +34,8 @@ function Home(){
         console.log(response)
         toast.dark('Sign in successful')
         setSignedIn(true)
+        setJWT_TOKEN(response.data.token)
+        //probably navigate to a new page here or smth
       }).catch(function(error){
         console.log(error.response.status)
         // if(error.response.status === 401)
@@ -87,7 +88,7 @@ function Home(){
      
     <div className = 'container'>
       <h1> Log in </h1>
-    {(!SignUp && !SignedIn) && <div className='form-control'>
+    {!SignedIn && <div className='form-control'>
       <label>Email</label>
       <input type ='text' placeholder='Enter your Email' 
       value={USER_EMAIL} 
@@ -95,7 +96,7 @@ function Home(){
       />
     </div>}
 
-    {(!SignUp && !SignedIn) && <div className='form-control'>
+    {!SignedIn && <div className='form-control'>
       <label>Password</label>
       <input type ='password' placeholder='Enter your Password' 
       value={USER_PASSWORD} 
@@ -109,6 +110,7 @@ function Home(){
     {!SignedIn && <Button color='black' text='Register instead' onClick = {registerPopup}/>}
 
     <ToastContainer/>
+
     <div className="App">
             <main>
               <br/><br/>

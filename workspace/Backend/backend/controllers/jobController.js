@@ -18,11 +18,21 @@ const setJobs = asyncHandler(async (req,res)=>{
         res.status(400)
         throw new Error('Please add a text field')
     }
+    if (!req.body.title){
+        res.status(400)
+        throw new Error('Please add a title field')
+    }
 
+    if (!req.body.price){
+        res.status(400)
+        throw new Error('Please add a price field')
+    }
     const job = await Job.create({
-        text: req.body.text,
+        title:req.body.title,
         user: req.user.id,
-        tags: req.body.tags
+        text: req.body.text,
+        price: req.body.price,
+        tags: req.body.tags,
     })
     res.status(200).json(job)
 })

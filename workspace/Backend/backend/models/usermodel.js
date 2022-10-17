@@ -1,7 +1,11 @@
 const mongoose = require('mongoose')
 
 const userSchema = mongoose.Schema({
-    name:{
+    first_name:{
+        type:String,
+        required:[true, 'Please add a name']
+    },
+    last_name:{
         type:String,
         required:[true, 'Please add a name']
     },
@@ -14,10 +18,16 @@ const userSchema = mongoose.Schema({
         type:String,
         required:[true, 'Please add a password']
     },
-    name:{
+    birthday:{
+        type:Date,
+        required:false
+    },
+    description:{
         type:String,
-        required:[true, 'Please add a name']
+        required:false
     }
+
+    
 },
 {
     timestamps:true

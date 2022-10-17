@@ -4,11 +4,11 @@ const asyncHandler = require('express-async-handler')
 const User = require('../models/usermodel')
 
 // @desc register user
-// @route POST /api/user
+// @route POST /api/user/register
 // @access public
 const registerUser = asyncHandler(async (req,res) => {
-    const {name, email, password } = req.body
-    if(!name || !email || !password){
+    const {first_name,last_name, email, password,birthday,description } = req.body
+    if(!first_name || !email || !password || !last_name){
         res.status(400)
         throw new Error('Please enter all fields')
     }
@@ -26,17 +26,25 @@ const registerUser = asyncHandler(async (req,res) => {
 
     //create user 
     const user = await User.create({
-        name, 
+        first_name,
+        last_name, 
         email,
-        password: hashedPassword
+        password: hashedPassword,
+        birthday,
+        description
+
     })
 
     if (user){
         res.status(201).json({
             _id: user.id,
-            name: user.name,
+            first_name: user.first_name,
+            last_name:user.last_name,
             email:user.email,
-            token: generateToken(user._id)
+            token: generateToken(user._id),
+            birthday:user.birthday,
+            description:user.description
+
         })
     } else {
         res.status(400)
@@ -71,12 +79,29 @@ const loginUser = asyncHandler(async(req,res) => {
 // @route GET /api/user/me
 // @access private
 const getMe = asyncHandler(async(req,res) => {
-    const {_id, name, email} = await User.findById(req.user.id)
-
+    const {_id, first_name,last_name, email,birthday,description} = await User.findById(req.user.id)
     res.status(200).json({
         id: _id,
-        name, 
+        first_name,
+        last_name, 
         email,
+        birthday,
+        description
+    })
+})
+
+// @desc get user data from other people
+// @route GET /api/user/
+// @access private
+const get = asyncHandler(async(req,res) => {
+    const {_id, first_name,last_name, email,birthday,description} = await User.findById(req.user.id)
+    res.status(200).json({
+        id: _id,
+        first_name,
+        last_name, 
+        email,
+        birthday,
+        description
     })
 })
 
