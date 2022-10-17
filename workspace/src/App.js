@@ -4,7 +4,7 @@ import {Route, Link} from 'react-router-dom';
 import NavBar from './components/navigation/NavBar';
 import Jobs from './pages/Jobs'
 import Profile from './pages/Profile'
-import Components1 from './pages/DefaultPage'
+import Login from './pages/DefaultPage'
 import { Redirect, Switch } from "react-router-dom";
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
       <NavBar/>
       <Switch>
         <Route exact path='/'>
-          <Components1 />
+          <Login />
         </Route>
         <Route exact path="/home" component={Home} >
         </Route>

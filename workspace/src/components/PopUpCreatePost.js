@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import Button from './Button';
 import './Popup.css'
 
@@ -21,6 +21,9 @@ import './Popup.css'
 //   ) :"";
 // }
 
+//                <label for="photos">Upload</label>
+//<input type="file" onChange={this.fileSelectedHandler} name="photos"></input>
+
 function PopUpCreatePost(props) {
   return (props.trigger)?(
     <div className='popup'>
@@ -34,6 +37,9 @@ function PopUpCreatePost(props) {
 
                 <label for="cost">Cost:</label>
                 <input type="number" id="cost" name="cost"></input>
+
+
+
             </form>
           </div>
         </div>
