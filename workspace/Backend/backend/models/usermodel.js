@@ -25,6 +25,12 @@ const userSchema = mongoose.Schema({
     description:{
         type:String,
         required:false
+    },
+    skills:{
+        type:[String]
+    },
+    rating: {
+        type: Number
     }
 
     

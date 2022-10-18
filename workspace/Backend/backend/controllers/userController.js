@@ -7,9 +7,9 @@ const User = require('../models/usermodel')
 // @route POST /api/user/register
 // @access public
 const registerUser = asyncHandler(async (req,res) => {
-    const {first_name,last_name, email, password,birthday,description } = req.body
+    const {first_name,last_name, email, password,birthday,description,skills,rating } = req.body
     if(!first_name || !email || !password || !last_name){
-        res.status(400)
+        res.status(401)
         throw new Error('Please enter all fields')
     }
 
@@ -31,8 +31,9 @@ const registerUser = asyncHandler(async (req,res) => {
         email,
         password: hashedPassword,
         birthday,
-        description
-
+        description,
+        skills,
+        rating 
     })
 
     if (user){
@@ -43,8 +44,9 @@ const registerUser = asyncHandler(async (req,res) => {
             email:user.email,
             token: generateToken(user._id),
             birthday:user.birthday,
-            description:user.description
-
+            description:user.description,
+            skills:user.skills,
+            rating:user.rating
         })
     } else {
         res.status(400)
@@ -86,7 +88,9 @@ const getMe = asyncHandler(async(req,res) => {
         last_name, 
         email,
         birthday,
-        description
+        description,
+        skills,
+        rating
     })
 })
 
@@ -101,7 +105,9 @@ const get = asyncHandler(async(req,res) => {
         last_name, 
         email,
         birthday,
-        description
+        description,
+        skills,
+        rating
     })
 })
 

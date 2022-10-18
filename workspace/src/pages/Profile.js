@@ -17,24 +17,19 @@ function Profile() {
     }
   ]);
 
-useEffect(() => {
-  const fetchData = async () => {
-    let token = localStorage.getItem("JWT_TOKEN")
-    const response = await axios.get(API_BASE_URL + API_GET_ME, { headers: { "Authorization": `Bearer ${token}` } });
-    setmy_profile(response.data)
-    console.log(response.data)
-  };
-  fetchData();
-}, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      let token = localStorage.getItem("JWT_TOKEN")
+      const response = await axios.get(API_BASE_URL + API_GET_ME, { headers: { "Authorization": `Bearer ${token}` } });
+      setmy_profile(response.data)
+      console.log(response.data)
+    };
+    fetchData();
+  }, []);
 
   if (localStorage.getItem('JWT_TOKEN') == null) {
     return <Redirect to="/"></Redirect>
   }
-
-
-
-
-
 
 
   const checkjwt = async () => {
@@ -71,11 +66,14 @@ useEffect(() => {
           <h2>{prof[2].map((item, i) => <div key={i}>{item}</div>)}</h2>
         </TabPanel>
         <TabPanel>
-          <h2>{prof[3]}</h2>
+          {/* <h2>{prof[3]}</h2> */}
+          <h2>{my_profile["description"]}</h2>
 
         </TabPanel>
         <TabPanel>
           <h2>{prof[4].map((item, i) => <div key={i}>{item}</div>)}</h2>
+          
+
         </TabPanel>
       </Tabs>
     </div>

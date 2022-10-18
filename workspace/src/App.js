@@ -5,12 +5,14 @@ import NavBar from './components/navigation/NavBar';
 import Jobs from './pages/Jobs'
 import Profile from './pages/Profile'
 import Login from './pages/DefaultPage'
-import { Redirect, Switch } from "react-router-dom";
+import { Redirect, Switch,useHistory } from "react-router-dom";
 import Button from './components/Button'
 
 function App() {
+  let history = useHistory()
   const logout =() => {
     localStorage.removeItem("JWT_TOKEN")
+    history.push('/')
   }
 
 
