@@ -65,6 +65,7 @@ function Profile() {
         </TabPanel>
         <TabPanel>
           <h2>{prof[3]}</h2>
+          <h2> {got_profile? my_profile["description"]: ""}</h2>
 
         </TabPanel>
         <TabPanel>
