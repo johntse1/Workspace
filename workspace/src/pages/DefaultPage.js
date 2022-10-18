@@ -6,18 +6,18 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import Popup from '../components/PopupRegister';
 import PopUpCreatePost from '../components/PopUpCreatePost';
-import {useHistory} from "react-router-dom";
+import {Redirect, useHistory,Route} from "react-router-dom";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import DatePicker from "react-datepicker"
 import 'react-datepicker/dist/react-datepicker.css'
+import Profile from '../pages/Profile'
 
 function Login() {
   let history = useHistory()
   const [register, registerPopup] = useState(false);
   const [createPost, createPostPopup] = useState(false);
   const [JWT_TOKEN, setJWT_TOKEN] = useState('')
-  const [SignedIn, setSignedIn] = useState(false)
 
   const [USER_EMAIL, setUSER_EMAIL] = useState('')
   const [USER_PASSWORD, setUSER_PASSWORD] = useState('')
@@ -26,6 +26,11 @@ function Login() {
   const [USER_BIRTHDAY, setUSER_BIRTHDAY] = useState('')
   const [USER_DESCRIPTION, setUSER_DESCRIPTION] = useState('')
 
+  const[loggedin,setLoggedin] = useState()
+
+  if (localStorage.getItem('JWT_TOKEN') != null){
+    return <Redirect to="/profile"></Redirect>
+  } 
 
   let API_BASE_URL = 'https://workspace.onrender.com/api/'
   let API_SIGN_IN_URL = 'users/login'
@@ -41,7 +46,6 @@ function Login() {
       .then(function (response) {
         console.log(response)
         toast.dark('Sign in successful')
-        setSignedIn(true)
         setJWT_TOKEN(response.data.token)
 
         localStorage.setItem('JWT_TOKEN',response.data.token)
@@ -57,7 +61,6 @@ function Login() {
         if (error.response.status === 400) {
           toast.warning('Invalid Login')
         }
-        setSignedIn(false)
       })
   }
 
@@ -92,7 +95,6 @@ function Login() {
 
   return (
     <div className='container'>
-
       <Tabs>
         <TabList>
           <Tab>Log in</Tab>
@@ -170,6 +172,8 @@ function Login() {
       </Tabs>
       <ToastContainer />
     <Button color='black' text='TEMPORARY SIGN OUT BUTTON' onClick={logout} />
+
+    
 
     </div>
 
