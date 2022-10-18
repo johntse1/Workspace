@@ -16,6 +16,7 @@ function Profile() {
       "id": "placeholderid"
     }
   ]);
+  const [got_profile,setgot_profile] = useState(null)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,6 +24,7 @@ function Profile() {
       const response = await axios.get(API_BASE_URL + API_GET_ME, { headers: { "Authorization": `Bearer ${token}` } });
       setmy_profile(response.data)
       console.log(response.data)
+      setgot_profile(true)
     };
     fetchData();
   }, []);
@@ -30,14 +32,9 @@ function Profile() {
   if (localStorage.getItem('JWT_TOKEN') == null) {
     return <Redirect to="/"></Redirect>
   }
-
-
   const checkjwt = async () => {
     if (localStorage.getItem("JWT_TOKEN") != null) {
       let token = localStorage.getItem("JWT_TOKEN")
-
-
-
       axios.get(API_BASE_URL + API_GET_ME, { headers: { "Authorization": `Bearer ${token}` } })
         .then((response) => {
           console.log(response)
@@ -45,8 +42,6 @@ function Profile() {
           console.log(my_profile)
         })
     }
-
-
   }
   return (
     <div>
@@ -63,11 +58,13 @@ function Profile() {
         </TabList>
 
         <TabPanel>
-          <h2>{prof[2].map((item, i) => <div key={i}>{item}</div>)}</h2>
+          {/* <h2>{prof[2].map((item, i) => <div key={i}>{item}</div>)}</h2> */}
+          <h2> {got_profile? my_profile["skills"][0] : ""}</h2>
+
+
         </TabPanel>
         <TabPanel>
-          {/* <h2>{prof[3]}</h2> */}
-          <h2>{my_profile["description"]}</h2>
+          <h2>{prof[3]}</h2>
 
         </TabPanel>
         <TabPanel>

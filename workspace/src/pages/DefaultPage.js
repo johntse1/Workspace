@@ -77,7 +77,10 @@ function Login() {
   }
 
   const registerUser = () => {
+
+    
     let url = API_BASE_URL + API_SIGN_UP_URL
+
     axios.post(url,
       {
         first_name: USER_FIRST_NAME,
@@ -85,7 +88,9 @@ function Login() {
         email: USER_EMAIL,
         password: USER_PASSWORD,
         birthday: USER_BIRTHDAY,
-        description: USER_DESCRIPTION
+        description: USER_DESCRIPTION,
+        skills:USER_SKILLS
+
       })
       .then(function (response) {
         console.log(response)
