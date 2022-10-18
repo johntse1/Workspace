@@ -14,17 +14,34 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import DatePicker from "react-datepicker"
 import 'react-datepicker/dist/react-datepicker.css'
+import Post from '../components/feed/Post.js'
+import {Route, Link} from 'react-router-dom'
+import CreateJob from '../pages/CreateJob'
+import { API_BASE_URL, API_GET_ME } from '../API_ENDPOINTS'
 
-function Home() {
-  const [createPost, createPostPopup] = useState(false);
 
+function Home(){
+  const loadJob = () =>{
+    console.log('button clicked')
+    let token = localStorage.getItem("JWT_TOKEN")
+    axios.get('https://workspace.onrender.com/api/jobs/getall')
+    .then( function (response){
+      console.log(response.data)
+      setItems(response.data)
+    }).catch(function (error){
+      console.log(error.response.status)
+    });
+  }
+  const [items, setItems] = useState([]);
   return (
-      <div className="App">
-        <main>
-          <br /><br />
-          <Button text='+' onClick={() => createPostPopup(true)}></Button>
-        </main>
-        <PopUpCreatePost trigger={createPost} setTrigger={createPostPopup}></PopUpCreatePost>
+       <div className="App">
+        <Link to ='/create'><Button text='Create Job Posting'></Button></Link>
+        <Button text='Load Job' onClick={loadJob}></Button>
+        <div>
+          {items.map((item) => 
+            <Post post={item} key={item._id}></Post>
+          )}
+        </div>
       </div>
   );
 }

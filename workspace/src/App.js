@@ -7,6 +7,7 @@ import Profile from './pages/Profile'
 import Login from './pages/DefaultPage'
 import { Redirect, Switch,useHistory } from "react-router-dom";
 import Button from './components/Button'
+import CreateJob from './pages/CreateJob'
 
 function App() {
   let history = useHistory()
@@ -29,6 +30,7 @@ function App() {
         </Route>
         <Route exact path="/profile" component={Profile} />
         <Route exact path="/jobs" component={Jobs} />
+        <Route exact path="/create" component={CreateJob} />
       </Switch>
 
   </div>
