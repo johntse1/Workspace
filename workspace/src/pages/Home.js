@@ -1,7 +1,7 @@
 
 //THIS PAGE WAS MOVED TO DEFAULT PAGE
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Button from '../components/Button'
 import { ToastContainer, toast } from 'react-toastify';
@@ -21,6 +21,9 @@ import { API_BASE_URL, API_GET_ME } from '../API_ENDPOINTS'
 
 
 function Home(){
+  useEffect(() =>{
+    loadJob();
+  }, []);
   const loadJob = () =>{
     console.log('button clicked')
     let token = localStorage.getItem("JWT_TOKEN")
@@ -36,7 +39,6 @@ function Home(){
   return (
        <div className="App">
         <Link to ='/create'><Button text='Create Job Posting'></Button></Link>
-        <Button text='Load Job' onClick={loadJob}></Button>
         <div>
           {items.map((item) => 
             <Post post={item} key={item._id}></Post>
