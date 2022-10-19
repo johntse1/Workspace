@@ -39,6 +39,7 @@ function Home(){
   return (
        <div className="App">
         <Link to ='/create'><Button text='Create Job Posting'></Button></Link>
+        <Button text='Refresh Feed' onClick={loadJob}></Button>
         <div>
           {items.map((item) => 
             <Post post={item} key={item._id}></Post>
