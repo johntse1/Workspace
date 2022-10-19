@@ -15,7 +15,7 @@ function CreateJob(){
       {  label: "Roof", value: "Roof" },
     ]
     return(
-        <div>
+        <div className='container'>
           <div className='form-control'>
             <label>Job Name</label>
             <input type='text' placeholder='Enter the job name'

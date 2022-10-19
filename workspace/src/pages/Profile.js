@@ -17,7 +17,7 @@ function Profile() {
     }
   ]);
   const [got_profile,setgot_profile] = useState(null)
-
+  
   useEffect(() => {
     const fetchData = async () => {
       let token = localStorage.getItem("JWT_TOKEN")
@@ -44,7 +44,7 @@ function Profile() {
     }
   }
   return (
-    <div>
+    <div className='App'>
       <Tabs>
         {/* <h1>{prof[0]}({prof[1]})</h1> */}
         <h1>{my_profile["first_name"] + " " + my_profile["last_name"]}</h1>
@@ -59,12 +59,17 @@ function Profile() {
 
         <TabPanel>
           {/* <h2>{prof[2].map((item, i) => <div key={i}>{item}</div>)}</h2> */}
-          <h2> {got_profile? my_profile["skills"][0] : ""}</h2>
+          {got_profile?  
+          <div>
+            {my_profile["skills"].map((skill) => <h2 key={skill}>{skill}</h2>)}
+          </div>: ""}
+         
+
 
 
         </TabPanel>
         <TabPanel>
-          <h2>{prof[3]}</h2>
+          {/* <h2>{prof[3]}</h2> */}
           <h2> {got_profile? my_profile["description"]: ""}</h2>
 
         </TabPanel>
