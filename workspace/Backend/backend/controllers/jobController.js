@@ -14,9 +14,10 @@ const getJobs = asyncHandler(async (req,res)=>{
 // @route POST /api/jobs
 // @access Private
 const setJobs = asyncHandler(async (req,res)=>{
+    console.log(req.body)
     if (!req.body.text){
         res.status(400)
-        throw new Error('Please add a text field')
+        throw new Error('Please add a text fields')
     }
     if (!req.body.title){
         res.status(400)
@@ -33,6 +34,8 @@ const setJobs = asyncHandler(async (req,res)=>{
         text: req.body.text,
         price: req.body.price,
         tags: req.body.tags,
+        status:"Incomplete",
+        acceptedby:null
     })
     res.status(200).json(job)
 })
@@ -102,11 +105,36 @@ const filterJobs = asyncHandler(async (req,res)=>{
 
     res.status(200).json(jobs)
 })
+
+const acceptJob = asyncHandler(async (req,res)=>{
+    const job = await Job.findById(req.params.id)
+    if(!job) {
+        res.status(400)
+        throw new Error('Job not found')
+    }    
+    const user = await User.findById(req.user.id)
+    //Check if logged in user does not the job user
+    if(job.user.toString() == user.id){
+        res.status(401)
+        throw new Error ('Cannot accept your own job')    
+    }
+    console.log(job.acceptedby)
+    if(job.acceptedby !== null){
+        res.status(401)
+        console.log(job.acceptedby)
+        throw new Error ('Job is already accepted')
+        
+    }
+    await job.updateOne({acceptedby:req.user.id})
+    res.status(200).json(job)
+
+})
 module.exports = {
     getJobs,
     setJobs,
     updateJobs,
     deleteJobs,
     getallJobs,
-    filterJobs
+    filterJobs,
+    acceptJob
 }

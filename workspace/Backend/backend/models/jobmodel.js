@@ -10,6 +10,11 @@ const jobSchema = mongoose.Schema({
         required: true,
         ref: 'User'
     },
+    acceptedby:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        default:[]
+    },
     text: {
         type:String,
         required: [true, 'Please add a text value'] 
@@ -20,6 +25,10 @@ const jobSchema = mongoose.Schema({
     },
     tags: {
         type: [String]
+    },
+    status:{
+        type:String,
+        required:true,
     },
     img:{
         data:Buffer,
