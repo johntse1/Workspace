@@ -1,8 +1,41 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
 import Select from 'react-select'
 import Button from '../components/Button'
+import axios from 'axios'
+import { Redirect, useHistory, Route, Link} from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import { API_SET_JOB, API_BASE_URL,API_GET_ME,API_GET_ALL_JOBS } from '../API_ENDPOINTS'
+
 
 function CreateJob(){
+
+
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      let token = localStorage.getItem("JWT_TOKEN")
+      const response = await axios.get(API_BASE_URL + API_SET_JOB, { headers: { "Authorization": `Bearer ${token}` } });
+      console.log(response.data)
+      setgot_profile(true)
+    };
+    fetchData();
+  }, []);
+
+  let history = useHistory()
+
+      const [got_profile,setgot_profile] = useState(null)
+      const [JWT_TOKEN, setJWT_TOKEN] = useState('')
+      const [POST_ID, setPOST_ID] = useState('')
+      const [USER_ID, setUSER_ID] = useState('')
+      const [USER_TITLE, setUSER_TITLE] = useState('')
+      const [USER_PRICE, setUSER_PRICE] = useState('')
+      const [USER_POST_DESCRIPTION, setUSER_POST_DESCRIPTION] = useState('')
+      const [USER_TAGS, setUSER_TAGS] = useState([])
+
+      if (localStorage.getItem('JWT_TOKEN') == null) {
+        return <Redirect to="/"></Redirect>
+      }
     let skills = 
     [
       {  label: "Construction", value: "Construction" },
@@ -14,19 +47,50 @@ function CreateJob(){
       {  label: "Technical", value: "Technical" },
       {  label: "Roof", value: "Roof" },
     ]
+    let url = 'https://workspace.onrender.com/api/jobs/set'
+
+  const setJobs = () => {
+      let token = localStorage.getItem("JWT_TOKEN")
+      axios.post(url,
+        {
+          title:USER_TITLE,
+          user: USER_ID,
+          text:USER_POST_DESCRIPTION,
+          price:USER_PRICE,
+          tags:USER_TAGS
+  
+        },{ headers: { "Authorization": `Bearer ${token}` } })    
+        .then(function (response) {
+          console.log(response)
+        }).catch(function (error) {
+          console.log(error.response.status)
+      })
+      
+    }
+
+
+    
+    const handleSelectChange = (e) => {
+      let values = []
+      e.map((v) => values.push(v.value))
+      setUSER_TAGS(values)
+      console.log(USER_TAGS)
+    }
     return(
-        <div className='container'>
+        <div>
           <div className='form-control'>
             <label>Job Name</label>
             <input type='text' placeholder='Enter the job name'
-            
+            value={USER_TITLE}
+            onChange={(e) => setUSER_TITLE(e.target.value)}
             />
           </div>
 
           <div className='form-control'>
             <label>Payment</label>
             <input type='number' placeholder='Enter payment amount'
-              
+              value={USER_PRICE}
+              onChange={(e) => setUSER_PRICE(e.target.value)}
             />
           </div>
 
@@ -37,6 +101,8 @@ function CreateJob(){
                 placeholder='Enter a description (optional)'
                 maxLength="200"
                 rows={5}
+                value={USER_POST_DESCRIPTION}
+                onChange={(e) => setUSER_POST_DESCRIPTION(e.target.value)}
               />
             </form>
             </div>
@@ -49,12 +115,14 @@ function CreateJob(){
               options={skills}
               className="basic-multi-select"
               classNamePrefix="select"
-
+              onChange={(e) => handleSelectChange(e)}
 
             />
             </div>
-            <Button text='Submit'></Button>
+            <Link to='/home'><Button text='Submit' onClick={setJobs} ></Button></Link>
+            <ToastContainer />
         </div>
+        
     );
 }
 
