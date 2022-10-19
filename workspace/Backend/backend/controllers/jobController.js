@@ -10,6 +10,8 @@ const getJobs = asyncHandler(async (req,res)=>{
     res.status(200).json(jobs)
 })
 
+
+
 // @desc set jobs
 // @route POST /api/jobs
 // @access Private

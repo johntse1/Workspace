@@ -1,13 +1,18 @@
+import {Route, Link} from 'react-router-dom'; 
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+
 import 'react-tabs/style/react-tabs.css';
 import { API_BASE_URL, API_GET_ME } from '../API_ENDPOINTS'
 import axios from 'axios'
 import Button from '../components/Button';
 import { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
+
 const prof = ['John Tse', '4.5', ['Fixing', 'Cleaning', 'Making'], 'A cool guy', ['Good worker', 'Quick Worker']]
 
+
 function Profile() {
+  
   const [my_profile, setmy_profile] = useState([
     {
       "first_name": "john",
@@ -25,6 +30,7 @@ function Profile() {
       setmy_profile(response.data)
       console.log(response.data)
       setgot_profile(true)
+      
     };
     fetchData();
   }, []);
@@ -66,6 +72,11 @@ function Profile() {
         <TabPanel>
           <h2>{prof[3]}</h2>
           <h2> {got_profile? my_profile["description"]: ""}</h2>
+          <form>
+            <button>
+              
+            </button>
+          </form>
 
         </TabPanel>
         <TabPanel>
@@ -75,6 +86,7 @@ function Profile() {
         </TabPanel>
       </Tabs>
     </div>
+    
   );
 }
 

@@ -10,4 +10,5 @@ router.route('/:id').delete(protect,deleteJobs).put(protect,updateJobs)
 router.route('/getall').get(getallJobs)
 router.route('/tags').get(filterJobs)
 
+
 module.exports = router 

@@ -98,6 +98,7 @@ function Login() {
         setJWT_TOKEN(JWT_TOKEN)
         localStorage.setItem('JWT_TOKEN', response.data.token)
         history.push('/profile')
+        
 
       }).catch(function (error) {
         console.log(error.response.status)
