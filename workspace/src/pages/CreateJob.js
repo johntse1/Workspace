@@ -12,15 +12,15 @@ function CreateJob(){
 
 
 
-  useEffect(() => {
-    const fetchData = async () => {
-      let token = localStorage.getItem("JWT_TOKEN")
-      const response = await axios.get(API_BASE_URL + API_SET_JOB, { headers: { "Authorization": `Bearer ${token}` } });
-      console.log(response.data)
-      setgot_profile(true)
-    };
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     let token = localStorage.getItem("JWT_TOKEN")
+  //     const response = await axios.get(API_BASE_URL + API_SET_JOB, { headers: { "Authorization": `Bearer ${token}` } });
+  //     console.log(response.data)
+  //     setgot_profile(true)
+  //   };
+  //   fetchData();
+  // }, []);
 
   let history = useHistory()
 
@@ -77,7 +77,7 @@ function CreateJob(){
       console.log(USER_TAGS)
     }
     return(
-        <div>
+        <div className='container'>
           <div className='form-control'>
             <label>Job Name</label>
             <input type='text' placeholder='Enter the job name'

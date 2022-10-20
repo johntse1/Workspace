@@ -6,7 +6,7 @@ export const API_GET_ME = 'users/me'
 //get
 export const API_GET_MY_JOBS = 'jobs/'
 //post
-export const API_SET_JOB = 'jobs/' 
+export const API_SET_JOB = 'jobs/get' 
 //delete 'jobs/id'
 export const API_DELETE_JOB = 'jobs/'
 //put 'jobs/id'
