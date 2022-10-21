@@ -10,18 +10,6 @@ import { API_SET_JOB, API_BASE_URL,API_GET_ME,API_GET_ALL_JOBS } from '../API_EN
 function CreateJob(){
 
 
-
-
-  useEffect(() => {
-    const fetchData = async () => {
-      let token = localStorage.getItem("JWT_TOKEN")
-      const response = await axios.get(API_BASE_URL + API_SET_JOB, { headers: { "Authorization": `Bearer ${token}` } });
-      console.log(response.data)
-      setgot_profile(true)
-    };
-    fetchData();
-  }, []);
-
   let history = useHistory()
 
       const [got_profile,setgot_profile] = useState(null)

@@ -8,10 +8,10 @@ import axios from 'axios'
 import { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import MyJobs from '../components/feed/MyJobs.js'
-import NavBar from '../components/navigation/workerNavBar';
+import NavBar from '../components/navigation/userNavBar';
 
 
-function Jobs(){
+function UserJobs(){
     const [my_profile, setmy_profile] = useState([
         {
           "first_name": "john",
@@ -76,4 +76,4 @@ function Jobs(){
     );
 }
 
-export default Jobs;
+export default UserJobs;
