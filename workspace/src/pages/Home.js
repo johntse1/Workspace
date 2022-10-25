@@ -18,6 +18,7 @@ import Post from '../components/feed/Post.js'
 import {Route, Link} from 'react-router-dom'
 import CreateJob from '../pages/CreateJob'
 import { API_BASE_URL, API_GET_ME } from '../API_ENDPOINTS'
+import NavBar from '../components/navigation/NavBar';
 
 
 function Home(){
@@ -38,6 +39,7 @@ function Home(){
   const [items, setItems] = useState([]);
   return (
        <div className="App">
+        <NavBar/>
         <Link to ='/create'><Button text='Create Job Posting'></Button></Link>
         <Button text='Refresh Feed' onClick={loadJob}></Button>
         <div>
