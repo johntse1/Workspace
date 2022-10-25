@@ -34,6 +34,7 @@ const jobSchema = mongoose.Schema({
         data:Buffer,
         contentType: String
     }
+    
 
 
 },

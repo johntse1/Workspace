@@ -7,7 +7,7 @@ const User = require('../models/usermodel')
 // @route POST /api/user/register
 // @access public
 const registerUser = asyncHandler(async (req,res) => {
-    const {first_name,last_name, email, password,birthday,description,skills,rating } = req.body
+    const {first_name,last_name, email, password,birthday,description,skills,rating,contractor,location,image} = req.body
     if(!first_name || !email || !password || !last_name){
         res.status(401)
         throw new Error('Please enter all fields')
@@ -33,7 +33,10 @@ const registerUser = asyncHandler(async (req,res) => {
         birthday,
         description,
         skills,
-        rating 
+        rating,
+        contractor,
+        location,
+        image
     })
 
     if (user){
@@ -46,7 +49,10 @@ const registerUser = asyncHandler(async (req,res) => {
             birthday:user.birthday,
             description:user.description,
             skills:user.skills,
-            rating:user.rating
+            rating:user.rating,
+            contractor: user.contractor,
+            location: user.location,
+            image : user.image
         })
     } else {
         res.status(400)
@@ -70,6 +76,10 @@ const loginUser = asyncHandler(async(req,res) => {
             name: user.name,
             email:user.email,
             token: generateToken(user._id),
+            contractor:user.contractor,
+            image:user.image,
+            location:user.location,
+            skills:user.skills
         })
     } else {
         res.status(400)
@@ -81,7 +91,7 @@ const loginUser = asyncHandler(async(req,res) => {
 // @route GET /api/user/me
 // @access private
 const getMe = asyncHandler(async(req,res) => {
-    const {_id, first_name,last_name, email,birthday,description,skills,rating} = await User.findById(req.user.id)
+    const {_id, first_name,last_name, email,birthday,description,skills,rating,contractor,location,image} = await User.findById(req.user.id)
     res.status(200).json({
         id: _id,
         first_name,
@@ -90,15 +100,18 @@ const getMe = asyncHandler(async(req,res) => {
         birthday,
         description,
         skills,
-        rating
+        rating,
+        contractor,
+        location,
+        image
     })
 })
 
 // @desc get user data from other people
-// @route GET /api/user/
+// @route GET /api/user/id
 // @access private
-const get = asyncHandler(async(req,res) => {
-    const {_id, first_name,last_name, email,birthday,description} = await User.findById(req.user.id)
+const getUser = asyncHandler(async(req,res) => {
+    const {_id, first_name,last_name, email,birthday,description,skills,rating,contractor,location,image} = await User.findById(req.params.id)
     res.status(200).json({
         id: _id,
         first_name,
@@ -107,7 +120,10 @@ const get = asyncHandler(async(req,res) => {
         birthday,
         description,
         skills,
-        rating
+        rating,
+        contractor,
+        location,
+        image
     })
 })
 
@@ -121,5 +137,6 @@ const generateToken = (id) => {
 module.exports = {
     registerUser,
     loginUser,
-    getMe
+    getMe,
+    getUser
 }

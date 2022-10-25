@@ -31,6 +31,16 @@ const userSchema = mongoose.Schema({
     },
     rating: {
         type: Number
+    },
+    contractor:{
+        type: Boolean,
+        required:true
+    },
+    location:{
+        type: [Number],
+    },
+    image:{
+        type: String
     }
 
     

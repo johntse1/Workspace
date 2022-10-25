@@ -106,6 +106,13 @@ const filterJobs = asyncHandler(async (req,res)=>{
     res.status(200).json(jobs)
 })
 
+const getallJobsFiltered = asyncHandler(async (req,res)=>{
+    // const jobs = await Job.find({user: req.user.id})
+    const filter = {tags:{$in:req.user.skills}}
+    const jobs = await Job.find(filter)
+    res.status(200).json(jobs)
+})
+
 const acceptJob = asyncHandler(async (req,res)=>{
     const job = await Job.findById(req.params.id)
     if(!job) {
@@ -136,5 +143,6 @@ module.exports = {
     deleteJobs,
     getallJobs,
     filterJobs,
-    acceptJob
+    acceptJob,
+    getallJobsFiltered
 }

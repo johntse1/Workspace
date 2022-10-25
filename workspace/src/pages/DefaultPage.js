@@ -61,6 +61,9 @@ function Login() {
         setJWT_TOKEN(response.data.token)
 
         localStorage.setItem('JWT_TOKEN', response.data.token)
+        localStorage.setItem('contractor',response.data.contractor)
+        localStorage.setItem('image',response.data.image)
+        
 
         //probably navigate to a new page here or smth
         history.push('/profile')
@@ -97,6 +100,8 @@ function Login() {
         toast.dark('Account successfully registered')
         setJWT_TOKEN(JWT_TOKEN)
         localStorage.setItem('JWT_TOKEN', response.data.token)
+        localStorage.setItem('contractor',response.data.contractor)
+        localStorage.setItem('image',response.data.image)
         history.push('/profile')
 
       }).catch(function (error) {
