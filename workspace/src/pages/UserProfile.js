@@ -5,11 +5,11 @@ import axios from 'axios'
 import Button from '../components/Button';
 import { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
-import NavBar from '../components/navigation/NavBar';
-
+import NavBar from '../components/navigation/UserNavBar';
 const prof = ['John Tse', '4.5', ['Fixing', 'Cleaning', 'Making'], 'A cool guy', ['Good worker', 'Quick Worker']]
 
-function Profile() {
+
+function UserProfile() {
   const [my_profile, setmy_profile] = useState([
     {
       "first_name": "john",
@@ -19,7 +19,7 @@ function Profile() {
     }
   ]);
   const [got_profile,setgot_profile] = useState(null)
-  
+
   useEffect(() => {
     const fetchData = async () => {
       let token = localStorage.getItem("JWT_TOKEN")
@@ -45,7 +45,9 @@ function Profile() {
         })
     }
   }
+
   return (
+
     <div className='App'>
       <NavBar/>
       <Tabs>
@@ -55,30 +57,17 @@ function Profile() {
         <h2>{my_profile["id"]}</h2>
 
         <TabList>
-          <Tab>Skills</Tab>
           <Tab>About</Tab>
           <Tab>Reviews</Tab>
         </TabList>
 
         <TabPanel>
-          {/* <h2>{prof[2].map((item, i) => <div key={i}>{item}</div>)}</h2> */}
-          {got_profile?  
-          <div>
-            {my_profile["skills"].map((skill) => <h2 key={skill}>{skill}</h2>)}
-          </div>: ""}
-         
-
-
-
-        </TabPanel>
-        <TabPanel>
           {/* <h2>{prof[3]}</h2> */}
           <h2> {got_profile? my_profile["description"]: ""}</h2>
-
         </TabPanel>
         <TabPanel>
           <h2>{prof[4].map((item, i) => <div key={i}>{item}</div>)}</h2>
-          
+
 
         </TabPanel>
       </Tabs>
@@ -86,4 +75,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default UserProfile;

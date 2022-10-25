@@ -8,9 +8,10 @@ import axios from 'axios'
 import { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import MyJobs from '../components/feed/MyJobs.js'
-import NavBar from '../components/navigation/NavBar';
+import NavBar from '../components/navigation/UserNavBar';
 
-function Jobs(){
+
+function UserJobs(){
     const [my_profile, setmy_profile] = useState([
         {
           "first_name": "john",
@@ -35,7 +36,7 @@ function Jobs(){
         };
         fetchData();
       }, [requestData]);
-    
+
       if (localStorage.getItem('JWT_TOKEN') == null) {
         return <Redirect to="/"></Redirect>
       }
@@ -70,9 +71,9 @@ function Jobs(){
 
                 <TabPanel>yooo</TabPanel>
             </Tabs>
-            
+
         </div>
     );
 }
 
-export default Jobs;
+export default UserJobs;
