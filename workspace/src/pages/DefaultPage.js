@@ -45,8 +45,14 @@ function Login() {
   const [USER_CONTRACTOR, setUSER_CONTRACTOR] = useState(false)
   const [USER_COORDINATES, setUSER_COORDINATES] = useState([])
   const [USER_IMAGES, setUSER_IMAGES] = useState()
-  if (localStorage.getItem('JWT_TOKEN') != null) {
-    return <Redirect to="/profile"></Redirect>
+  if ((localStorage.getItem('JWT_TOKEN') != null) && USER_CONTRACTOR == true) 
+  {
+    console.log(USER_CONTRACTOR)
+    //return <Redirect to="/profile"></Redirect>
+  }
+  if((localStorage.getItem('JWT_TOKEN') != null) && USER_CONTRACTOR == false)
+  {
+    return <Redirect to="/userprofile"></Redirect>
   }
 
 
@@ -87,14 +93,18 @@ function Login() {
         console.log(response)
         toast.dark('Sign in successful')
         setJWT_TOKEN(response.data.token)
-
         localStorage.setItem('JWT_TOKEN', response.data.token)
         localStorage.setItem('contractor', response.data.contractor)
         localStorage.setItem('image', response.data.image)
-
-
         //probably navigate to a new page here or smth
-        history.push('/profile')
+        if(response.data.contractor == false)
+        {
+          history.push('/userprofile')
+        }
+        else
+        {
+          history.push('/profile')
+        }
       }).catch(function (error) {
         console.log(error.response.status)
         // if(error.response.status === 401)
@@ -132,7 +142,15 @@ function Login() {
         localStorage.setItem('JWT_TOKEN', response.data.token)
         localStorage.setItem('contractor', response.data.contractor)
         localStorage.setItem('image', response.data.image)
-        history.push('/profile')
+
+        if(response.data.contractor == false)
+        {
+          history.push('/userprofile')
+        }
+        else
+        {
+          history.push('/profile')
+        }
 
       }).catch(function (error) {
         console.log(error.response.status)
@@ -155,7 +173,9 @@ function Login() {
   }
 
   const handleSelectChangeCon = (e) => {
+    console.log(e)
     setUSER_CONTRACTOR(e.value)
+    console.log(USER_CONTRACTOR)
   }
 
   const imagechangeHandler = (e) => {

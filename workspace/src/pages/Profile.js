@@ -15,7 +15,8 @@ function Profile() {
       "first_name": "john",
       "last_name": "tse",
       "email": "placeholder@gmail.com",
-      "id": "placeholderid"
+      "id": "placeholderid",
+      "contractor" : "placeholdertype"
     }
   ]);
   const [got_profile,setgot_profile] = useState(null)
@@ -45,6 +46,7 @@ function Profile() {
         })
     }
   }
+   console.log(my_profile["contractor"])
   return (
     <div className='App'>
       <NavBar/>

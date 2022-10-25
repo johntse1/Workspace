@@ -40,7 +40,6 @@ function Home(){
   return (
        <div className="App">
         <NavBar/>
-        <Link to ='/create'><Button text='Create Job Posting'></Button></Link>
         <Button text='Refresh Feed' onClick={loadJob}></Button>
         <div>
           {items.map((item) => 
