@@ -13,8 +13,23 @@ import DatePicker from "react-datepicker"
 import 'react-datepicker/dist/react-datepicker.css'
 import Profile from '../pages/Profile'
 import Select from 'react-select'
+import { useEffect } from 'react';
 
 function Login() {
+
+  useEffect(() => {
+    const getCords = async () => {
+      navigator.geolocation.getCurrentPosition(function (position) {
+        console.log("Latitude is :", position.coords.latitude);
+        console.log("Longitude is :", position.coords.longitude);
+        let cords = [position.coords.latitude, position.coords.longitude]
+        setUSER_COORDINATES(cords)
+      })
+    };
+    getCords();
+  }, []);
+
+
   let history = useHistory()
   const [register, registerPopup] = useState(false);
   const [createPost, createPostPopup] = useState(false);
@@ -27,22 +42,35 @@ function Login() {
   const [USER_BIRTHDAY, setUSER_BIRTHDAY] = useState('')
   const [USER_DESCRIPTION, setUSER_DESCRIPTION] = useState('')
   const [USER_SKILLS, setUSER_SKILLS] = useState([])
-
+  const [USER_CONTRACTOR, setUSER_CONTRACTOR] = useState(false)
+  const [USER_COORDINATES, setUSER_COORDINATES] = useState([])
+  const [USER_IMAGES, setUSER_IMAGES] = useState()
   if (localStorage.getItem('JWT_TOKEN') != null) {
     return <Redirect to="/profile"></Redirect>
   }
 
-  let skills = 
-  [
-    {  label: "Construction", value: "Construction" },
-    {  label: "Plumbing", value: "Plumbing" },
-    {  label: "Electrical", value: "Electrical" },
-    {  label: "Mechanical", value: "Mechanical" },
-    {  label: "Home", value: "Home" },
-    {  label: "Logging", value: "Logging" },
-    {  label: "Technical", value: "Technical" },
-    {  label: "Roof", value: "Roof" },
-  ]
+
+
+
+
+
+  let skills =
+    [
+      { label: "Construction", value: "Construction" },
+      { label: "Plumbing", value: "Plumbing" },
+      { label: "Electrical", value: "Electrical" },
+      { label: "Mechanical", value: "Mechanical" },
+      { label: "Home", value: "Home" },
+      { label: "Logging", value: "Logging" },
+      { label: "Technical", value: "Technical" },
+      { label: "Roof", value: "Roof" },
+    ]
+  let Contractor =
+    [
+      { label: "Contractor", value: "true" },
+      { label: "User", value: "false"},
+
+    ]
 
   let API_BASE_URL = 'https://workspace.onrender.com/api/'
   let API_SIGN_IN_URL = 'users/login'
@@ -61,9 +89,9 @@ function Login() {
         setJWT_TOKEN(response.data.token)
 
         localStorage.setItem('JWT_TOKEN', response.data.token)
-        localStorage.setItem('contractor',response.data.contractor)
-        localStorage.setItem('image',response.data.image)
-        
+        localStorage.setItem('contractor', response.data.contractor)
+        localStorage.setItem('image', response.data.image)
+
 
         //probably navigate to a new page here or smth
         history.push('/profile')
@@ -81,7 +109,7 @@ function Login() {
 
   const registerUser = () => {
 
-    
+
     let url = API_BASE_URL + API_SIGN_UP_URL
 
     axios.post(url,
@@ -92,16 +120,18 @@ function Login() {
         password: USER_PASSWORD,
         birthday: USER_BIRTHDAY,
         description: USER_DESCRIPTION,
-        skills:USER_SKILLS
+        skills: USER_SKILLS,
+        contractor: USER_CONTRACTOR,
+        location: USER_COORDINATES
+
 
       })
       .then(function (response) {
         console.log(response)
         toast.dark('Account successfully registered')
-        setJWT_TOKEN(JWT_TOKEN)
         localStorage.setItem('JWT_TOKEN', response.data.token)
-        localStorage.setItem('contractor',response.data.contractor)
-        localStorage.setItem('image',response.data.image)
+        localStorage.setItem('contractor', response.data.contractor)
+        localStorage.setItem('image', response.data.image)
         history.push('/profile')
 
       }).catch(function (error) {
@@ -117,12 +147,25 @@ function Login() {
   }
 
 
-const handleSelectChange = (e) => {
-  let values = []
-  e.map((v) => values.push(v.value))
-  setUSER_SKILLS(values)
-  console.log(USER_SKILLS)
-}
+  const handleSelectChange = (e) => {
+    let values = []
+    e.map((v) => values.push(v.value))
+    setUSER_SKILLS(values)
+    console.log(USER_SKILLS)
+  }
+
+  const handleSelectChangeCon = (e) => {
+    setUSER_CONTRACTOR(e.value)
+  }
+
+  const imagechangeHandler = (e) => {
+    setUSER_IMAGES(e.target.files[0])
+    console.log(USER_IMAGES)
+  }
+
+  const test = () => {
+    console.log(USER_CONTRACTOR)
+  }
 
   return (
     <div className='container'>
@@ -187,6 +230,17 @@ const handleSelectChange = (e) => {
           </div>
 
           <div className='form-control'>
+            <label>What are you?</label>
+            <Select
+              name="Contractor"
+              options={Contractor}
+              className="basic-multi-select"
+              classNamePrefix="select"
+              onChange={(e) => handleSelectChangeCon(e)}
+            />
+          </div>
+
+          <div className='form-control'>
             <label>Birthday</label>
             <DatePicker
               selected={USER_BIRTHDAY}
@@ -209,34 +263,33 @@ const handleSelectChange = (e) => {
                 rows={5}
               />
             </form>
-            </div>
+          </div>
 
-            <div className='form-control'>
+          <div className='form-control'>
             <label>Skills</label>
             <Select
               isMulti
               name="colors"
               options={skills}
-              className="basic-multi-select"
+              className="basic-single"
               classNamePrefix="select"
               onChange={(e) => handleSelectChange(e)}
 
             />
-            </div>
-
-
+          </div>
+          <div className='form-control'>
+            <label>Profile Pictures</label>
+            <input type="file" name="file" onChange={imagechangeHandler} multiple={false}
+            />
+          </div>
           <Button color='black' text='Register' onClick={registerUser} />
+          <Button color='black' text='test' onClick={test} />
+
         </TabPanel>
       </Tabs>
       <ToastContainer />
-
-
-
     </div>
-
   );
-
-
 }
 
 export default Login;
