@@ -11,6 +11,7 @@ import CreateJob from './pages/CreateJob'
 import UserHome from './pages/UserHome'
 import UserProfile from './pages/UserProfile'
 import UserJobs from './pages/UserJobs'
+import OtherUser from './pages/OtherUser'
 
 
 import Chat from "./pages/Chat";
@@ -57,6 +58,7 @@ function App() {
         <Route exact path="/userProfile" component={UserProfile} />
         <Route exact path="/userHome" component={UserHome} />
         <Route exact path="/userJobs" component={UserJobs} />
+        <Route exact path="/otherUser" component={OtherUser} />
       </Switch>
     
       {!showChat ? (

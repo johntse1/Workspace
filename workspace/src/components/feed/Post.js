@@ -1,5 +1,6 @@
 import React from 'react'
 import Button from '../Button';
+import {Link} from 'react-router-dom'
 
 function Post(props){
     const displayTitle = () =>{
@@ -10,9 +11,10 @@ function Post(props){
         <div key={props.post._id}>
             <h1>{props.post.title}</h1>
             <br />
-            <div>{props.post.user}</div>
+            <Link to={{pathname: '/otherUser', state: props.post.user}}>{props.post.user}</Link>
             <div>{props.post.text}</div>
             <div>{props.post.price}</div>
+            <div>{props.post.tags}</div>
             <Button text='Not interested' onClick={displayTitle}></Button>
             <Button text='I want this job'></Button>
         </div>
