@@ -33,7 +33,10 @@ const jobSchema = mongoose.Schema({
     img:{
         data:Buffer,
         contentType: String
-    }
+    },
+    location:{
+        type: [Number],
+    },
     
 
 

@@ -31,6 +31,7 @@ function Login() {
 
 
   let history = useHistory()
+  let imgurclient = "ec5fa7976333d6b"
   const [register, registerPopup] = useState(false);
   const [createPost, createPostPopup] = useState(false);
   const [JWT_TOKEN, setJWT_TOKEN] = useState('')
@@ -184,7 +185,18 @@ function Login() {
   }
 
   const test = () => {
-    console.log(USER_CONTRACTOR)
+    // console.log(USER_CONTRACTOR)
+    const formdata = new FormData()
+    formdata.append("image",USER_IMAGES)
+    axios.post("https://api.imgur.com/3/upload",
+      {
+        data: formdata
+      },{ headers: { "Authorization": `Client-ID ${imgurclient}` } })
+      .then(function (response) {
+        console.log(response)
+      }).catch(function (error) {
+        console.log(error.response)
+      })
   }
 
   return (
@@ -303,7 +315,7 @@ function Login() {
             />
           </div>
           <Button color='black' text='Register' onClick={registerUser} />
-          <Button color='black' text='test' onClick={test} />
+          {/* <Button color='black' text='test' onClick={test} /> */}
 
         </TabPanel>
       </Tabs>

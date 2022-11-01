@@ -35,7 +35,8 @@ const setJobs = asyncHandler(async (req,res)=>{
         price: req.body.price,
         tags: req.body.tags,
         status:"Incomplete",
-        acceptedby:null
+        acceptedby:null,
+        location:req.body.location
     })
     res.status(200).json(job)
 })

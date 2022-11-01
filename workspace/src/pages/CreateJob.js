@@ -32,7 +32,7 @@ function CreateJob(){
       const [USER_PRICE, setUSER_PRICE] = useState('')
       const [USER_POST_DESCRIPTION, setUSER_POST_DESCRIPTION] = useState('')
       const [USER_TAGS, setUSER_TAGS] = useState([])
-
+      const [USER_ADDRESS,setUSER_ADDRESS] = useState('')
       if (localStorage.getItem('JWT_TOKEN') == null) {
         return <Redirect to="/"></Redirect>
       }
@@ -51,23 +51,42 @@ function CreateJob(){
 
   const setJobs = () => {
       let token = localStorage.getItem("JWT_TOKEN")
-      axios.post(url,
-        {
-          title:USER_TITLE,
-          user: USER_ID,
-          text:USER_POST_DESCRIPTION,
-          price:USER_PRICE,
-          tags:USER_TAGS
-  
-        },{ headers: { "Authorization": `Bearer ${token}` } })    
-        .then(function (response) {
-          console.log(response)
-        }).catch(function (error) {
-          console.log(error.response.status)
-      })
-      
+      let base_url = "https://maps.googleapis.com/maps/api/geocode/json?"
+      let params = {
+        'key':process.env.REACT_APP_GOOGLE_API_KEY,
+        'address': USER_ADDRESS
+      } 
+      axios.get(base_url, {params})
+      .then(function (response) {
+        console.log(response)
+        let lat = response.data.results[0].geometry.location.lat
+        let lon = response.data.results[0].geometry.location.lng
+        console.log(lat,lon)
+        let latlon = [lat,lon]
+        axios.post(url,
+          {
+            title:USER_TITLE,
+            user: USER_ID,
+            text:USER_POST_DESCRIPTION,
+            price:USER_PRICE,
+            tags:USER_TAGS,
+            location: latlon
+          },{ headers: { "Authorization": `Bearer ${token}` } })    
+          .then(function (response) {
+            console.log(response)
+            history.push('/userjobs')
+          }).catch(function (error) {
+            console.log(error.response.status)
+        })
+      }).catch(function (error) {
+        //if google api fails
+        console.log(error.response)
+        toast.error('Enter a new address')
+      })    
     }
 
+
+    
 
     
     const handleSelectChange = (e) => {
@@ -76,6 +95,35 @@ function CreateJob(){
       setUSER_TAGS(values)
       console.log(USER_TAGS)
     }
+
+    const test = ()=>{
+
+      let address = ''
+      let base_url = "https://maps.googleapis.com/maps/api/geocode/json?"
+      let params = {
+        'key':process.env.GOOGLE_API_KEY,
+        'address': address
+      } 
+      axios.get(base_url, {params})
+      .then(function (response) {
+        console.log(response)
+
+        let lat = response.data.results[0].geometry.location.lat
+        let lon = response.data.results[0].geometry.location.lng
+        console.log(lat,lon)
+
+      }).catch(function (error) {
+        console.log(error.response)
+      })    
+    }
+
+    const test2 =()=>{
+      console.log(process.env.REACT_APP_GOOGLE_API_KEY)
+    }
+
+    
+
+
     return(
         <div className='container'>
           <div className='form-control'>
@@ -91,6 +139,14 @@ function CreateJob(){
             <input type='number' placeholder='Enter payment amount'
               value={USER_PRICE}
               onChange={(e) => setUSER_PRICE(e.target.value)}
+            />
+          </div>
+
+          <div className='form-control'>
+            <label>Enter a location</label>
+            <input type='text' placeholder='Enter the location of the job'
+            value={USER_ADDRESS}
+            onChange={(e) => setUSER_ADDRESS(e.target.value)}
             />
           </div>
 
@@ -119,7 +175,11 @@ function CreateJob(){
 
             />
             </div>
-            <Link to='/userhome'><Button text='Submit' onClick={setJobs} ></Button></Link>
+
+            <Button text='Submit' onClick={setJobs} ></Button>
+            <Button color='black' text='test' onClick={test2} />
+
+
             <ToastContainer />
         </div>
         
