@@ -1,5 +1,6 @@
 const asyncHandler = require('express-async-handler')
 const { globalAgent } = require('http')
+const { model } = require('mongoose')
 const Job = require('../models/jobmodel')
 const User = require('../models/usermodel')
 // @desc get jobs
@@ -136,7 +137,62 @@ const acceptJob = asyncHandler(async (req,res)=>{
     }
     await job.updateOne({acceptedby:req.user.id})
     res.status(200).json(job)
+})
 
+const getJobsWithin = asyncHandler(async (req,res)=>{
+    if(!req.body.coord)
+    {
+        res.status(400)
+        throw new Error ('Enter a coordinate.')
+    }
+
+    if(!req.body.distance)
+    {
+        res.status(400)
+        throw new Error ('Enter a distance from coordinate.')
+    }
+
+    const lat = req.body.coord[0]
+    const lng = req.body.coord[1]
+    const radius = req.body.distance/3963.2
+
+    const result = await Job.find({
+      location: { $geoWithin: { $centerSphere: [[lat, lng], radius] } },
+    })
+    .sort("-score");
+
+
+    res.status(200).json(result)
+})
+
+const getJobsWithTagDistance = asyncHandler(async (req,res)=>{
+    if(!req.body.coord)
+    {
+        res.status(400)
+        throw new Error ('Enter a coordinate.')
+    }
+
+    if(!req.body.distance)
+    {
+        res.status(400)
+        throw new Error ('Enter a distance from coordinate.')
+    }
+    if(!req.body.tags)
+    {
+        res.status(400)
+        throw new Error ('Please enter tags.')
+    }
+    const lat = req.body.coord[0]
+    const lng = req.body.coord[1]
+    const radius = req.body.distance/3963.2
+    const result = await Job.find({
+      location: { $geoWithin: { $centerSphere: [[lat, lng], radius] } },
+      tags:{$in:req.body.tags}
+    })
+    .sort("-score");
+
+
+    res.status(200).json(result)
 })
 module.exports = {
     getJobs,
@@ -146,5 +202,7 @@ module.exports = {
     getallJobs,
     filterJobs,
     acceptJob,
-    getallJobsFiltered
+    getallJobsFiltered,
+    getJobsWithin,
+    getJobsWithTagDistance
 }

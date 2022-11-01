@@ -37,6 +37,9 @@ const jobSchema = mongoose.Schema({
     location:{
         type: [Number],
     },
+    address:{
+        type: String
+    }
     
 
 
