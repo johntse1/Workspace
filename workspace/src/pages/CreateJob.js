@@ -56,6 +56,7 @@ function CreateJob(){
         'key':process.env.REACT_APP_GOOGLE_API_KEY,
         'address': USER_ADDRESS
       } 
+
       axios.get(base_url, {params})
       .then(function (response) {
         console.log(response)
@@ -70,7 +71,8 @@ function CreateJob(){
             text:USER_POST_DESCRIPTION,
             price:USER_PRICE,
             tags:USER_TAGS,
-            location: latlon
+            location: latlon,
+            address: USER_ADDRESS
           },{ headers: { "Authorization": `Bearer ${token}` } })    
           .then(function (response) {
             console.log(response)
@@ -177,7 +179,7 @@ function CreateJob(){
             </div>
 
             <Button text='Submit' onClick={setJobs} ></Button>
-            <Button color='black' text='test' onClick={test2} />
+            {/* <Button color='black' text='test' onClick={test2} /> */}
 
 
             <ToastContainer />
