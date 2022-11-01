@@ -7,63 +7,66 @@ const User = require('../models/usermodel')
 // @desc get jobs
 // @route GET /api/jobs
 // @access Private
-const getJobs = asyncHandler(async (req,res)=>{
-    const jobs = await Job.find({user: req.user.id})
+const getJobs = asyncHandler(async (req, res) => {
+
+    const jobs = await Job.find({ user: req.user.id }).sort({ createdAt: 'desc' }).exec()
     res.status(200).json(jobs)
 })
 
 // @desc set jobs
 // @route POST /api/jobs
 // @access Private
-const setJobs = asyncHandler(async (req,res)=>{
+const setJobs = asyncHandler(async (req, res) => {
     console.log(req.body)
-    if (!req.body.text){
+    if (!req.body.text) {
         res.status(400)
         throw new Error('Please add a text fields')
     }
-    if (!req.body.title){
+    if (!req.body.title) {
         res.status(400)
         throw new Error('Please add a title field')
     }
 
-    if (!req.body.price){
+    if (!req.body.price) {
         res.status(400)
         throw new Error('Please add a price field')
     }
 
     let coord = []
-    if (req.body.address)
-    {
-        console.log('ran')
+    if (req.body.address) {
         let base_url = "https://maps.googleapis.com/maps/api/geocode/json?"
         let params = {
-        'key':process.env.GOOGLE_API_KEY,
-        'address': req.body.address
-      }
-      console.log(req.body.address)
-      var options = {
-        'method':'GET',
-        'url':base_url,
-        'params':params
-      }
-    await axios(options).then(function(response){
-        let lat = response.data.results[0].geometry.location.lat
-        let lon = response.data.results[0].geometry.location.lng
-        coord = [lat,lon]
-      })
+            'key': process.env.GOOGLE_API_KEY,
+            'address': req.body.address
+        }
+        var options = {
+            'method': 'GET',
+            'url': base_url,
+            'params': params
+        }
+        await axios(options).then(function (response) {
+            if (response.data.results[0].geometry.location.lat)
+            {
+                let lat = response.data.results[0].geometry.location.lat
+                let lon = response.data.results[0].geometry.location.lng
+                coord = [lat, lon]
+            }
+        }).catch(function (error) {
+            console.log(error)
+            res.status(400)
+            throw new Error('Please enter another address')
+        })
     }
-
-
     const job = await Job.create({
-        title:req.body.title,
+        title: req.body.title,
         user: req.user.id,
         text: req.body.text,
         price: req.body.price,
         tags: req.body.tags,
-        status:"Incomplete",
-        acceptedby:null,
-        location:coord,
-        address:req.body.address
+        status: "Incomplete",
+        acceptedby: null,
+        location: coord,
+        address: req.body.address
     })
     res.status(200).json(job)
 })
@@ -71,150 +74,145 @@ const setJobs = asyncHandler(async (req,res)=>{
 // @desc update jobs
 // @route GET /api/jobs/:id
 // @access Private
-const updateJobs = asyncHandler(async (req,res)=>{
+const updateJobs = asyncHandler(async (req, res) => {
     const job = await Job.findById(req.params.id)
-    if(!job) {
+    if (!job) {
         res.status(400)
         throw new Error('Job not found')
     }
 
     const user = await User.findById(req.user.id)
-    
-    if(!user){
+
+    if (!user) {
         res.status(401)
-        throw new Error ('User not found')    
+        throw new Error('User not found')
     }
 
     //Check if logged in user matches the job user
-    if(job.user.toString() !== user.id){
+    if (job.user.toString() !== user.id) {
         res.status(401)
-        throw new Error ('User does not match job user')    
+        throw new Error('User does not match job user')
     }
 
-    const updatedJob = await Job.findByIdAndUpdate(req.params.id, req.body, {new:true})
+    const updatedJob = await Job.findByIdAndUpdate(req.params.id, req.body, { new: true })
     res.status(200).json(updatedJob)
 })
 
 // @desc delete jobs
 // @route GET /api/jobs/:id
 // @access Private
-const deleteJobs = asyncHandler(async (req,res)=>{
+const deleteJobs = asyncHandler(async (req, res) => {
     const job = await Job.findById(req.params.id)
-    if(!job) {
+    if (!job) {
         res.status(400)
         throw new Error('Job not found')
-    }    
+    }
     const user = await User.findById(req.user.id)
 
-    if(!user){
+    if (!user) {
         res.status(401)
-        throw new Error ('User not found')    
+        throw new Error('User not found')
     }
 
     //Check if logged in user matches the job user
-    if(job.user.toString() !== user.id){
+    if (job.user.toString() !== user.id) {
         res.status(401)
-        throw new Error ('User does not match job user')    
+        throw new Error('User does not match job user')
     }
 
     await job.remove()
-    res.status(200).json({id: req.params.id})
+    res.status(200).json({ id: req.params.id })
 })
 
-const getallJobs = asyncHandler(async (req,res)=>{
+const getallJobs = asyncHandler(async (req, res) => {
     const filter = {}
-    const jobs = await Job.find(filter).sort({ createdAt: 'desc'}).exec();
+    const jobs = await Job.find(filter).sort({ createdAt: 'desc' }).exec();
     res.status(200).json(jobs)
 })
 
-const filterJobs = asyncHandler(async (req,res)=>{
-    const filter = {tags:{$in:req.body.tags}}
+const filterJobs = asyncHandler(async (req, res) => {
+    const filter = { tags: { $in: req.body.tags } }
     const jobs = await Job.find(filter)
 
     res.status(200).json(jobs)
 })
 
-const getallJobsFiltered = asyncHandler(async (req,res)=>{
+const getallJobsFiltered = asyncHandler(async (req, res) => {
     // const jobs = await Job.find({user: req.user.id})
-    const filter = {tags:{$in:req.user.skills}}
+    const filter = { tags: { $in: req.user.skills } }
     const jobs = await Job.find(filter)
     res.status(200).json(jobs)
 })
 
-const acceptJob = asyncHandler(async (req,res)=>{
+const acceptJob = asyncHandler(async (req, res) => {
     const job = await Job.findById(req.params.id)
-    if(!job) {
+    if (!job) {
         res.status(400)
         throw new Error('Job not found')
-    }    
+    }
     const user = await User.findById(req.user.id)
     //Check if logged in user does not the job user
-    if(job.user.toString() == user.id){
+    if (job.user.toString() == user.id) {
         res.status(401)
-        throw new Error ('Cannot accept your own job')    
+        throw new Error('Cannot accept your own job')
     }
     console.log(job.acceptedby)
-    if(job.acceptedby !== null){
+    if (job.acceptedby !== null) {
         res.status(401)
         console.log(job.acceptedby)
-        throw new Error ('Job is already accepted')
-        
+        throw new Error('Job is already accepted')
+
     }
-    await job.updateOne({acceptedby:req.user.id})
+    await job.updateOne({ acceptedby: req.user.id })
     res.status(200).json(job)
 })
 
-const getJobsWithin = asyncHandler(async (req,res)=>{
-    if(!req.body.coord)
-    {
+const getJobsWithin = asyncHandler(async (req, res) => {
+    if (!req.body.coord) {
         res.status(400)
-        throw new Error ('Enter a coordinate.')
+        throw new Error('Enter a coordinate.')
     }
 
-    if(!req.body.distance)
-    {
+    if (!req.body.distance) {
         res.status(400)
-        throw new Error ('Enter a distance from coordinate.')
+        throw new Error('Enter a distance from coordinate.')
     }
 
     const lat = req.body.coord[0]
     const lng = req.body.coord[1]
-    const radius = req.body.distance/3963.2
+    const radius = req.body.distance / 3963.2
 
     const result = await Job.find({
-      location: { $geoWithin: { $centerSphere: [[lat, lng], radius] } },
+        location: { $geoWithin: { $centerSphere: [[lat, lng], radius] } },
     })
-    .sort("-score");
+        .sort("-score");
 
 
     res.status(200).json(result)
 })
 
-const getJobsWithTagDistance = asyncHandler(async (req,res)=>{
-    if(!req.body.coord)
-    {
+const getJobsWithTagDistance = asyncHandler(async (req, res) => {
+    if (!req.body.coord) {
         res.status(400)
-        throw new Error ('Enter a coordinate.')
+        throw new Error('Enter a coordinate.')
     }
 
-    if(!req.body.distance)
-    {
+    if (!req.body.distance) {
         res.status(400)
-        throw new Error ('Enter a distance from coordinate.')
+        throw new Error('Enter a distance from coordinate.')
     }
-    if(!req.body.tags)
-    {
+    if (!req.body.tags) {
         res.status(400)
-        throw new Error ('Please enter tags.')
+        throw new Error('Please enter tags.')
     }
     const lat = req.body.coord[0]
     const lng = req.body.coord[1]
-    const radius = req.body.distance/3963.2
+    const radius = req.body.distance / 3963.2
     const result = await Job.find({
-      location: { $geoWithin: { $centerSphere: [[lat, lng], radius] } },
-      tags:{$in:req.body.tags}
+        location: { $geoWithin: { $centerSphere: [[lat, lng], radius] } },
+        tags: { $in: req.body.tags }
     })
-    .sort("-score");
+        .sort("-score");
 
 
     res.status(200).json(result)
