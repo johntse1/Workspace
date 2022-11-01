@@ -39,6 +39,12 @@ const jobSchema = mongoose.Schema({
     },
     address:{
         type: String,
+    },
+    completed_user:{
+        type:Boolean
+    },
+    completed_contractor:{
+        type:Boolean
     }
     
 

@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const {getJobs,setJobs,updateJobs,deleteJobs,getallJobs,filterJobs,acceptJob,getallJobsFiltered,getJobsWithin,getJobsWithTagDistance} = require('../controllers/jobController')
+const {getJobs,setJobs,updateJobs,deleteJobs,getallJobs,filterJobs,acceptJob,getallJobsFiltered,getJobsWithin,getJobsWithTagDistance,completeJob} = require('../controllers/jobController')
 
 const {protect} = require ('../middleware/authMiddleware')
 
@@ -14,6 +14,6 @@ router.route('/accept/:id').post(protect,acceptJob)
 router.route('/mytags').get(protect,getallJobsFiltered)
 router.route('/getwithin').get(getJobsWithin)
 router.route('/getwithintag').get(getJobsWithTagDistance)
-
+router.route('/complete/:id').post(protect,completeJob)
 getJobsWithTagDistance
 module.exports = router 

@@ -65,7 +65,9 @@ const setJobs = asyncHandler(async (req, res) => {
         status: "Incomplete",
         acceptedby: null,
         location: coord,
-        address: req.body.address
+        address: req.body.address,
+        completed_user: false,
+        completed_contractor: false,
     })
 
     const user = await User.findById(req.user.id)
@@ -76,8 +78,9 @@ const setJobs = asyncHandler(async (req, res) => {
 
             if (req.body.tags.length == 1) {
                 if (temp.includes(req.body.tags[0]) == false) {
-                temp.push(req.body.tags[0])
-            }}
+                    temp.push(req.body.tags[0])
+                }
+            }
 
             else if (req.body.tags.length > 1) {
                 for (const x of req.body.tags) {
@@ -186,8 +189,61 @@ const acceptJob = asyncHandler(async (req, res) => {
         throw new Error('Job is already accepted')
 
     }
-    await job.updateOne({ acceptedby: req.user.id })
+    await job.updateOne({ acceptedby: req.user.id, status: "in progress" })
     res.status(200).json(job)
+})
+
+const completeJob = asyncHandler(async (req, res) => {
+    const job = await Job.findById(req.params.id)
+
+    if (!job) {
+        res.status(400)
+        throw new Error('Job not found')
+    }
+
+    if (job.acceptedby == null) {
+        res.status(400)
+        throw new Error('Job must be accepted before completing')
+    }
+
+    const user = await User.findById(req.user.id)
+    //If you are the owner of the job
+    if (job.user.toString() == user.id) {
+        if (job.completed_user == true) {
+            res.status(400)
+            throw new Error('Owner of job has already completed it')
+        }
+        else {
+            if (job.completed_contractor == true) {
+                // await job.updateOne({ status: "Complete", completed_user: true },{new:true} )
+                // res.status(200).json(job)
+
+                const updatedJob = await Job.findByIdAndUpdate(req.params.id, {status:"Complete", completed_user:true}, { new: true })
+                res.status(200).json(updatedJob)
+            }
+
+        }
+    }
+
+    //if you are the contractor of the job
+    if (job.acceptedby.toString() == user.id) {
+        if (job.completed_contractor == true) {
+            res.status(400)
+            throw new Error('Contractor of job has already completed it')
+        }
+        else {
+            if (job.completed_user == true) {
+                const updatedJob = await Job.findByIdAndUpdate(req.params.id, {status:"Complete", completed_contractor:true}, { new: true })
+                res.status(200).json(updatedJob)
+
+            }
+        }
+    }
+
+    // res.status(200).json(job)
+
+
+
 })
 
 const getJobsWithin = asyncHandler(async (req, res) => {
@@ -250,5 +306,6 @@ module.exports = {
     acceptJob,
     getallJobsFiltered,
     getJobsWithin,
-    getJobsWithTagDistance
+    getJobsWithTagDistance,
+    completeJob
 }
