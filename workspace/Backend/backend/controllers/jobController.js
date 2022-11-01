@@ -1,3 +1,4 @@
+const axios = require('axios');
 const asyncHandler = require('express-async-handler')
 const { globalAgent } = require('http')
 const { model } = require('mongoose')
@@ -29,6 +30,30 @@ const setJobs = asyncHandler(async (req,res)=>{
         res.status(400)
         throw new Error('Please add a price field')
     }
+
+    let coord = []
+    if (req.body.address)
+    {
+        console.log('ran')
+        let base_url = "https://maps.googleapis.com/maps/api/geocode/json?"
+        let params = {
+        'key':process.env.GOOGLE_API_KEY,
+        'address': req.body.address
+      }
+      console.log(req.body.address)
+      var options = {
+        'method':'GET',
+        'url':base_url,
+        'params':params
+      }
+    await axios(options).then(function(response){
+        let lat = response.data.results[0].geometry.location.lat
+        let lon = response.data.results[0].geometry.location.lng
+        coord = [lat,lon]
+      })
+    }
+
+
     const job = await Job.create({
         title:req.body.title,
         user: req.user.id,
@@ -37,7 +62,7 @@ const setJobs = asyncHandler(async (req,res)=>{
         tags: req.body.tags,
         status:"Incomplete",
         acceptedby:null,
-        location:req.body.location,
+        location:coord,
         address:req.body.address
     })
     res.status(200).json(job)

@@ -49,43 +49,67 @@ function CreateJob(){
     ]
     let url = 'https://workspace.onrender.com/api/jobs/set'
 
-  const setJobs = () => {
-      let token = localStorage.getItem("JWT_TOKEN")
-      let base_url = "https://maps.googleapis.com/maps/api/geocode/json?"
-      let params = {
-        'key':process.env.REACT_APP_GOOGLE_API_KEY,
-        'address': USER_ADDRESS
-      } 
+  // const setJobsWithLoc = () => {
+  //     let token = localStorage.getItem("JWT_TOKEN")
+  //     let base_url = "https://maps.googleapis.com/maps/api/geocode/json?"
+  //     let params = {
+  //       'key':process.env.REACT_APP_GOOGLE_API_KEY,
+  //       'address': USER_ADDRESS
+  //     } 
 
-      axios.get(base_url, {params})
-      .then(function (response) {
-        console.log(response)
-        let lat = response.data.results[0].geometry.location.lat
-        let lon = response.data.results[0].geometry.location.lng
-        console.log(lat,lon)
-        let latlon = [lat,lon]
-        axios.post(url,
-          {
-            title:USER_TITLE,
-            user: USER_ID,
-            text:USER_POST_DESCRIPTION,
-            price:USER_PRICE,
-            tags:USER_TAGS,
-            location: latlon,
-            address: USER_ADDRESS
-          },{ headers: { "Authorization": `Bearer ${token}` } })    
-          .then(function (response) {
-            console.log(response)
-            history.push('/userjobs')
-          }).catch(function (error) {
-            console.log(error.response.status)
-        })
-      }).catch(function (error) {
-        //if google api fails
-        console.log(error.response)
-        toast.error('Enter a new address')
-      })    
-    }
+  //     axios.get(base_url, {params})
+  //     .then(function (response) {
+  //       console.log(response)
+  //       let lat = response.data.results[0].geometry.location.lat
+  //       let lon = response.data.results[0].geometry.location.lng
+  //       console.log(lat,lon)
+  //       let latlon = [lat,lon]
+  //       axios.post(url,
+  //         {
+  //           title:USER_TITLE,
+  //           user: USER_ID,
+  //           text:USER_POST_DESCRIPTION,
+  //           price:USER_PRICE,
+  //           tags:USER_TAGS,
+  //           location: latlon,
+  //           address: USER_ADDRESS
+  //         },{ headers: { "Authorization": `Bearer ${token}` } })    
+  //         .then(function (response) {
+  //           console.log(response)
+  //           history.push('/userjobs')
+  //         }).catch(function (error) {
+  //           console.log(error.response.status)
+  //       })
+  //     }).catch(function (error) {
+  //       //if google api fails
+  //       console.log(error.response)
+  //       toast.error('Enter a new address')
+  //     })    
+  //   }
+  const setJobs = ()=>
+  {
+    let token = localStorage.getItem("JWT_TOKEN")
+    let base_url = "https://maps.googleapis.com/maps/api/geocode/json?"
+    let params = {
+      'key':process.env.REACT_APP_GOOGLE_API_KEY,
+      'address': USER_ADDRESS
+    } 
+      axios.post(url,
+        {
+          title:USER_TITLE,
+          user: USER_ID,
+          text:USER_POST_DESCRIPTION,
+          price:USER_PRICE,
+          tags:USER_TAGS,
+          address: USER_ADDRESS
+        },{ headers: { "Authorization": `Bearer ${token}` } })    
+        .then(function (response) {
+          console.log(response)
+          history.push('/userjobs')
+        }).catch(function (error) {
+          console.log(error.response.status)
+      })
+  }
 
 
     
@@ -119,9 +143,6 @@ function CreateJob(){
       })    
     }
 
-    const test2 =()=>{
-      console.log(process.env.REACT_APP_GOOGLE_API_KEY)
-    }
 
     
 
@@ -179,7 +200,8 @@ function CreateJob(){
             </div>
 
             <Button text='Submit' onClick={setJobs} ></Button>
-            {/* <Button color='black' text='test' onClick={test2} /> */}
+            {/* <Button color='black' text='test' onClick={setJobstest} /> */}
+
 
 
             <ToastContainer />
