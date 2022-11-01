@@ -215,13 +215,13 @@ const completeJob = asyncHandler(async (req, res) => {
         }
         else {
             if (job.completed_contractor == true) {
-                // await job.updateOne({ status: "Complete", completed_user: true },{new:true} )
-                // res.status(200).json(job)
-
-                const updatedJob = await Job.findByIdAndUpdate(req.params.id, {status:"Complete", completed_user:true}, { new: true })
+                const updatedJob = await Job.findByIdAndUpdate(req.params.id, { completed_user: true,status:"Complete"}, { new: true })
                 res.status(200).json(updatedJob)
             }
-
+            else {
+                const updatedJob = await Job.findByIdAndUpdate(req.params.id, { completed_user: true}, { new: true })
+                res.status(200).json(updatedJob)
+            }
         }
     }
 
@@ -233,14 +233,52 @@ const completeJob = asyncHandler(async (req, res) => {
         }
         else {
             if (job.completed_user == true) {
-                const updatedJob = await Job.findByIdAndUpdate(req.params.id, {status:"Complete", completed_contractor:true}, { new: true })
+                const updatedJob = await Job.findByIdAndUpdate(req.params.id, { completed_contractor: true,status:"Complete"}, { new: true })
                 res.status(200).json(updatedJob)
-
+            }
+            else {
+                const updatedJob = await Job.findByIdAndUpdate(req.params.id, { completed_contractor: true}, { new: true })
+                res.status(200).json(updatedJob)
             }
         }
     }
 
-    // res.status(200).json(job)
+
+    if (job.completed_user == true && job.completed_contractor == true) {
+        const updatedJob = await Job.findByIdAndUpdate(req.params.id, { status: "Complete" }, { new: true })
+        res.status(200).json(updatedJob)
+    }
+
+
+
+
+
+})
+
+const denyJob = asyncHandler(async (req, res) => {
+    const job = await Job.findById(req.params.id)
+
+    if (!job) {
+        res.status(400)
+        throw new Error('Job not found')
+    }
+
+    if (job.acceptedby == null) {
+        res.status(400)
+        throw new Error('Job must be accepted before denying')
+    }
+
+    const user = await User.findById(req.user.id)
+    //If you are the owner of the job or contractor
+    if (job.user.toString() == user.id || job.acceptedby.toString() == user.id) {
+        if (job.status !== "Complete") {
+            const updatedJob = await Job.findByIdAndUpdate(req.params.id, { status: "Incomplete", completed_user: false, completed_contractor: false, acceptedby: null }, { new: true })
+            res.status(200).json(updatedJob)
+        }
+    }
+
+    res.status(200)
+    throw new Error("Not Authrorized")
 
 
 
@@ -307,5 +345,6 @@ module.exports = {
     getallJobsFiltered,
     getJobsWithin,
     getJobsWithTagDistance,
-    completeJob
+    completeJob,
+    denyJob
 }
