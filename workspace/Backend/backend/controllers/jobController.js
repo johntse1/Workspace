@@ -276,9 +276,12 @@ const denyJob = asyncHandler(async (req, res) => {
             res.status(200).json(updatedJob)
         }
     }
+    else {
+        res.status(200)
+        throw new Error("Not Authorized")
+    }
 
-    res.status(200)
-    throw new Error("Not Authrorized")
+
 
 
 
