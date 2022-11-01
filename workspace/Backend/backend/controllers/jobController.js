@@ -45,8 +45,7 @@ const setJobs = asyncHandler(async (req, res) => {
             'params': params
         }
         await axios(options).then(function (response) {
-            if (response.data.results[0].geometry.location.lat)
-            {
+            if (response.data.results[0].geometry.location.lat) {
                 let lat = response.data.results[0].geometry.location.lat
                 let lon = response.data.results[0].geometry.location.lng
                 coord = [lat, lon]
@@ -68,6 +67,30 @@ const setJobs = asyncHandler(async (req, res) => {
         location: coord,
         address: req.body.address
     })
+
+    const user = await User.findById(req.user.id)
+    if (user.contractor == false) {
+        if (req.body.tags) {
+
+            let temp = user.skills
+
+            if (req.body.tags.length == 1) {
+                if (temp.includes(req.body.tags[0]) == false) {
+                temp.push(req.body.tags[0])
+            }}
+
+            else if (req.body.tags.length > 1) {
+                for (const x of req.body.tags) {
+                    if (temp.includes(x) == false) {
+                        temp.push(x)
+                    }
+                }
+            }
+            await user.updateOne({ skills: temp })
+
+        }
+    }
+
     res.status(200).json(job)
 })
 

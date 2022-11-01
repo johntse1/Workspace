@@ -127,6 +127,11 @@ const getUser = asyncHandler(async(req,res) => {
     })
 })
 
+const getUserTag = asyncHandler(async(req,res) => {
+    const filter = { skills: { $in: req.user.skills }, contractor:true}
+    const users = await User.find(filter)    
+    res.status(200).json(users)
+})
 
 //generate token for jwt
 const generateToken = (id) => {
@@ -138,5 +143,6 @@ module.exports = {
     registerUser,
     loginUser,
     getMe,
-    getUser
+    getUser,
+    getUserTag
 }
