@@ -166,7 +166,7 @@ const filterJobs = asyncHandler(async (req, res) => {
 const getallJobsFiltered = asyncHandler(async (req, res) => {
     // const jobs = await Job.find({user: req.user.id})
     const filter = { tags: { $in: req.user.skills } }
-    const jobs = await Job.find(filter)
+    const jobs = await Job.find(filter).sort({ createdAt: 'desc' }).exec()
     res.status(200).json(jobs)
 })
 
@@ -274,6 +274,10 @@ const denyJob = asyncHandler(async (req, res) => {
         if (job.status !== "Complete") {
             const updatedJob = await Job.findByIdAndUpdate(req.params.id, { status: "Incomplete", completed_user: false, completed_contractor: false, acceptedby: null }, { new: true })
             res.status(200).json(updatedJob)
+        }
+        else {
+            res.status(200)
+            throw new Error("Job is already completed")
         }
     }
     else {
