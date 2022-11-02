@@ -7,6 +7,7 @@ function userNavBar(){
             <li><Link to='/userHome'>Home2</Link></li>
             <li><Link to='/userProfile'>My Profile</Link></li>
             <li><Link to='/userjobs'>Jobs</Link></li>
+
         </ul>
     );
 }

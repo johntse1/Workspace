@@ -18,15 +18,29 @@ function MyJobs(props){
             console.log(error)
         })
         return <Redirect to='/'></Redirect>
+
     }
+    const completeJob = () =>{
+        let token = localStorage.getItem("JWT_TOKEN")
+        axios.post('https://workspace.onrender.com/api/jobs/complete/' + props.post._id,
+            {
+            },{ headers: { "Authorization": `Bearer ${token}` } })   
+        .then( function (response){
+          console.log(response.data)
+        }).catch(function (error){
+          console.log(error.response.status)
+        });
+      }
     return(
         <div key={props.post._id}>
             <h1>{props.post.title}</h1>
             <div>{props.post.user}</div>
             <div>{props.post.text}</div>
             <div>{props.post.price}</div>
+            <div>{props.post.status}</div>
             <Button text='Edit Job' onClick={displayTitle}></Button>
             <Button text='Remove Job' onClick={removeJob}></Button>
+            <Button text='Mark as Complete' onClick={completeJob}></Button>
         </div>
     );
 }
