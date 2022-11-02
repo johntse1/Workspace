@@ -7,6 +7,7 @@ import Button from '../components/Button';
 import { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import NavBar from '../components/navigation/NavBar';
+import UserNavBar from '../components/navigation/UserNavBar';
 
 
 function OtherUser(props){
@@ -33,9 +34,19 @@ function OtherUser(props){
         };
         fetchData();
       }, []);
+
+    const navBar = () =>{
+      let contBool = localStorage.getItem('contractor')
+      if(contBool){
+        return <UserNavBar/>
+      }
+      else{
+        return <NavBar/>
+      }
+    }
     return(
         <div>
-            <NavBar/>
+            <div>{navBar()}</div>
             <Tabs>
                 {/* <h1>{prof[0]}({prof[1]})</h1> */}
                 <h1>{profile["first_name"] + " " + profile["last_name"]}'s profile</h1>

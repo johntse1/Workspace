@@ -8,15 +8,75 @@ import {Route, Link} from 'react-router-dom'
 import CreateJob from './CreateJob'
 import { API_BASE_URL, API_GET_ME, API_GET_ALL_JOBS_FILTER } from '../API_ENDPOINTS'
 import NavBar from '../components/navigation/UserNavBar';
+import axios from 'axios'
+import UserFeed from '../components/feed/UserFeed.js'
 
 
 
 function UserHome(){
+  
+  const [items, setItems] = useState([]);
+  const [currItems, setCurrItems] = useState([]);
+  const [pageNum, setNum] = useState(0);
+
+
+  useEffect(() =>{
+    loadJob();
+  }, []);
+  const loadJob = () =>{
+    console.log('button clicked')
+    let token = localStorage.getItem("JWT_TOKEN")
+    axios.get('https://workspace.onrender.com/api/users/gettag', { headers: { "Authorization": `Bearer ${token}` } })
+    .then( function (response){
+      console.log(response.data)
+      makePages(response.data)
+    }).catch(function (error){
+      console.log(error.response.status)
+    });
+  }
+
+  const makePages = (arr) =>{
+    let pageSize = 2
+    let tempArr = []
+    //console.log(items.length)
+    console.log(arr)
+    for (let i = 0; i < arr.length; i += pageSize) {
+      let page = arr.slice(i, i + pageSize);
+      //console.log(page)
+      tempArr.push(page)
+    }
+    setItems(tempArr)
+    //console.log(tempArr)
+    //console.log('a')
+    //console.log(items)
+    setCurrItems(tempArr.at(pageNum))
+    //console.log(items.at(pageNum))
+    //console.log(currItems)
+  }
+  const nextPage = () =>{
+    if(pageNum < items.length - 1){
+      setNum(pageNum + 1)
+      //loadJob()
+      setCurrItems(items.at(pageNum+1))
+    }
+  }
+  const prevPage = () =>{
+    if(pageNum > 0){
+      setNum(pageNum - 1)
+      //loadJob()
+      setCurrItems(items.at(pageNum-1))
+    }
+  }
 
   return (
        <div className="App">
         <NavBar/>
         <Link to ='/create'><Button text='Create Job Posting'></Button></Link>
+        <Button text='Refresh Feed' onClick={loadJob}></Button>
+        <UserFeed feed={currItems}></UserFeed>
+        <Button text='Prev Page' onClick={prevPage}></Button>
+        {pageNum + 1}
+        <Button text='Next Page' onClick={nextPage}></Button>
       </div>
   );
 }

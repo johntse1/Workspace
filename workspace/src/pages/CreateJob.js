@@ -5,7 +5,8 @@ import axios from 'axios'
 import { Redirect, useHistory, Route, Link } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import { API_SET_JOB, API_BASE_URL, API_GET_ME, API_GET_ALL_JOBS } from '../API_ENDPOINTS'
-
+import NavBar from '../components/navigation/NavBar';
+import UserNavBar from '../components/navigation/UserNavBar';
 
 function CreateJob() {
 
@@ -111,66 +112,78 @@ function CreateJob() {
     setUSER_TAGS(values)
     console.log(USER_TAGS)
   }
+  const navBar = () =>{
+    let contBool = localStorage.getItem('contractor')
+    if(contBool){
+      return <UserNavBar/>
+    }
+    else{
+      return <NavBar/>
+    }
+  }
   return (
-    <div className='container'>
-      <div className='form-control'>
-        <label>Job Name</label>
-        <input type='text' placeholder='Enter the job name'
-          value={USER_TITLE}
-          onChange={(e) => setUSER_TITLE(e.target.value)}
-        />
-      </div>
-
-      <div className='form-control'>
-        <label>Payment</label>
-        <input type='number' placeholder='Enter payment amount'
-          value={USER_PRICE}
-          onChange={(e) => setUSER_PRICE(e.target.value)}
-        />
-      </div>
-
-      <div className='form-control'>
-        <label>Enter a location</label>
-        <input type='text' placeholder='Enter the location of the job'
-          value={USER_ADDRESS}
-          onChange={(e) => setUSER_ADDRESS(e.target.value)}
-        />
-      </div>
-
-      <div className='form-control'>
-        <label>Description</label>
-        <form>
-          <textarea type='text'
-            placeholder='Enter a description (optional)'
-            maxLength="200"
-            rows={5}
-            value={USER_POST_DESCRIPTION}
-            onChange={(e) => setUSER_POST_DESCRIPTION(e.target.value)}
+    <div>
+      <div>{navBar()}</div>
+      <div className='container'>
+        
+        <div className='form-control'>
+          <label>Job Name</label>
+          <input type='text' placeholder='Enter the job name'
+            value={USER_TITLE}
+            onChange={(e) => setUSER_TITLE(e.target.value)}
           />
-        </form>
+        </div>
+
+        <div className='form-control'>
+          <label>Payment</label>
+          <input type='number' placeholder='Enter payment amount'
+            value={USER_PRICE}
+            onChange={(e) => setUSER_PRICE(e.target.value)}
+          />
+        </div>
+
+        <div className='form-control'>
+          <label>Enter a location</label>
+          <input type='text' placeholder='Enter the location of the job'
+            value={USER_ADDRESS}
+            onChange={(e) => setUSER_ADDRESS(e.target.value)}
+          />
+        </div>
+
+        <div className='form-control'>
+          <label>Description</label>
+          <form>
+            <textarea type='text'
+              placeholder='Enter a description (optional)'
+              maxLength="200"
+              rows={5}
+              value={USER_POST_DESCRIPTION}
+              onChange={(e) => setUSER_POST_DESCRIPTION(e.target.value)}
+            />
+          </form>
+        </div>
+
+        <div className='form-control'>
+          <label>Tags</label>
+          <Select
+            isMulti
+            name="colors"
+            options={skills}
+            className="basic-multi-select"
+            classNamePrefix="select"
+            onChange={(e) => handleSelectChange(e)}
+
+          />
+        </div>
+
+        <Button text='Submit' onClick={setJobs} ></Button>
+        {/* <Button color='black' text='test' onClick={setJobstest} /> */}
+
+
+
+        <ToastContainer />
       </div>
-
-      <div className='form-control'>
-        <label>Tags</label>
-        <Select
-          isMulti
-          name="colors"
-          options={skills}
-          className="basic-multi-select"
-          classNamePrefix="select"
-          onChange={(e) => handleSelectChange(e)}
-
-        />
-      </div>
-
-      <Button text='Submit' onClick={setJobs} ></Button>
-      {/* <Button color='black' text='test' onClick={setJobstest} /> */}
-
-
-
-      <ToastContainer />
     </div>
-
   );
 }
 

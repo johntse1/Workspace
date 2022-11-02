@@ -6,6 +6,7 @@ import Button from '../components/Button';
 import { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import NavBar from '../components/navigation/NavBar';
+import UserNavBar from '../components/navigation/UserNavBar';
 
 const prof = ['John Tse', '4.5', ['Fixing', 'Cleaning', 'Making'], 'A cool guy', ['Good worker', 'Quick Worker']]
 
@@ -47,9 +48,19 @@ function Profile() {
     }
   }
    console.log(my_profile["contractor"])
+
+   const navBar = () =>{
+    let contBool = localStorage.getItem('contractor')
+    if(contBool){
+      return <UserNavBar/>
+    }
+    else{
+      return <NavBar/>
+    }
+  }
   return (
     <div className='App'>
-      <NavBar/>
+      <div>{navBar()}</div>
       <Tabs>
         {/* <h1>{prof[0]}({prof[1]})</h1> */}
         <h1>{my_profile["first_name"] + " " + my_profile["last_name"]}</h1>
