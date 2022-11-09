@@ -215,11 +215,11 @@ const completeJob = asyncHandler(async (req, res) => {
         }
         else {
             if (job.completed_contractor == true) {
-                const updatedJob = await Job.findByIdAndUpdate(req.params.id, { completed_user: true,status:"Complete"}, { new: true })
+                const updatedJob = await Job.findByIdAndUpdate(req.params.id, { completed_user: true, status: "Complete" }, { new: true })
                 res.status(200).json(updatedJob)
             }
             else {
-                const updatedJob = await Job.findByIdAndUpdate(req.params.id, { completed_user: true}, { new: true })
+                const updatedJob = await Job.findByIdAndUpdate(req.params.id, { completed_user: true }, { new: true })
                 res.status(200).json(updatedJob)
             }
         }
@@ -233,11 +233,11 @@ const completeJob = asyncHandler(async (req, res) => {
         }
         else {
             if (job.completed_user == true) {
-                const updatedJob = await Job.findByIdAndUpdate(req.params.id, { completed_contractor: true,status:"Complete"}, { new: true })
+                const updatedJob = await Job.findByIdAndUpdate(req.params.id, { completed_contractor: true, status: "Complete" }, { new: true })
                 res.status(200).json(updatedJob)
             }
             else {
-                const updatedJob = await Job.findByIdAndUpdate(req.params.id, { completed_contractor: true}, { new: true })
+                const updatedJob = await Job.findByIdAndUpdate(req.params.id, { completed_contractor: true }, { new: true })
                 res.status(200).json(updatedJob)
             }
         }
@@ -248,11 +248,6 @@ const completeJob = asyncHandler(async (req, res) => {
         const updatedJob = await Job.findByIdAndUpdate(req.params.id, { status: "Complete" }, { new: true })
         res.status(200).json(updatedJob)
     }
-
-
-
-
-
 })
 
 const denyJob = asyncHandler(async (req, res) => {
@@ -284,11 +279,6 @@ const denyJob = asyncHandler(async (req, res) => {
         res.status(200)
         throw new Error("Not Authorized")
     }
-
-
-
-
-
 })
 
 const getJobsWithin = asyncHandler(async (req, res) => {
@@ -341,6 +331,40 @@ const getJobsWithTagDistance = asyncHandler(async (req, res) => {
 
     res.status(200).json(result)
 })
+
+//used by the contractor to get their current jobs
+const getCurrentJobs = asyncHandler(async (req, res) => {
+
+    const user = await User.findById(req.user.id)
+    //If you are an user 
+    if (user.contractor == false) {
+        const jobs = await Job.find({user: req.user.id, status: "in progress" }).sort({ createdAt: 'desc' }).exec()
+        res.status(200).json(jobs)
+    }
+    //if you are the contractor
+    else if (user.contractor == true){
+        const jobs = await Job.find({acceptedby: req.user.id, status: "in progress" }).sort({ createdAt: 'desc' }).exec()
+        res.status(200).json(jobs)
+    }
+
+})
+
+const getPastJobs = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.user.id)
+    //If you are an user 
+    if (user.contractor == false) {
+        const jobs = await Job.find({user: req.user.id, status: "Complete" }).sort({ createdAt: 'desc' }).exec()
+        res.status(200).json(jobs)
+    }
+    //if you are the contractor
+    else if (user.contractor == true){
+        const jobs = await Job.find({acceptedby: req.user.id, status: "Complete" }).sort({ createdAt: 'desc' }).exec()
+        res.status(200).json(jobs)
+    }
+
+})
+
+
 module.exports = {
     getJobs,
     setJobs,
@@ -353,5 +377,7 @@ module.exports = {
     getJobsWithin,
     getJobsWithTagDistance,
     completeJob,
-    denyJob
+    denyJob,
+    getCurrentJobs,
+    getPastJobs
 }
