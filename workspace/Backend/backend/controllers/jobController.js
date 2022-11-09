@@ -364,6 +364,21 @@ const getPastJobs = asyncHandler(async (req, res) => {
 
 })
 
+const getIncompleteJobs = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.user.id)
+    //If you are an user 
+    if (user.contractor == false) {
+        const jobs = await Job.find({user: req.user.id, status: "Incomplete" }).sort({ createdAt: 'desc' }).exec()
+        res.status(200).json(jobs)
+    }
+    //if you are the contractor
+    else if (user.contractor == true){
+        const jobs = await Job.find({acceptedby: req.user.id, status: "Incomplete" }).sort({ createdAt: 'desc' }).exec()
+        res.status(200).json(jobs)
+    }
+
+})
+
 
 module.exports = {
     getJobs,
@@ -379,5 +394,6 @@ module.exports = {
     completeJob,
     denyJob,
     getCurrentJobs,
-    getPastJobs
+    getPastJobs,
+    getIncompleteJobs
 }
