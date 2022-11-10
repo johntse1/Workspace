@@ -23,16 +23,22 @@ function UserJobs(){
       const [got_profile,setgot_profile] = useState(null)
       const [active_jobs, setActive_Jobs] = useState([])
       const [requestData, setRequestData] = useState(new Date());
+      const [previous_jobs, setPrevious_Jobs] = useState([])
+      const [incomplete_jobs, setIncomplete_Jobs] = useState([])
 
       useEffect(() => {
         const fetchData = async () => {
           let token = localStorage.getItem("JWT_TOKEN")
           const response = await axios.get(API_BASE_URL + API_GET_ME, { headers: { "Authorization": `Bearer ${token}` } });
-          const jobsList = await axios.get('https://workspace.onrender.com/api/jobs/get', { headers: { "Authorization": `Bearer ${token}` } })
+          const jobsList = await axios.get('https://workspace.onrender.com/api/jobs/getcurrent', { headers: { "Authorization": `Bearer ${token}` } })
           setmy_profile(response.data)
-          setActive_Jobs(jobsList.data)
-          console.log(jobsList.data)
           setgot_profile(true)
+          setActive_Jobs(jobsList.data)
+          const prevjobsList = await axios.get('https://workspace.onrender.com/api/jobs/getpast', { headers: { "Authorization": `Bearer ${token}` } })
+          setPrevious_Jobs(prevjobsList.data)
+          const incompletejobList = await axios.get('https://workspace.onrender.com/api/jobs/getincomplete ', { headers: { "Authorization": `Bearer ${token}` } })
+          setIncomplete_Jobs(incompletejobList.data)
+          console.log(jobsList.data)
         };
         fetchData();
       }, [requestData]);
@@ -57,10 +63,19 @@ function UserJobs(){
             <Tabs>
                 <TabList>
                     <h1>Jobs Page</h1>
-                    <Tab>Current Jobs</Tab>
+                    <Tab>Listed Jobs</Tab>
+                    <Tab>Ongoing Jobs</Tab>
                     <Tab>Past Jobs</Tab>
                 </TabList>
 
+                <TabPanel>
+                <div>
+                        {incomplete_jobs.map((jobs) => 
+                            <MyJobs post={jobs} key={jobs._id} setRequestData={setRequestData}></MyJobs>
+                        )}
+                    </div>
+                </TabPanel>
+                
                 <TabPanel>
                     <div>
                         {active_jobs.map((jobs) => 
@@ -69,7 +84,13 @@ function UserJobs(){
                     </div>
                 </TabPanel>
 
-                <TabPanel>yooo</TabPanel>
+                <TabPanel>
+                <div>
+                        {previous_jobs.map((jobs) => 
+                            <MyJobs post={jobs} key={jobs._id} setRequestData={setRequestData}></MyJobs>
+                        )}
+                    </div>
+                </TabPanel>
             </Tabs>
 
         </div>

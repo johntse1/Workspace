@@ -51,11 +51,12 @@ function Profile() {
 
    const navBar = () =>{
     let contBool = localStorage.getItem('contractor')
+    console.log(contBool)
     if(contBool){
-      return <UserNavBar/>
+      return <NavBar/>
     }
     else{
-      return <NavBar/>
+      return <UserNavBar/>
     }
   }
   return (
