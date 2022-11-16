@@ -43,9 +43,11 @@ const createReview = asyncHandler(async (req, res) => {
 
     reviewExists = await Review.findOne({job: req.params.id})
     if (reviewExists) {
+        // if(reviewExists.reviewer ==)
         res.status(400)
         throw new Error('Review for job already exists')
     }
+    
 
     const review = await Review.create({
         job: job.id,
@@ -105,12 +107,17 @@ const deleteReview =  asyncHandler(async (req, res) => {
 
     await review.remove()
     res.status(200).json({ id: req.params.id })
-
 })
 
+const getReviewsOther = asyncHandler(async (req, res) => {
+    const reviews = await Review.find({reviewee: req.params.id}).sort({ createdAt: 'desc' }).exec()
+    res.status(200).json({reviews})
+
+})
 module.exports = {
     createReview,
     getReviews,
     updateReview,
-    deleteReview
+    deleteReview,
+    getReviewsOther
 }
