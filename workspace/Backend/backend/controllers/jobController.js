@@ -300,8 +300,6 @@ const getJobsWithin = asyncHandler(async (req, res) => {
         location: { $geoWithin: { $centerSphere: [[lat, lng], radius] } },
     })
         .sort("-score");
-
-
     res.status(200).json(result)
 })
 

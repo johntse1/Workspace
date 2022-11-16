@@ -22,6 +22,10 @@ const createReview = asyncHandler(async (req, res) => {
         throw new Error('Please enter a rating for the job')
     }
 
+    if (!req.body.title) {
+        res.status(400)
+        throw new Error('Please enter a title for the job')
+    }
 
     const user = await User.findById(req.user.id)
     const job = await Job.findById(req.params.id)
@@ -53,7 +57,8 @@ const createReview = asyncHandler(async (req, res) => {
         reviewer: req.user.id,
         reviewee: job.acceptedby,
         text: req.body.text,
-        rating: req.body.rating
+        rating: req.body.rating,
+        title: req.body.title
     })
     res.status(200).json(review)
 })

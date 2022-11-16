@@ -25,6 +25,10 @@ const reviewSchema = mongoose.Schema({
         type:Number,
         required: [true, 'Please add a rating value out of 1-5'] 
     },
+    title:{
+        type:String,
+        required:[true, 'Please add a title']
+    }
 },
 {
     timestamps: true
