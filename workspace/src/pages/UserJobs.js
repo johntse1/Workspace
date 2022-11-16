@@ -36,8 +36,10 @@ function UserJobs(){
           setActive_Jobs(jobsList.data)
           const prevjobsList = await axios.get('https://workspace.onrender.com/api/jobs/getpast', { headers: { "Authorization": `Bearer ${token}` } })
           setPrevious_Jobs(prevjobsList.data)
+          //console.log(prevjobsList.data)
           const incompletejobList = await axios.get('https://workspace.onrender.com/api/jobs/getincomplete ', { headers: { "Authorization": `Bearer ${token}` } })
           setIncomplete_Jobs(incompletejobList.data)
+          //console.log(incompletejobList.data)
           console.log(jobsList.data)
         };
         fetchData();

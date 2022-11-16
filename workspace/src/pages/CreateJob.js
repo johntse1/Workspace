@@ -102,7 +102,7 @@ function CreateJob() {
         console.log(response)
         history.push('/userjobs')
       }).catch(function (error) {
-        console.log(error.response.status)
+        console.log(error.response)
       })
   }
 

@@ -24,15 +24,15 @@ function Chat({ socket, username, room }) {
     }
   };
 
-  useEffect(() => {
-    socket.on("receive_message", (data) => {
-      setMessageList((list) => [...list, data]);
-    });
-  }, [socket]);
+  // useEffect(() => {
+  //   socket.on("receive_message", (data) => {
+  //     setMessageList((list) => [...list, data]);
+  //   });
+  // }, [socket]);
 
   return (
     <div className="chat-window">
-      <div className="chat-header">
+      {/* <div className="chat-header">
         <p>Live Chat</p>
       </div>
       <div className="chat-body">
@@ -70,7 +70,7 @@ function Chat({ socket, username, room }) {
           }}
         />
         <button onClick={sendMessage}>&#9658;</button>
-      </div>
+      </div> */}
     </div>
   );
 }
