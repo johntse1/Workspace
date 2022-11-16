@@ -310,25 +310,24 @@ const getJobsWithTagDistance = asyncHandler(async (req, res) => {
         res.status(400)
         throw new Error('Enter a coordinate.')
     }
-
     if (!req.body.distance) {
         res.status(400)
         throw new Error('Enter a distance from coordinate.')
     }
-    if (!req.body.tags) {
-        res.status(400)
-        throw new Error('Please enter tags.')
-    }
+
+    // const user = await User.findById(req.user.id)
+
+
+
     const lat = req.body.coord[0]
     const lng = req.body.coord[1]
     const radius = req.body.distance / 3963.2
+    console.log(req.user.skills)
     const result = await Job.find({
         location: { $geoWithin: { $centerSphere: [[lat, lng], radius] } },
-        tags: { $in: req.body.tags }
+        tags: {$in: req.user.skills}
     })
         .sort("-score");
-
-
     res.status(200).json(result)
 })
 
