@@ -2,6 +2,7 @@ import axios from 'axios';
 import React from 'react'
 import Button from '../Button';
 import { Redirect } from 'react-router-dom';
+import {Link} from 'react-router-dom'
 
 function MyJobs(props){
     const displayTitle = () =>{
@@ -42,6 +43,7 @@ function MyJobs(props){
             <div>{props.post.text}</div>
             <div>{props.post.price}</div>
             <div>{props.post.status}</div>
+            <Link to={{pathname: '/review', state: props.post._id}}><Button text='Review' onClick={displayTitle}></Button></Link>
           </div>)
       //jobs that were accepted and in progress
       if(props.post.status == 'in progress')
@@ -63,7 +65,6 @@ function MyJobs(props){
             <div>{props.post.text}</div>
             <div>{props.post.price}</div>
             <div>{props.post.status}</div>
-            <Button text='Edit Job' onClick={displayTitle}></Button>
             <Button text='Remove Job' onClick={removeJob}></Button>
         </div>
         )

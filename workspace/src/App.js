@@ -12,6 +12,7 @@ import UserHome from './pages/UserHome'
 import UserProfile from './pages/UserProfile'
 import UserJobs from './pages/UserJobs'
 import OtherUser from './pages/OtherUser'
+import Review from './pages/Review'
 
 
 import Chat from "./pages/Chat";
@@ -59,6 +60,7 @@ function App() {
         <Route exact path="/userHome" component={UserHome} />
         <Route exact path="/userJobs" component={UserJobs} />
         <Route exact path="/otherUser" component={OtherUser} />
+        <Route exact path="/review" component={Review} />
       </Switch>
     
       {!showChat ? (
