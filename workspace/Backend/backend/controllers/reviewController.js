@@ -41,23 +41,52 @@ const createReview = asyncHandler(async (req, res) => {
         throw new Error('Job is not complete yet')
     }
 
-    reviewExists = await Review.findOne({job: req.params.id})
-    if (reviewExists) {
-        // if(reviewExists.reviewer ==)
-        res.status(400)
-        throw new Error('Review for job already exists')
+    // reviewExists = await Review.find({job: req.params.id})
+    // if (reviewExists) {
+    //     // if(reviewExists.reviewer ==)
+    //     //    if (job.acceptedby.toString() == user.id) {
+    //     // if(reviewExists)
+    //     res.status(400)
+    //     throw new Error('Review for job already exists')
+    // }
+    reviewExists = await Review.find({job:req.params.id, reviewer:user.id})
+    // console.log(reviewExists.length)
+    console.log(reviewExists)
+    if (reviewExists.length >= 1){
+        {
+            res.status(400)
+            throw new Error('you have already made an review')
+        }
     }
-    
+     
 
-    const review = await Review.create({
-        job: job.id,
-        reviewer: req.user.id,
-        reviewee: job.acceptedby,
-        text: req.body.text,
-        rating: req.body.rating,
-        title: req.body.title
-    })
-    res.status(200).json(review)
+    if (user.contractor == false)
+    {
+        const review = await Review.create({
+            job: job.id,
+            reviewer: req.user.id,
+            reviewee: job.acceptedby,
+            text: req.body.text,
+            rating: req.body.rating,
+            title: req.body.title
+        })
+        res.status(200).json(review)
+    }
+
+    if (user.contractor == true)
+    {
+        const review = await Review.create({
+            job: job.id,
+            reviewer: req.user.id,
+            reviewee: job.user,
+            text: req.body.text,
+            rating: req.body.rating,
+            title: req.body.title
+        })
+        res.status(200).json(review)
+    }
+
+
 })
 
 const getReviews = asyncHandler(async (req, res) => {
