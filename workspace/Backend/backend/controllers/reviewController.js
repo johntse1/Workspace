@@ -35,11 +35,6 @@ const createReview = asyncHandler(async (req, res) => {
         throw new Error('Job not found')
     }
 
-    if (user.id != job.user.toString())
-    {
-        res.status(400)
-        throw new Error('You are not the owner of the job')
-    }
     if (job.status != "Complete")
     {
         res.status(400)
