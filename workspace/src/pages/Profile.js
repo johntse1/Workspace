@@ -7,8 +7,10 @@ import { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import NavBar from '../components/navigation/NavBar';
 import UserNavBar from '../components/navigation/UserNavBar';
+import ReviewFeed from '../components/reviewStuff/ReviewFeed'
 
 const prof = ['John Tse', '4.5', ['Fixing', 'Cleaning', 'Making'], 'A cool guy', ['Good worker', 'Quick Worker']]
+
 
 function Profile() {
   const [my_profile, setmy_profile] = useState([
@@ -21,13 +23,19 @@ function Profile() {
     }
   ]);
   const [got_profile,setgot_profile] = useState(null)
+  const [reviews, setReviews] = useState()
+
+  const url = 'https://workspace.onrender.com/api/reviews/get'
   
   useEffect(() => {
     const fetchData = async () => {
       let token = localStorage.getItem("JWT_TOKEN")
       const response = await axios.get(API_BASE_URL + API_GET_ME, { headers: { "Authorization": `Bearer ${token}` } });
+      const reviewResponse = await axios.get(url, { headers: { "Authorization": `Bearer ${token}` } });
       setmy_profile(response.data)
-      console.log(response.data)
+      setReviews(reviewResponse.data)
+      //console.log(response.data)
+      console.log(reviewResponse.data)
       setgot_profile(true)
     };
     fetchData();
@@ -91,7 +99,7 @@ function Profile() {
 
         </TabPanel>
         <TabPanel>
-          <h2>{prof[4].map((item, i) => <div key={i}>{item}</div>)}</h2>
+          <ReviewFeed feed={reviews}></ReviewFeed>
           
 
         </TabPanel>

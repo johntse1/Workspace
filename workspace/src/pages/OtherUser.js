@@ -8,6 +8,8 @@ import { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import NavBar from '../components/navigation/NavBar';
 import UserNavBar from '../components/navigation/UserNavBar';
+import ReviewFeed from '../components/reviewStuff/ReviewFeed'
+import OtherUserReviews from '../components/reviewStuff/OtherUserReviews'
 
 
 function OtherUser(props){
@@ -23,13 +25,18 @@ function OtherUser(props){
         }
       ]);
       const [got_profile,setgot_profile] = useState(null)
+      const [reviews, setReviews] = useState()
+
+      const url = 'https://workspace.onrender.com/api/reviews/get/'
       
       useEffect(() => {
         const fetchData = async () => {
           let token = localStorage.getItem("JWT_TOKEN")
           const response = await axios.get("https://workspace.onrender.com/api/users/get/" + props.location.state, { headers: { "Authorization": `Bearer ${token}` } });
+          const reviewResponse = await axios.get(url + props.location.state, { headers: { "Authorization": `Bearer ${token}` } });
           set_profile(response.data)
-          console.log(response.data)
+          setReviews(reviewResponse.data)
+          console.log(reviewResponse.data)
           setgot_profile(true)
         };
         fetchData();
@@ -76,7 +83,7 @@ function OtherUser(props){
 
                 </TabPanel>
                 <TabPanel>
-                <h2>{prof[4].map((item, i) => <div key={i}>{item}</div>)}</h2>
+                  <OtherUserReviews feed={reviews}></OtherUserReviews>
                 
 
                 </TabPanel>
