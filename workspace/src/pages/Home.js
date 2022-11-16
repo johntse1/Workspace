@@ -9,42 +9,67 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import Popup from '../components/PopupRegister';
 import PopUpCreatePost from '../components/PopUpCreatePost';
-import {useHistory} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import DatePicker from "react-datepicker"
 import 'react-datepicker/dist/react-datepicker.css'
 import Post from '../components/feed/Post.js'
 import Feed from '../components/feed/Feed.js'
-import {Route, Link} from 'react-router-dom'
+import { Route, Link } from 'react-router-dom'
 import CreateJob from '../pages/CreateJob'
 import { API_BASE_URL, API_GET_ME } from '../API_ENDPOINTS'
 import NavBar from '../components/navigation/NavBar';
 
 
-function Home(){
+function Home() {
   const [items, setItems] = useState([]);
   const [currItems, setCurrItems] = useState([]);
   const [pageNum, setNum] = useState(0);
+  const [USER_COORDINATES, setUSER_COORDINATES] = useState([])
 
 
-  useEffect(() =>{
+  useEffect(() => {
     loadJob();
   }, []);
-  const loadJob = () =>{
-    console.log('button clicked')
-    let token = localStorage.getItem("JWT_TOKEN")
-    axios.get('https://workspace.onrender.com/api/jobs/mytags', { headers: { "Authorization": `Bearer ${token}` } })
-    .then( function (response){
-      console.log(response.data)
-      makePages(response.data)
-    }).catch(function (error){
-      console.log(error.response.status)
-    });
+  const loadJob = () => {
+    let cords = []
+    let token = localStorage.getItem("JWT_TOKEN") 
+    if ('geolocation' in navigator) {
+
+      navigator.geolocation.getCurrentPosition((position) => {
+        // console.log("Latitude is :", position.coords.latitude);
+        // console.log("Longitude is :", position.coords.longitude);
+        cords = [parseFloat(position.coords.latitude), parseFloat(position.coords.longitude)]
+      axios.post('https://workspace.onrender.com/api/jobs/getwithintag', 
+      {
+        coord:cords,
+        distance:50
+      },{ headers: { "Authorization": `Bearer ${token}` } })
+      .then(function (response) {
+        console.log(response.data)
+        console.log("showing all posts with correct tags within 50 miles")
+
+        makePages(response.data)
+      }).catch(function (error) {
+        console.log(error.response.status)
+      });
+      }, function(error) {
+        console.log(error)
+        axios.get('https://workspace.onrender.com/api/jobs/mytags', { headers: { "Authorization": `Bearer ${token}` } })
+        .then(function (response) {
+          console.log(response.data)
+          console.log("showing all posts with correct tags")
+          makePages(response.data)
+        }).catch(function (error) {
+          console.log(error.response.status)
+        });
+      });
+      } 
   }
 
-  const makePages = (arr) =>{
-    let pageSize = 2
+  const makePages = (arr) => {
+    let pageSize = 3
     let tempArr = []
     //console.log(items.length)
     console.log(arr)
@@ -61,30 +86,30 @@ function Home(){
     //console.log(items.at(pageNum))
     //console.log(currItems)
   }
-  const nextPage = () =>{
-    if(pageNum < items.length - 1){
+  const nextPage = () => {
+    if (pageNum < items.length - 1) {
       setNum(pageNum + 1)
       //loadJob()
-      setCurrItems(items.at(pageNum+1))
+      setCurrItems(items.at(pageNum + 1))
     }
   }
-  const prevPage = () =>{
-    if(pageNum > 0){
+  const prevPage = () => {
+    if (pageNum > 0) {
       setNum(pageNum - 1)
       //loadJob()
-      setCurrItems(items.at(pageNum-1))
+      setCurrItems(items.at(pageNum - 1))
     }
   }
 
   return (
-       <div className="App">
-        <NavBar/>
-        <Button text='Refresh Feed' onClick={loadJob}></Button>
-        <Feed feed={currItems}></Feed>
-        <Button text='Prev Page' onClick={prevPage}></Button>
-        {pageNum + 1}
-        <Button text='Next Page' onClick={nextPage}></Button>
-      </div>
+    <div className="App">
+      <NavBar />
+      <Button text='Refresh Feed' onClick={loadJob}></Button>
+      <Feed feed={currItems}></Feed>
+      <Button text='Prev Page' onClick={prevPage}></Button>
+      {pageNum + 1}
+      <Button text='Next Page' onClick={nextPage}></Button>
+    </div>
   );
 }
 
