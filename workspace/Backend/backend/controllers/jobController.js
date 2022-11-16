@@ -19,16 +19,16 @@ const getJobs = asyncHandler(async (req, res) => {
 const setJobs = asyncHandler(async (req, res) => {
     console.log(req.body)
     if (!req.body.text) {
-        res.status(400)
+        res.status(401)
         throw new Error('Please add a text fields')
     }
     if (!req.body.title) {
-        res.status(400)
+        res.status(402)
         throw new Error('Please add a title field')
     }
 
     if (!req.body.price) {
-        res.status(400)
+        res.status(403)
         throw new Error('Please add a price field')
     }
 

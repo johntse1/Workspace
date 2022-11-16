@@ -3,6 +3,7 @@ import React from 'react'
 import Button from '../Button';
 import { Redirect } from 'react-router-dom';
 import {Link} from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify';
 
 function MyJobs(props){
     const displayTitle = () =>{
@@ -28,8 +29,10 @@ function MyJobs(props){
             },{ headers: { "Authorization": `Bearer ${token}` } })   
         .then( function (response){
           console.log(response.data)
+          toast.dark("Job Completed")
         }).catch(function (error){
           console.log(error.response.status)
+          toast.error("Job failed to complete")
         });
       }
     let contBool = localStorage.getItem('contractor')
@@ -55,6 +58,7 @@ function MyJobs(props){
             <div>{props.post.price}</div>
             <div>{props.post.status}</div>
             <Button text='Mark as Complete' onClick={completeJob}></Button>
+            <ToastContainer/>
           </div>)
       else
       {

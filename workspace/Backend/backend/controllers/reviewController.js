@@ -41,17 +41,8 @@ const createReview = asyncHandler(async (req, res) => {
         throw new Error('Job is not complete yet')
     }
 
-    // reviewExists = await Review.find({job: req.params.id})
-    // if (reviewExists) {
-    //     // if(reviewExists.reviewer ==)
-    //     //    if (job.acceptedby.toString() == user.id) {
-    //     // if(reviewExists)
-    //     res.status(400)
-    //     throw new Error('Review for job already exists')
-    // }
     reviewExists = await Review.find({job:req.params.id, reviewer:user.id})
-    // console.log(reviewExists.length)
-    console.log(reviewExists)
+    // console.log(reviewExists)
     if (reviewExists.length >= 1){
         {
             res.status(400)
@@ -85,8 +76,6 @@ const createReview = asyncHandler(async (req, res) => {
         })
         res.status(200).json(review)
     }
-
-
 })
 
 const getReviews = asyncHandler(async (req, res) => {

@@ -2,6 +2,7 @@ import React from 'react'
 import Button from '../Button';
 import {Link} from 'react-router-dom'
 import axios from 'axios'
+import { ToastContainer, toast } from 'react-toastify';
 
 function Post(props){
     const displayTitle = () =>{
@@ -15,8 +16,10 @@ function Post(props){
             },{ headers: { "Authorization": `Bearer ${token}` } })   
         .then( function (response){
           console.log(response.data)
+          toast.dark("Job Accepted")
         }).catch(function (error){
           console.log(error.response.status)
+          toast.dark("Job failed to accept")
         });
       }
     return(
@@ -29,7 +32,10 @@ function Post(props){
             <div>{props.post.tags}</div>
             <Button text='Not interested' onClick={displayTitle}></Button>
             <Button text='I want this job' onClick={acceptJob}></Button>
+            <ToastContainer></ToastContainer>
+
         </div>
+
     );
 }
 

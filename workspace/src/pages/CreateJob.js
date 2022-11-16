@@ -103,6 +103,23 @@ function CreateJob() {
         history.push('/userjobs')
       }).catch(function (error) {
         console.log(error.response)
+        if(error.response.status == 400)
+        {
+          toast.error("Please enter another address")
+        }
+
+        if(error.response.status == 401)
+        {
+          toast.error("Please add a text field")
+        }
+        if(error.response.status == 402)
+        {
+          toast.error("Please add a title")
+        }
+        if(error.response.status == 403)
+        {
+          toast.error("Please enter a price field")
+        }
       })
   }
 
@@ -120,6 +137,10 @@ function CreateJob() {
     else{
       return <NavBar/>
     }
+  }
+
+  const tester = () => {
+    toast.error("breh")
   }
   return (
     <div>
@@ -177,7 +198,7 @@ function CreateJob() {
         </div>
 
         <Button text='Submit' onClick={setJobs} ></Button>
-        {/* <Button color='black' text='test' onClick={setJobstest} /> */}
+        <Button color='black' text='test' onClick={tester} />
 
 
 

@@ -49,8 +49,9 @@ function Home() {
       .then(function (response) {
         console.log(response.data)
         console.log("showing all posts with correct tags within 50 miles")
-
+        toast.dark("Loaded jobs within 50 miles")
         makePages(response.data)
+
       }).catch(function (error) {
         console.log(error.response.status)
       });
@@ -60,6 +61,7 @@ function Home() {
         .then(function (response) {
           console.log(response.data)
           console.log("showing all posts with correct tags")
+          toast.dark("Loaded jobs with your selected skills")
           makePages(response.data)
         }).catch(function (error) {
           console.log(error.response.status)
@@ -109,6 +111,9 @@ function Home() {
       <Button text='Prev Page' onClick={prevPage}></Button>
       {pageNum + 1}
       <Button text='Next Page' onClick={nextPage}></Button>
+
+      <ToastContainer />
+
     </div>
   );
 }
