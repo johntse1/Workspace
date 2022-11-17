@@ -15,7 +15,9 @@ const registerUser = asyncHandler(async (req,res) => {
 
     
     if(!first_name || !email || !password || !last_name){
+        if(req.file)
         fs.unlinkSync(path.join(__dirname,'..','..','images',req.file.filename))
+        
         res.status(401)
         throw new Error('Please enter all fields')
     }
@@ -23,7 +25,9 @@ const registerUser = asyncHandler(async (req,res) => {
     // check if user exists
     const userExists = await User.findOne({email})
     if (userExists) {
+        if(req.file)
         fs.unlinkSync(path.join(__dirname,'..','..','images',req.file.filename))
+        
         res.status(400)
         throw new Error('User already exists')
     }
@@ -68,7 +72,6 @@ const registerUser = asyncHandler(async (req,res) => {
         skills,
         rating,
         contractor,
-        location,
         image:imgurUrl
     })
 

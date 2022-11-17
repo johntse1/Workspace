@@ -115,8 +115,6 @@ function Login() {
   }
 
   const registerUser = () => {
-
-
     let url = API_BASE_URL + API_SIGN_UP_URL
 
     axios.post(url,

@@ -36,9 +36,6 @@ const userSchema = mongoose.Schema({
         type: Boolean,
         required:true
     },
-    location:{
-        type: [Number],
-    },
     image:{
         type: String
     },
