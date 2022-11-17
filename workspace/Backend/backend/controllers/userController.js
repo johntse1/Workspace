@@ -2,13 +2,20 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const asyncHandler = require('express-async-handler')
 const User = require('../models/usermodel')
+const { ImgurClient } = require('imgur');
+const fs = require('fs');
+const path = require('path');
 
 // @desc register user
 // @route POST /api/user/register
 // @access public
 const registerUser = asyncHandler(async (req,res) => {
-    const {first_name,last_name, email, password,birthday,description,skills,rating,contractor,location,image} = req.body
+    const {first_name,last_name, email, password,birthday,description,skills,rating,contractor,location} = req.body
+
+
+    
     if(!first_name || !email || !password || !last_name){
+        fs.unlinkSync(path.join(__dirname,'..','..','images',req.file.filename))
         res.status(401)
         throw new Error('Please enter all fields')
     }
@@ -16,6 +23,7 @@ const registerUser = asyncHandler(async (req,res) => {
     // check if user exists
     const userExists = await User.findOne({email})
     if (userExists) {
+        fs.unlinkSync(path.join(__dirname,'..','..','images',req.file.filename))
         res.status(400)
         throw new Error('User already exists')
     }
@@ -23,6 +31,31 @@ const registerUser = asyncHandler(async (req,res) => {
     // hash password 
     const salt = await bcrypt.genSalt(10)
     const hashedPassword = await bcrypt.hash(password,salt)
+    let imgurUrl = ""
+    if(req.file)
+    {
+        const CLIENT_ID = "ec5fa7976333d6b"
+        const client = new ImgurClient({ clientId: CLIENT_ID });
+
+        const response = await client.upload({
+            image: fs.createReadStream(path.join(__dirname,'..','..','images',req.file.filename)),
+            type: 'stream',
+        });
+        console.log(response)
+        if(response.success == true)
+        {
+            console.log("ran1")
+            fs.unlinkSync(path.join(__dirname,'..','..','images',req.file.filename))
+            imgurUrl = response.data.link
+            console.log(imgurUrl)
+        }
+        else {
+            console.log("ran2")
+                console.log(error)
+                fs.unlinkSync(path.join(__dirname,'..','..','images',req.file.filename))
+                imgurUrl = ""
+        }
+    }
 
     //create user 
     const user = await User.create({
@@ -36,7 +69,7 @@ const registerUser = asyncHandler(async (req,res) => {
         rating,
         contractor,
         location,
-        image
+        image:imgurUrl
     })
 
     if (user){
@@ -134,6 +167,40 @@ const getUserTag = asyncHandler(async(req,res) => {
     res.status(200).json(users)
 })
 
+const testImage = asyncHandler(async(req,res) => {
+    if(req.file)
+    {
+        const CLIENT_ID = "ec5fa7976333d6b"
+        const file = req.file
+        const client = new ImgurClient({ clientId: CLIENT_ID });
+    
+        // const response = await client.upload({
+        //     image: fs.createReadStream(`./images/${file.filename}`),
+        //     type: 'stream',
+        // })
+        await client.upload({
+            image: fs.createReadStream(`./images/${file.filename}`),
+            type: 'stream',
+        }).then(function(response){
+            // console.log(response)
+            fs.unlinkSync(`./images/${file.filename}`)
+            res.status(200).json(response.data.link)
+        }).catch(function(error){
+            // console.log(error)
+            fs.unlinkSync(`./images/${file.filename}`)
+            res.status(400)
+            throw new Error ('Imgur API failed')
+        })
+    }
+
+    else {
+        res.status(400)
+        throw new Error("shit bnroke")
+    }
+})
+
+
+
 //generate token for jwt
 const generateToken = (id) => {
     return jwt.sign({id}, process.env.JWT_SECRET, {
@@ -145,5 +212,7 @@ module.exports = {
     loginUser,
     getMe,
     getUser,
-    getUserTag
+    getUserTag,
+    
+    
 }

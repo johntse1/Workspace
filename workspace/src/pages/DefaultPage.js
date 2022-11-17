@@ -46,13 +46,11 @@ function Login() {
   const [USER_CONTRACTOR, setUSER_CONTRACTOR] = useState(false)
   const [USER_COORDINATES, setUSER_COORDINATES] = useState([])
   const [USER_IMAGES, setUSER_IMAGES] = useState()
-  if ((localStorage.getItem('JWT_TOKEN') != null) && USER_CONTRACTOR == true) 
-  {
+  if ((localStorage.getItem('JWT_TOKEN') != null) && USER_CONTRACTOR == true) {
     console.log(USER_CONTRACTOR)
     //return <Redirect to="/profile"></Redirect>
   }
-  if((localStorage.getItem('JWT_TOKEN') != null) && USER_CONTRACTOR == false)
-  {
+  if ((localStorage.getItem('JWT_TOKEN') != null) && USER_CONTRACTOR == false) {
     return <Redirect to="/userprofile"></Redirect>
   }
 
@@ -75,7 +73,7 @@ function Login() {
   let Contractor =
     [
       { label: "Contractor", value: "true" },
-      { label: "User", value: "false"},
+      { label: "User", value: "false" },
 
     ]
 
@@ -98,12 +96,10 @@ function Login() {
         localStorage.setItem('contractor', response.data.contractor)
         localStorage.setItem('image', response.data.image)
         //probably navigate to a new page here or smth
-        if(response.data.contractor == false)
-        {
+        if (response.data.contractor == false) {
           history.push('/userprofile')
         }
-        else
-        {
+        else {
           history.push('/profile')
         }
       }).catch(function (error) {
@@ -134,8 +130,6 @@ function Login() {
         skills: USER_SKILLS,
         contractor: USER_CONTRACTOR,
         location: USER_COORDINATES
-
-
       })
       .then(function (response) {
         console.log(response)
@@ -144,12 +138,10 @@ function Login() {
         localStorage.setItem('contractor', response.data.contractor)
         localStorage.setItem('image', response.data.image)
 
-        if(response.data.contractor == false)
-        {
+        if (response.data.contractor == false) {
           history.push('/userprofile')
         }
-        else
-        {
+        else {
           history.push('/profile')
         }
 
@@ -165,6 +157,51 @@ function Login() {
       })
   }
 
+  const registerUser2 = async () => {
+    const formdata = new FormData()
+    formdata.append("image", USER_IMAGES)
+    formdata.append("first_name", USER_FIRST_NAME)
+    formdata.append("last_name", USER_LAST_NAME)
+    formdata.append("email", USER_EMAIL)
+    formdata.append("password", USER_PASSWORD)
+    formdata.append("birthday", USER_BIRTHDAY)
+    formdata.append("description", USER_DESCRIPTION)
+    formdata.append("skills", USER_SKILLS)
+    formdata.append("contractor", USER_CONTRACTOR)
+    formdata.append("location", USER_COORDINATES)
+
+    axios({
+      method: "post",
+      url: "http://localhost:3000/api/users/register",
+      data: formdata,
+      headers: { "Content-Type": "multipart/form-data" }
+    }).then(function (response) {
+      console.log(response)
+      toast.dark('Account successfully registered')
+      localStorage.setItem('JWT_TOKEN', response.data.token)
+      localStorage.setItem('contractor', response.data.contractor)
+      localStorage.setItem('image', response.data.image)
+
+      if (response.data.contractor == false) {
+        history.push('/userprofile')
+      }
+      else {
+        history.push('/profile')
+      }
+
+    }).catch(function (error) {
+      console.log(error.response.status)
+      if (error.response.status === 400) {
+        toast.warning('Email already exists')
+      }
+
+      if (error.response.status === 401) {
+        toast.warning('Please enter all fields')
+      }
+    })
+
+
+  }
 
   const handleSelectChange = (e) => {
     let values = []
@@ -187,16 +224,32 @@ function Login() {
   const test = () => {
     // console.log(USER_CONTRACTOR)
     const formdata = new FormData()
-    formdata.append("image",USER_IMAGES)
+    formdata.append("image", USER_IMAGES)
     axios.post("https://api.imgur.com/3/upload",
       {
         data: formdata
-      },{ headers: { "Authorization": `Client-ID ${imgurclient}` } })
+      }, { headers: { "Authorization": `Client-ID ${imgurclient}` } })
       .then(function (response) {
         console.log(response)
       }).catch(function (error) {
         console.log(error.response)
       })
+  }
+
+  const test2 = async () => {
+    const formdata = new FormData()
+    formdata.append("image", USER_IMAGES)
+    try {
+      const res = await fetch("http://localhost:3000/api/upload/uploadImage", {
+        method: "POST",
+        body: formdata,
+      });
+      const data = await res.json();
+      console.log(data)
+    }
+    catch (err) {
+      console.log(err)
+    }
   }
 
   return (
@@ -311,11 +364,11 @@ function Login() {
           </div>
           <div className='form-control'>
             <label>Profile Pictures</label>
-            <input type="file" name="file" onChange={imagechangeHandler} multiple={false}
+            <input type="file" name="image" onChange={imagechangeHandler} multiple={false}
             />
           </div>
           <Button color='black' text='Register' onClick={registerUser} />
-          {/* <Button color='black' text='test' onClick={test} /> */}
+          <Button color='black' text='test' onClick={registerUser2} />
 
         </TabPanel>
       </Tabs>
