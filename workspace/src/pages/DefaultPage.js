@@ -168,11 +168,10 @@ function Login() {
     formdata.append("description", USER_DESCRIPTION)
     formdata.append("skills", USER_SKILLS)
     formdata.append("contractor", USER_CONTRACTOR)
-    formdata.append("location", USER_COORDINATES)
 
     axios({
       method: "post",
-      url: "http://localhost:3000/api/users/register",
+      url: "https://workspace.onrender.com/api/users/register",
       data: formdata,
       headers: { "Content-Type": "multipart/form-data" }
     }).then(function (response) {
@@ -367,8 +366,8 @@ function Login() {
             <input type="file" name="image" onChange={imagechangeHandler} multiple={false}
             />
           </div>
-          <Button color='black' text='Register' onClick={registerUser} />
-          <Button color='black' text='test' onClick={registerUser2} />
+          <Button color='black' text='Register' onClick={registerUser2} />
+          {/* <Button color='black' text='test' onClick={registerUser2} /> */}
 
         </TabPanel>
       </Tabs>
