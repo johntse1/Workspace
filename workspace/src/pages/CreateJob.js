@@ -89,10 +89,10 @@ function CreateJob() {
     const formdata = new FormData()
     // formdata.append("images", USER_IMAGES)
     let files = USER_IMAGES
-    for (let i=0;i<files.length;i++){
-      formdata.append("images",files.item(i))
+    for (let i = 0; i < files.length; i++) {
+      formdata.append("images", files.item(i))
     }
-    
+
     formdata.append("title", USER_TITLE)
     formdata.append("user", USER_ID)
     formdata.append("text", USER_POST_DESCRIPTION)
@@ -105,11 +105,29 @@ function CreateJob() {
       method: "post",
       url: "https://workspace.onrender.com/api/jobs/set",
       data: formdata,
-      headers: { "Content-Type": "multipart/form-data", "Authorization": `Bearer ${token}`}
+      headers: { "Content-Type": "multipart/form-data", "Authorization": `Bearer ${token}` }
     }).then(function (response) {
       console.log(response)
+      history.push('/userjobs')
+
     }).catch(function (error) {
       console.log(error)
+      if (error.response.status == 400) {
+        toast.error("Please enter another address")
+      }
+
+      if (error.response.status == 401) {
+        toast.error("Please add a text field")
+      }
+      if (error.response.status == 402) {
+        toast.error("Please add a title")
+      }
+      if (error.response.status == 403) {
+        toast.error("Please enter a price field")
+      }
+      if (error.response.status == 404) {
+        toast.error("Failed to upload to imgur")
+      }
     })
 
 
@@ -132,12 +150,11 @@ function CreateJob() {
   }
 
   const imagechangeHandler = (e) => {
-    if (e.target.files.length > 5)
-    {
+    if (e.target.files.length > 5) {
       alert("Only 5 files are accepted.")
-      e.target.value = null    
+      e.target.value = null
     }
-    else{
+    else {
       setUSER_IMAGES(e.target.files)
     }
     console.log(USER_IMAGES)
@@ -198,11 +215,11 @@ function CreateJob() {
           />
         </div>
 
-          <div className='form-control'>
-            <label>Upload Images</label>
-            <input type="file" name="images" onChange={imagechangeHandler} multiple={true} max={5} maxLength={5} accept=".jpg,.jpeg,.png" 
-            />
-          </div>
+        <div className='form-control'>
+          <label>Upload Images</label>
+          <input type="file" name="images" onChange={imagechangeHandler} multiple={true} max={5} maxLength={5} accept=".jpg,.jpeg,.png"
+          />
+        </div>
 
 
         <Button text='Submit' onClick={setJobs} ></Button>
