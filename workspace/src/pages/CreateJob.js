@@ -34,6 +34,8 @@ function CreateJob() {
   const [USER_POST_DESCRIPTION, setUSER_POST_DESCRIPTION] = useState('')
   const [USER_TAGS, setUSER_TAGS] = useState([])
   const [USER_ADDRESS, setUSER_ADDRESS] = useState('')
+  const [USER_IMAGES, setUSER_IMAGES] = useState()
+
   if (localStorage.getItem('JWT_TOKEN') == null) {
     return <Redirect to="/"></Redirect>
   }
@@ -50,77 +52,67 @@ function CreateJob() {
     ]
   let url = 'https://workspace.onrender.com/api/jobs/set'
 
-  // const setJobsWithLoc = () => {
-  //     let token = localStorage.getItem("JWT_TOKEN")
-  //     let base_url = "https://maps.googleapis.com/maps/api/geocode/json?"
-  //     let params = {
-  //       'key':process.env.REACT_APP_GOOGLE_API_KEY,
-  //       'address': USER_ADDRESS
-  //     } 
-
-  //     axios.get(base_url, {params})
+  // const setJobs = () => {
+  //   let token = localStorage.getItem("JWT_TOKEN")
+  //   axios.post(url,
+  //     {
+  //       title: USER_TITLE,
+  //       user: USER_ID,
+  //       text: USER_POST_DESCRIPTION,
+  //       price: USER_PRICE,
+  //       tags: USER_TAGS,
+  //       address: USER_ADDRESS
+  //     }, { headers: { "Authorization": `Bearer ${token}` } })
   //     .then(function (response) {
   //       console.log(response)
-  //       let lat = response.data.results[0].geometry.location.lat
-  //       let lon = response.data.results[0].geometry.location.lng
-  //       console.log(lat,lon)
-  //       let latlon = [lat,lon]
-  //       axios.post(url,
-  //         {
-  //           title:USER_TITLE,
-  //           user: USER_ID,
-  //           text:USER_POST_DESCRIPTION,
-  //           price:USER_PRICE,
-  //           tags:USER_TAGS,
-  //           location: latlon,
-  //           address: USER_ADDRESS
-  //         },{ headers: { "Authorization": `Bearer ${token}` } })    
-  //         .then(function (response) {
-  //           console.log(response)
-  //           history.push('/userjobs')
-  //         }).catch(function (error) {
-  //           console.log(error.response.status)
-  //       })
+  //       history.push('/userjobs')
   //     }).catch(function (error) {
-  //       //if google api fails
   //       console.log(error.response)
-  //       toast.error('Enter a new address')
-  //     })    
-  //   }
-  const setJobs = () => {
-    let token = localStorage.getItem("JWT_TOKEN")
-    axios.post(url,
-      {
-        title: USER_TITLE,
-        user: USER_ID,
-        text: USER_POST_DESCRIPTION,
-        price: USER_PRICE,
-        tags: USER_TAGS,
-        address: USER_ADDRESS
-      }, { headers: { "Authorization": `Bearer ${token}` } })
-      .then(function (response) {
-        console.log(response)
-        history.push('/userjobs')
-      }).catch(function (error) {
-        console.log(error.response)
-        if(error.response.status == 400)
-        {
-          toast.error("Please enter another address")
-        }
+  //       if (error.response.status == 400) {
+  //         toast.error("Please enter another address")
+  //       }
 
-        if(error.response.status == 401)
-        {
-          toast.error("Please add a text field")
-        }
-        if(error.response.status == 402)
-        {
-          toast.error("Please add a title")
-        }
-        if(error.response.status == 403)
-        {
-          toast.error("Please enter a price field")
-        }
-      })
+  //       if (error.response.status == 401) {
+  //         toast.error("Please add a text field")
+  //       }
+  //       if (error.response.status == 402) {
+  //         toast.error("Please add a title")
+  //       }
+  //       if (error.response.status == 403) {
+  //         toast.error("Please enter a price field")
+  //       }
+  //     })
+  // }
+
+  const setJobs = async () => {
+    let token = localStorage.getItem("JWT_TOKEN")
+    const formdata = new FormData()
+    // formdata.append("images", USER_IMAGES)
+    let files = USER_IMAGES
+    for (let i=0;i<files.length;i++){
+      formdata.append("images",files.item(i))
+    }
+    
+    formdata.append("title", USER_TITLE)
+    formdata.append("user", USER_ID)
+    formdata.append("text", USER_POST_DESCRIPTION)
+    formdata.append("price", USER_PRICE)
+    formdata.append("tags", USER_TAGS)
+    formdata.append("address", USER_ADDRESS)
+
+
+    axios({
+      method: "post",
+      url: "https://workspace.onrender.com/api/jobs/set",
+      data: formdata,
+      headers: { "Content-Type": "multipart/form-data", "Authorization": `Bearer ${token}`}
+    }).then(function (response) {
+      console.log(response)
+    }).catch(function (error) {
+      console.log(error)
+    })
+
+
   }
 
   const handleSelectChange = (e) => {
@@ -129,24 +121,33 @@ function CreateJob() {
     setUSER_TAGS(values)
     console.log(USER_TAGS)
   }
-  const navBar = () =>{
+  const navBar = () => {
     let contBool = localStorage.getItem('contractor')
-    if(contBool){
-      return <UserNavBar/>
+    if (contBool) {
+      return <UserNavBar />
     }
-    else{
-      return <NavBar/>
+    else {
+      return <NavBar />
     }
   }
 
-  const tester = () => {
-    toast.error("breh")
+  const imagechangeHandler = (e) => {
+    if (e.target.files.length > 5)
+    {
+      alert("Only 5 files are accepted.")
+      e.target.value = null    
+    }
+    else{
+      setUSER_IMAGES(e.target.files)
+    }
+    console.log(USER_IMAGES)
   }
+
   return (
     <div>
       <div>{navBar()}</div>
       <div className='container'>
-        
+
         <div className='form-control'>
           <label>Job Name</label>
           <input type='text' placeholder='Enter the job name'
@@ -197,8 +198,15 @@ function CreateJob() {
           />
         </div>
 
+          <div className='form-control'>
+            <label>Upload Images</label>
+            <input type="file" name="images" onChange={imagechangeHandler} multiple={true} max={5} maxLength={5} accept=".jpg,.jpeg,.png" 
+            />
+          </div>
+
+
         <Button text='Submit' onClick={setJobs} ></Button>
-        <Button color='black' text='test' onClick={tester} />
+        {/* <Button text='Submit2' onClick={setJobs2} ></Button> */}
 
 
 

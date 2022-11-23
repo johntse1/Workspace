@@ -4,6 +4,10 @@ const { globalAgent } = require('http')
 const { model } = require('mongoose')
 const Job = require('../models/jobmodel')
 const User = require('../models/usermodel')
+const fs = require('fs');
+const path = require('path');
+const { ImgurClient } = require('imgur');
+
 // @desc get jobs
 // @route GET /api/jobs
 // @access Private
@@ -19,18 +23,79 @@ const getJobs = asyncHandler(async (req, res) => {
 const setJobs = asyncHandler(async (req, res) => {
     console.log(req.body)
     if (!req.body.text) {
+        req.files.forEach(image => {
+            try{
+                fs.unlinkSync(path.join(__dirname,'..','..','images',image.filename))
+            } catch(err){
+                console.log(err)
+                res.status(403)
+                throw new Error ("Failed to upload images")
+            }
+        })
+
         res.status(401)
         throw new Error('Please add a text fields')
     }
     if (!req.body.title) {
+        req.files.forEach(image => {
+            try{
+                fs.unlinkSync(path.join(__dirname,'..','..','images',image.filename))
+            } catch(err){
+                console.log(err)
+                res.status(403)
+                throw new Error ("Failed to upload images")
+            }
+        })
         res.status(402)
         throw new Error('Please add a title field')
     }
 
     if (!req.body.price) {
+        req.files.forEach(image => {
+            try{
+                fs.unlinkSync(path.join(__dirname,'..','..','images',image.filename))
+            } catch(err){
+                console.log(err)
+                res.status(403)
+                throw new Error ("Failed to upload images")
+            }
+        })
         res.status(403)
         throw new Error('Please add a price field')
     }
+    console.log(req.files)
+    let urls = []
+    if (req.files) {
+        const CLIENT_ID = "ec5fa7976333d6b"
+        const client = new ImgurClient({ clientId: CLIENT_ID });
+        console.log("ran")
+        for (let i in req.files ) { 
+            const response = await client.upload({
+                image: fs.createReadStream(path.join(__dirname, '..', '..', 'images', req.files[i].filename)),
+                type: 'stream',
+            });
+            console.log(response)
+            if (response.success == true) {
+                urls.push(response.data.link)
+            }
+            else {
+                console.log(error)
+                res.status(404)
+                throw new Error ("Failed to upload images")
+            }
+        }
+
+        req.files.forEach(image => {
+            try{
+                fs.unlinkSync(path.join(__dirname,'..','..','images',image.filename))
+            } catch(err){
+                console.log(err)
+                res.status(403)
+                throw new Error ("Failed to upload images")
+            }
+        })
+    }
+
 
     let coord = []
     if (req.body.address) {
@@ -68,6 +133,7 @@ const setJobs = asyncHandler(async (req, res) => {
         address: req.body.address,
         completed_user: false,
         completed_contractor: false,
+        images:urls
     })
 
     const user = await User.findById(req.user.id)
@@ -96,6 +162,7 @@ const setJobs = asyncHandler(async (req, res) => {
 
     res.status(200).json(job)
 })
+
 
 // @desc update jobs
 // @route GET /api/jobs/:id
@@ -323,7 +390,7 @@ const getJobsWithTagDistance = asyncHandler(async (req, res) => {
     console.log(req.user.skills)
     const result = await Job.find({
         location: { $geoWithin: { $centerSphere: [[lat, lng], radius] } },
-        tags: {$in: req.user.skills}
+        tags: { $in: req.user.skills }
     })
         .sort("-score");
     res.status(200).json(result)
@@ -335,12 +402,12 @@ const getCurrentJobs = asyncHandler(async (req, res) => {
     const user = await User.findById(req.user.id)
     //If you are an user 
     if (user.contractor == false) {
-        const jobs = await Job.find({user: req.user.id, status: "in progress" }).sort({ createdAt: 'desc' }).exec()
+        const jobs = await Job.find({ user: req.user.id, status: "in progress" }).sort({ createdAt: 'desc' }).exec()
         res.status(200).json(jobs)
     }
     //if you are the contractor
-    else if (user.contractor == true){
-        const jobs = await Job.find({acceptedby: req.user.id, status: "in progress" }).sort({ createdAt: 'desc' }).exec()
+    else if (user.contractor == true) {
+        const jobs = await Job.find({ acceptedby: req.user.id, status: "in progress" }).sort({ createdAt: 'desc' }).exec()
         res.status(200).json(jobs)
     }
 
@@ -350,12 +417,12 @@ const getPastJobs = asyncHandler(async (req, res) => {
     const user = await User.findById(req.user.id)
     //If you are an user 
     if (user.contractor == false) {
-        const jobs = await Job.find({user: req.user.id, status: "Complete" }).sort({ createdAt: 'desc' }).exec()
+        const jobs = await Job.find({ user: req.user.id, status: "Complete" }).sort({ createdAt: 'desc' }).exec()
         res.status(200).json(jobs)
     }
     //if you are the contractor
-    else if (user.contractor == true){
-        const jobs = await Job.find({acceptedby: req.user.id, status: "Complete" }).sort({ createdAt: 'desc' }).exec()
+    else if (user.contractor == true) {
+        const jobs = await Job.find({ acceptedby: req.user.id, status: "Complete" }).sort({ createdAt: 'desc' }).exec()
         res.status(200).json(jobs)
     }
 
@@ -365,12 +432,12 @@ const getIncompleteJobs = asyncHandler(async (req, res) => {
     const user = await User.findById(req.user.id)
     //If you are an user 
     if (user.contractor == false) {
-        const jobs = await Job.find({user: req.user.id, status: "Incomplete" }).sort({ createdAt: 'desc' }).exec()
+        const jobs = await Job.find({ user: req.user.id, status: "Incomplete" }).sort({ createdAt: 'desc' }).exec()
         res.status(200).json(jobs)
     }
     //if you are the contractor
-    else if (user.contractor == true){
-        const jobs = await Job.find({acceptedby: req.user.id, status: "Incomplete" }).sort({ createdAt: 'desc' }).exec()
+    else if (user.contractor == true) {
+        const jobs = await Job.find({ acceptedby: req.user.id, status: "Incomplete" }).sort({ createdAt: 'desc' }).exec()
         res.status(200).json(jobs)
     }
 
@@ -392,5 +459,5 @@ module.exports = {
     denyJob,
     getCurrentJobs,
     getPastJobs,
-    getIncompleteJobs
+    getIncompleteJobs,
 }

@@ -218,37 +218,6 @@ function Login() {
     console.log(USER_IMAGES)
   }
 
-  const test = () => {
-    // console.log(USER_CONTRACTOR)
-    const formdata = new FormData()
-    formdata.append("image", USER_IMAGES)
-    axios.post("https://api.imgur.com/3/upload",
-      {
-        data: formdata
-      }, { headers: { "Authorization": `Client-ID ${imgurclient}` } })
-      .then(function (response) {
-        console.log(response)
-      }).catch(function (error) {
-        console.log(error.response)
-      })
-  }
-
-  const test2 = async () => {
-    const formdata = new FormData()
-    formdata.append("image", USER_IMAGES)
-    try {
-      const res = await fetch("http://localhost:3000/api/upload/uploadImage", {
-        method: "POST",
-        body: formdata,
-      });
-      const data = await res.json();
-      console.log(data)
-    }
-    catch (err) {
-      console.log(err)
-    }
-  }
-
   return (
     <div className='container'>
       <Tabs>

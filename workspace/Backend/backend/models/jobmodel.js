@@ -30,10 +30,7 @@ const jobSchema = mongoose.Schema({
         type:String,
         required:true,
     },
-    img:{
-        data:Buffer,
-        contentType: String
-    },
+
     location:{
         type: [Number],
     },
@@ -45,6 +42,9 @@ const jobSchema = mongoose.Schema({
     },
     completed_contractor:{
         type:Boolean
+    },
+    images:{
+        type:[String]
     }
     
 
