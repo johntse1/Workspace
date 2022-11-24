@@ -1,0 +1,27 @@
+.post {
+    border-radius: 25px;
+    border: 2px solid #22251c;
+    padding: 20px;
+    width: 50%;
+    height: 50%; 
+    justify-content: center;
+    align-items: center;
+    display:flex;
+    flex-direction: column;
+    margin:20px;
+}
+
+.stuff {
+    display: flex;
+    
+}
+
+.postImg {
+    width:100px;
+    height:100px;
+}
+
+.images {
+    display: flex;
+    
+}

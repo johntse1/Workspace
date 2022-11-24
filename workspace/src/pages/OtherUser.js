@@ -44,22 +44,26 @@ function OtherUser(props){
 
     const navBar = () =>{
       let contBool = localStorage.getItem('contractor')
-      if(contBool){
-        return <UserNavBar/>
+      if(contBool === true){
+        return <NavBar/>
       }
       else{
-        return <NavBar/>
+        return <UserNavBar/>
       }
     }
     return(
         <div>
             <div>{navBar()}</div>
             <Tabs>
+                <div className='bigboy'><div>
                 {/* <h1>{prof[0]}({prof[1]})</h1> */}
                 <h1>{profile["first_name"] + " " + profile["last_name"]}'s profile</h1>
                 <h2>{profile["email"]}</h2>
                 <h2>{profile["id"]}</h2>
+                </div>
 
+                <img src={profile['image']} className='picture'/>
+                </div>
                 <TabList>
                 <Tab>Skills</Tab>
                 <Tab>About</Tab>

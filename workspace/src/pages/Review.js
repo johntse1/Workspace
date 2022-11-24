@@ -54,7 +54,7 @@ function Review(props){
             
                 <div className='form-control'>
                 <label>Title</label>
-                <input type='text' placeholder='Enter review title'
+                <input  type='text' placeholder='Enter review title'
                     value={REVIEW_TITLE}
                     onChange={(e) => setREVIEW_TITLE(e.target.value)}
                 />
@@ -63,7 +63,7 @@ function Review(props){
                 <div className='form-control'>
                 <label>Text</label>
                 <form>
-                    <textarea type='text'
+                    <textarea class='textstuff' type='text'
                     placeholder='Enter a description (optional)'
                     maxLength="200"
                     rows={5}

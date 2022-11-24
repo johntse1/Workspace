@@ -20,6 +20,7 @@ import { Route, Link } from 'react-router-dom'
 import CreateJob from '../pages/CreateJob'
 import { API_BASE_URL, API_GET_ME } from '../API_ENDPOINTS'
 import NavBar from '../components/navigation/NavBar';
+import './supercoolcss.css';
 
 
 function Home() {
@@ -71,7 +72,7 @@ function Home() {
   }
 
   const makePages = (arr) => {
-    let pageSize = 3
+    let pageSize = 5
     let tempArr = []
     //console.log(items.length)
     console.log(arr)
@@ -106,11 +107,12 @@ function Home() {
   return (
     <div className="App">
       <NavBar />
-      <Button text='Refresh Feed' onClick={loadJob}></Button>
+      
       <Feed feed={currItems}></Feed>
-      <Button text='Prev Page' onClick={prevPage}></Button>
+      <div class='pageButton'><Button text='Prev Page' onClick={prevPage}></Button>
       {pageNum + 1}
-      <Button text='Next Page' onClick={nextPage}></Button>
+      <Button text='Next Page' onClick={nextPage}></Button></div>
+      <div class='coolButton'><Button text='Refresh Feed' onClick={loadJob}></Button></div>
 
       <ToastContainer />
 

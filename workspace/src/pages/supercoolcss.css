@@ -1,0 +1,31 @@
+.pageButton {
+    display: flex;
+    justify-content:center;
+    align-self: center;
+    font-size:40px;
+}
+
+.coolButton {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+}
+
+.textstuff {
+    resize:none;
+    width:101.35%;
+}
+
+.picture {
+    display:flex;
+    justify-content: right;
+    align-self: right;
+    height:250px;
+    width:250px;
+    
+}
+
+.bigboy {
+    display:flex;
+    justify-content: space-between;
+}

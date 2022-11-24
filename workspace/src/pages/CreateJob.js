@@ -192,7 +192,7 @@ function CreateJob() {
         <div className='form-control'>
           <label>Description</label>
           <form>
-            <textarea type='text'
+            <textarea type='text' class='textstuff'
               placeholder='Enter a description (optional)'
               maxLength="200"
               rows={5}

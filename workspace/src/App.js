@@ -25,10 +25,7 @@ const socket  = io.connect("http://localhost:3000");
 
 function App() {
   let history = useHistory()
-  const logout =() => {
-    localStorage.removeItem("JWT_TOKEN")
-    history.push('/')
-  }
+  
 
   const[username,setUsername] = useState("");
   const[room,setRoom] = useState("");
@@ -46,7 +43,7 @@ function App() {
   return (
     <div className = "App">
       <h1>WELCOME TO WORKSPACE</h1>
-      <Button color='black' text='TEMPORARY SIGN OUT BUTTON' onClick={logout} />
+      
       <Switch>
         <Route exact path='/'>
           <Login />

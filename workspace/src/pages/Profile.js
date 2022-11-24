@@ -8,6 +8,7 @@ import { Redirect } from 'react-router-dom';
 import NavBar from '../components/navigation/NavBar';
 import UserNavBar from '../components/navigation/UserNavBar';
 import ReviewFeed from '../components/reviewStuff/ReviewFeed'
+import './supercoolcss.css';
 
 const prof = ['John Tse', '4.5', ['Fixing', 'Cleaning', 'Making'], 'A cool guy', ['Good worker', 'Quick Worker']]
 
@@ -71,11 +72,14 @@ function Profile() {
     <div className='App'>
       <div>{navBar()}</div>
       <Tabs>
+        <div className='bigboy'><div>
         {/* <h1>{prof[0]}({prof[1]})</h1> */}
         <h1>{my_profile["first_name"] + " " + my_profile["last_name"]}</h1>
         <h2>{my_profile["email"]}</h2>
         <h2>{my_profile["id"]}</h2>
-
+        </div>
+        <img src={my_profile['image']} className='picture'/>
+        </div>
         <TabList>
           <Tab>Skills</Tab>
           <Tab>About</Tab>

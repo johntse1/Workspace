@@ -36,7 +36,7 @@ function UserHome(){
   }
 
   const makePages = (arr) =>{
-    let pageSize = 2
+    let pageSize = 5
     let tempArr = []
     //console.log(items.length)
     console.log(arr)
@@ -71,12 +71,14 @@ function UserHome(){
   return (
        <div className="App">
         <NavBar/>
-        <Link to ='/create'><Button text='Create Job Posting'></Button></Link>
-        <Button text='Refresh Feed' onClick={loadJob}></Button>
+        
         <UserFeed feed={currItems}></UserFeed>
-        <Button text='Prev Page' onClick={prevPage}></Button>
+        
+        <div class='pageButton'><Button text='Prev Page' onClick={prevPage}></Button>
         {pageNum + 1}
-        <Button text='Next Page' onClick={nextPage}></Button>
+        <Button text='Next Page' onClick={nextPage}></Button></div>
+        <div class='coolButton'><Link to ='/create'><Button text='Create Job Posting'></Button></Link>
+        <Button text='Refresh Feed' onClick={loadJob}></Button></div>
       </div>
   );
 }
