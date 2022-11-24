@@ -15,6 +15,7 @@ function UserNavBar(){
             <li class='lii'><Link to='/userHome' class='navLink'>Home2</Link></li>
             <li class='lii'><Link to='/userProfile' class='navLink'>My Profile</Link></li>
             <li class='lii'><Link to='/userjobs' class='navLink'>Jobs</Link></li>
+            <li class='lii'><Link to='/chat' class='navLink'>Chat</Link></li>
             <li><Link class='logOut' onClick={logout}>Logout</Link></li>
         </ul>
     );

@@ -4,9 +4,9 @@ import {Route, Link} from 'react-router-dom';
 //import NavBar from './components/navigation/NavBar';
 import Jobs from './pages/Jobs'
 import Profile from './pages/Profile'
+import defaultChat from "./pages/defaultChat";
 import Login from './pages/DefaultPage'
 import { Redirect, Switch,useHistory } from "react-router-dom";
-import Button from './components/Button'
 import CreateJob from './pages/CreateJob'
 import UserHome from './pages/UserHome'
 import UserProfile from './pages/UserProfile'
@@ -27,10 +27,13 @@ function App() {
         <Route exact path='/'>
           <Login />
         </Route>
-        <Route exact path="/home" component={Home} >
-        </Route>
+        <Route exact path="/home" component={Home} />
         <Route exact path="/profile" component={Profile} />
         <Route exact path="/jobs" component={Jobs} />
+        <Route exact path="/chat" component={defaultChat}/>
+        
+        {//Routes used for nav bar above
+        }
         <Route exact path="/create" component={CreateJob} />
         <Route exact path="/userProfile" component={UserProfile} />
         <Route exact path="/userHome" component={UserHome} />

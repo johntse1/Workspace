@@ -23,7 +23,7 @@ app.use(express.urlencoded({extended:false,limit:'50mb'}))
 app.use('/api/jobs',require('./routes/jobRoutes'),cors())
 app.use('/api/users',require('./routes/userRoutes'),cors())
 app.use('/api/reviews',require('./routes/reviewRoutes'),cors())
-// app.use('/api/upload',require('./routes/uploadRoutes'),cors())
+    // app.use('/api/upload',require('./routes/uploadRoutes'),cors())
 
 app.use(errorHandler)
 

@@ -15,6 +15,7 @@ function NavBar(){
             <li class='lii'><Link to='/home' class='navLink'>Home2</Link></li>
             <li class='lii'><Link to='/profile' class='navLink'>My Profile</Link></li>
             <li class='lii'><Link to='/jobs' class='navLink'>Jobs</Link></li>
+            <li class='lii'><Link to='/chat' class='navLink'>Chat</Link></li>
             <li><Link class='logOut' onClick={logout}>Logout</Link></li>
         </ul>
     );
