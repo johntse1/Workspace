@@ -1,7 +1,6 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 import './nav.css';
-import Button from '../Button';
 import { Redirect, Switch,useHistory } from "react-router-dom";
 
 function NavBar(){
