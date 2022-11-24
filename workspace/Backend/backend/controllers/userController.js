@@ -127,7 +127,7 @@ const loginUser = asyncHandler(async(req,res) => {
 // @route GET /api/user/me
 // @access private
 const getMe = asyncHandler(async(req,res) => {
-    const {_id, first_name,last_name, email,birthday,description,skills,rating,contractor,location,image} = await User.findById(req.user.id)
+    const {_id, first_name,last_name, email,birthday,description,skills,rating,contractor,location,image,password} = await User.findById(req.user.id)
     res.status(200).json({
         id: _id,
         first_name,
@@ -139,7 +139,8 @@ const getMe = asyncHandler(async(req,res) => {
         rating,
         contractor,
         location,
-        image
+        image,
+        password
     })
 })
 
@@ -202,6 +203,13 @@ const testImage = asyncHandler(async(req,res) => {
     }
 })
 
+const getallUsers = asyncHandler(async(req,res) => {
+    filter ={}
+    const users = await User.find(filter).select('-password')  
+    res.status(200).json(users)
+
+})
+
 
 
 //generate token for jwt
@@ -216,6 +224,7 @@ module.exports = {
     getMe,
     getUser,
     getUserTag,
+    getallUsers
     
     
 }
