@@ -43,7 +43,7 @@ function OtherUser(props){
       }, []);
 
     const navBar = () =>{
-      let contBool = localStorage.getItem('contractor')
+      let contBool = Boolean(localStorage.getItem('contractor'))
       if(contBool === true){
         return <NavBar/>
       }
