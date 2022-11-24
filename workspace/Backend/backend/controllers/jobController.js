@@ -80,9 +80,9 @@ const setJobs = asyncHandler(async (req, res) => {
                 urls.push(response.data.link)
             }
             else {
-                // console.log(response)
-                res.status(404)
-                throw new Error ("Failed to upload images")
+                console.log(response)
+                // res.status(404)
+                // throw new Error ("Failed to upload images")
             }
         }
 
