@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const {getJobs,setJobs,updateJobs,deleteJobs,getallJobs,filterJobs,acceptJob,getallJobsFiltered,getJobsWithin,getJobsWithTagDistance,completeJob,denyJob,getCurrentJobs,getPastJobs,getIncompleteJobs} = require('../controllers/jobController')
+const {getJobs,setJobs,updateJobs,deleteJobs,getallJobs,filterJobs,acceptJob,getallJobsFiltered,getJobsWithin,getJobsWithTagDistance,completeJob,denyJob,getCurrentJobs,getPastJobs,getIncompleteJobs,updatetemp} = require('../controllers/jobController')
 const {upload} = require('../middleware/multerMiddleware')
 const {protect} = require ('../middleware/authMiddleware')
 
@@ -20,6 +20,7 @@ router.route('/getcurrent').get(protect,getCurrentJobs)
 router.route('/getpast').get(protect,getPastJobs)
 router.route('/getincomplete').get(protect,getIncompleteJobs)
 
+router.route('/temp').get(updatetemp)
 
 // router.route('/setTEMP').post(upload.array("images"), setJobsTEMP)
 

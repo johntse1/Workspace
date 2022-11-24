@@ -7,6 +7,7 @@ const User = require('../models/usermodel')
 const fs = require('fs');
 const path = require('path');
 const { ImgurClient } = require('imgur');
+const { ObjectId } = require('mongodb');
 
 // @desc get jobs
 // @route GET /api/jobs
@@ -133,7 +134,8 @@ const setJobs = asyncHandler(async (req, res) => {
         address: req.body.address,
         completed_user: false,
         completed_contractor: false,
-        images:urls
+        images:urls,
+        username:req.user.first_name + " " + req.user.last_name
     })
 
     const user = await User.findById(req.user.id)
@@ -163,6 +165,26 @@ const setJobs = asyncHandler(async (req, res) => {
     res.status(200).json(job)
 })
 
+const updatetemp = asyncHandler(async (req, res) => {
+    Job.find({},(err,jobs) => {
+        if(err){
+            console.log("error")
+        }
+        jobs.map( async job =>{ 
+            // let id = ObjectId(job.user)
+            const user = await User.findById(job.user).exec()
+            if(user)
+            {
+                let updatedjob= await job.updateOne({$set: {username:(user.first_name + " " + user.last_name)}})
+                if(updatedjob)
+                console.log(updatedjob)
+            }
+        })
+    })
+
+
+
+})
 
 // @desc update jobs
 // @route GET /api/jobs/:id
@@ -461,4 +483,5 @@ module.exports = {
     getCurrentJobs,
     getPastJobs,
     getIncompleteJobs,
+    updatetemp
 }

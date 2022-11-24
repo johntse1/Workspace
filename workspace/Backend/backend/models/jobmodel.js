@@ -10,6 +10,9 @@ const jobSchema = mongoose.Schema({
         required: true,
         ref: 'User'
     },
+    username:{
+        type:String,
+    },
     acceptedby:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
