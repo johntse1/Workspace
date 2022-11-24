@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const{registerUser, loginUser, getMe,getUser,getUserTag} = require('../controllers/userController')
+const{registerUser, loginUser, getMe,getUser,getUserTag,getallUsers} = require('../controllers/userController')
 const {upload} = require('../middleware/multerMiddleware')
 
 const {protect} = require('../middleware/authMiddleware')
@@ -10,5 +10,6 @@ router.post('/login', loginUser)
 router.get('/me', protect, getMe)
 router.get('/get/:id',getUser)
 router.get('/gettag',protect, getUserTag)
+router.get('/getall',getallUsers)
 
 module.exports = router
