@@ -232,8 +232,8 @@ const filterJobs = asyncHandler(async (req, res) => {
 
 const getallJobsFiltered = asyncHandler(async (req, res) => {
     // const jobs = await Job.find({user: req.user.id})
-    const filter = { tags: { $in: req.user.skills } }
-    const jobs = await Job.find(filter).sort({ createdAt: 'desc',status:"in progress" }).exec()
+    const filter = { tags: { $in: req.user.skills, status:"Incomplete" } }
+    const jobs = await Job.find(filter).sort({ createdAt: 'desc'}).exec()
     res.status(200).json(jobs)
 })
 
@@ -391,7 +391,7 @@ const getJobsWithTagDistance = asyncHandler(async (req, res) => {
     const result = await Job.find({
         location: { $geoWithin: { $centerSphere: [[lat, lng], radius] } },
         tags: { $in: req.user.skills },
-        status: "in progress"
+        status: "Incomplete"
     })
         .sort("-score");
     res.status(200).json(result)
