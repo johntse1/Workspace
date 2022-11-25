@@ -21,7 +21,7 @@ function App() {
   
   return (
     <div className = "App">
-      <h1>WELCOME TO WORKSPACE</h1>
+      <h1 class=''>WELCOME TO WORKSPACE</h1>
       
       <Switch>
         <Route exact path='/'>

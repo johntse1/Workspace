@@ -4,9 +4,7 @@ import Button from '../components/Button'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import Popup from '../components/PopupRegister';
-import PopUpCreatePost from '../components/PopUpCreatePost';
-import { Redirect, useHistory, Route } from "react-router-dom";
+import { Redirect, useHistory, Route, } from "react-router-dom";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import DatePicker from "react-datepicker"
@@ -14,6 +12,9 @@ import 'react-datepicker/dist/react-datepicker.css'
 import Profile from '../pages/Profile'
 import Select from 'react-select'
 import { useEffect } from 'react';
+
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
 
 function Login() {
 
@@ -54,11 +55,6 @@ function Login() {
     return <Redirect to="/userprofile"></Redirect>
   }
 
-
-
-
-
-
   let skills =
     [
       { label: "Construction", value: "Construction" },
@@ -81,7 +77,22 @@ function Login() {
   let API_SIGN_IN_URL = 'users/login'
   let API_SIGN_UP_URL = 'users/register'
 
+
   const signin = () => {
+
+    //This section is used to connect to firebase
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      const email = e.target[0].value;
+      const password = e.target[1].value;
+
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+      } catch (err) {
+      }
+    };
+
+    
     let url = API_BASE_URL + API_SIGN_IN_URL
     axios.post(url,
       {
@@ -110,47 +121,6 @@ function Login() {
         // }
         if (error.response.status === 400) {
           toast.warning('Invalid Login')
-        }
-      })
-  }
-
-  const registerUser = () => {
-    let url = API_BASE_URL + API_SIGN_UP_URL
-
-    axios.post(url,
-      {
-        first_name: USER_FIRST_NAME,
-        last_name: USER_LAST_NAME,
-        email: USER_EMAIL,
-        password: USER_PASSWORD,
-        birthday: USER_BIRTHDAY,
-        description: USER_DESCRIPTION,
-        skills: USER_SKILLS,
-        contractor: USER_CONTRACTOR,
-        location: USER_COORDINATES
-      })
-      .then(function (response) {
-        console.log(response)
-        toast.dark('Account successfully registered')
-        localStorage.setItem('JWT_TOKEN', response.data.token)
-        localStorage.setItem('contractor', response.data.contractor)
-        localStorage.setItem('image', response.data.image)
-
-        if (response.data.contractor == false) {
-          history.push('/userprofile')
-        }
-        else {
-          history.push('/profile')
-        }
-
-      }).catch(function (error) {
-        console.log(error.response.status)
-        if (error.response.status === 400) {
-          toast.warning('Email already exists')
-        }
-
-        if (error.response.status === 401) {
-          toast.warning('Please enter all fields')
         }
       })
   }
@@ -200,6 +170,23 @@ function Login() {
 
   }
 
+  const handleSubmitRegister = async (e) => {
+    setLoading(true);
+    e.preventDefault();
+    const displayName = e.target[0].value;
+    const email = e.target[1].value;
+    const password = e.target[2].value;
+    
+    await setDoc(doc(db, "users", res.user.uid), {
+      uid: res.user.uid,
+      displayName,
+      email,
+    });
+
+    //create empty user chats on firestore
+    await setDoc(doc(db, "userChats", res.user.uid), {});
+  }
+
   const handleSelectChange = (e) => {
     let values = []
     e.map((v) => values.push(v.value))
@@ -217,6 +204,8 @@ function Login() {
     setUSER_IMAGES(e.target.files[0])
     console.log(USER_IMAGES)
   }
+
+
 
   return (
     <div className='container'>
