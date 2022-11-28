@@ -4,7 +4,7 @@ import Button from '../components/Button'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { Redirect, useHistory, Route, } from "react-router-dom";
+import { Redirect, useHistory, Route, useNavigate, Link} from "react-router-dom";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import DatePicker from "react-datepicker"
@@ -13,8 +13,9 @@ import Profile from '../pages/Profile'
 import Select from 'react-select'
 import { useEffect } from 'react';
 
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase";
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from "../firebase";
+import { doc, setDoc } from "firebase/firestore";
 
 function Login() {
 
@@ -33,10 +34,7 @@ function Login() {
 
   let history = useHistory()
   let imgurclient = "ec5fa7976333d6b"
-  const [register, registerPopup] = useState(false);
-  const [createPost, createPostPopup] = useState(false);
   const [JWT_TOKEN, setJWT_TOKEN] = useState('')
-
   const [USER_EMAIL, setUSER_EMAIL] = useState('')
   const [USER_PASSWORD, setUSER_PASSWORD] = useState('')
   const [USER_FIRST_NAME, setUSER_FIRST_NAME] = useState('')
@@ -77,21 +75,12 @@ function Login() {
   let API_SIGN_IN_URL = 'users/login'
   let API_SIGN_UP_URL = 'users/register'
 
-
   const signin = () => {
-
-    //This section is used to connect to firebase
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-      const email = e.target[0].value;
-      const password = e.target[1].value;
-
-      try {
-        await signInWithEmailAndPassword(auth, email, password);
-      } catch (err) {
-      }
-    };
-
+    //This section is used to connect to Firebase
+      const email = USER_EMAIL;
+      const password = USER_PASSWORD;
+      signInWithEmailAndPassword(auth, email, password);
+    //End of section used to connection to Firebase
     
     let url = API_BASE_URL + API_SIGN_IN_URL
     axios.post(url,
@@ -115,10 +104,6 @@ function Login() {
         }
       }).catch(function (error) {
         console.log(error.response.status)
-        // if(error.response.status === 401)
-        // {
-        //   toast.warning('User was not found')
-        // }
         if (error.response.status === 400) {
           toast.warning('Invalid Login')
         }
@@ -137,6 +122,22 @@ function Login() {
     formdata.append("skills", USER_SKILLS)
     formdata.append("contractor", USER_CONTRACTOR)
 
+
+    //Firebase initialization
+    const displayName = formdata.get('email');
+    const email = formdata.get('email');
+    const password = formdata.get('password');
+    const res = await createUserWithEmailAndPassword(auth, email, password);
+
+    await setDoc(doc(db, "users", res.user.uid), {
+      uid: res.user.uid,
+      displayName,
+      email,
+    });
+
+    await setDoc(doc(db, "userChats", res.user.uid), {});
+    //End of firebase initialization
+    //Works
     axios({
       method: "post",
       url: "https://workspace.onrender.com/api/users/register",
@@ -166,25 +167,6 @@ function Login() {
         toast.warning('Please enter all fields')
       }
     })
-
-
-  }
-
-  const handleSubmitRegister = async (e) => {
-    setLoading(true);
-    e.preventDefault();
-    const displayName = e.target[0].value;
-    const email = e.target[1].value;
-    const password = e.target[2].value;
-    
-    await setDoc(doc(db, "users", res.user.uid), {
-      uid: res.user.uid,
-      displayName,
-      email,
-    });
-
-    //create empty user chats on firestore
-    await setDoc(doc(db, "userChats", res.user.uid), {});
   }
 
   const handleSelectChange = (e) => {
@@ -221,6 +203,7 @@ function Login() {
             <input type='text' placeholder='Enter your Email'
               value={USER_EMAIL}
               onChange={(e) => setUSER_EMAIL(e.target.value)}
+
             />
           </div>
 

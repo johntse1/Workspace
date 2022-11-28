@@ -1,24 +1,22 @@
-import React from "react";
 import Home from './pages/Home'
-import {Route, Link} from 'react-router-dom'; 
+import {Route} from 'react-router-dom'; 
 //import NavBar from './components/navigation/NavBar';
 import Jobs from './pages/Jobs'
 import Profile from './pages/Profile'
 import defaultChat from "./pages/defaultChat";
 import Login from './pages/DefaultPage'
-import { Redirect, Switch,useHistory } from "react-router-dom";
+import {Switch,useHistory } from "react-router-dom";
 import CreateJob from './pages/CreateJob'
 import UserHome from './pages/UserHome'
 import UserProfile from './pages/UserProfile'
 import UserJobs from './pages/UserJobs'
 import OtherUser from './pages/OtherUser'
 import Review from './pages/Review'
-
 import './App.css';
 
 function App() {
   let history = useHistory()
-  
+
   return (
     <div className = "App">
       <h1 class=''>WELCOME TO WORKSPACE</h1>
@@ -41,7 +39,9 @@ function App() {
         <Route exact path="/otherUser" component={OtherUser} />
         <Route exact path="/review" component={Review} />
       </Switch>
-  </div>
+
+    </div>
+
   );
 }
 
