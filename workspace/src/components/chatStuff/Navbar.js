@@ -5,13 +5,13 @@ import { AuthContext } from '../context/AuthContext'
 
 const Navbar = () => {
   const {currentUser} = useContext(AuthContext)
-
+  console.log(currentUser);
+  
   return (
     <div className='navbar'>
       <span className="logo">Test Chat</span>
       <div className="user">
         <span>{currentUser.displayName}</span>
-        <button onClick={()=>signOut(auth)}>logout</button>
       </div>
     </div>
   )

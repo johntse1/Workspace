@@ -131,17 +131,17 @@ function Login() {
 
     //Firebase initialization
     try{
-      const displayName = formdata.get('email');
-      const email = formdata.get('email');
-      const password = formdata.get('password');
+      const displayName = USER_EMAIL;
+      const email = USER_EMAIL;
+      const password = USER_PASSWORD;
       const res = await createUserWithEmailAndPassword(auth, email, password);
       
       await setDoc(doc(db, "users", res.user.uid), {
         uid: res.user.uid,
-        displayName,
+        displayName:displayName,
         email,
       });
-  
+      
       await setDoc(doc(db, "userChats", res.user.uid), {});
     }
     catch (err){
@@ -150,6 +150,7 @@ function Login() {
       setLoading(false);
     }
     //End of firebase initialization
+
     //Works
     axios({
       method: "post",
@@ -233,6 +234,7 @@ function Login() {
 
 
         <TabPanel>
+
           <div className='form-control'>
             <label>First Name</label>
             <input type='text' placeholder='Enter your first name'

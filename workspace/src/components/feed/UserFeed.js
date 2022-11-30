@@ -4,7 +4,7 @@ import User from './User.js'
 
 function UserFeed(props){
     return(
-        <div class='feed'>
+        <div className='feed'>
           {props.feed.map((item) => 
             <User post={item} key={item._id}></User>
           )}

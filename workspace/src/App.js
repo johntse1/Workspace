@@ -15,11 +15,12 @@ import Review from './pages/Review'
 import './App.css';
 import { useContext } from "react";
 import { AuthContext } from "../src/components/context/AuthContext";
-//import "../src/style.scss";
+import "../src/style.scss";
 function App() {
   let history = useHistory()
 
   const {currentUser} = useContext(AuthContext);
+  console.log(currentUser);
   console.log("Current User"+ currentUser);
   const ProtectedRoute = ({ children }) => {
     if (!currentUser) {
@@ -30,7 +31,7 @@ function App() {
   };
   return (
     <div className = "App">
-      <h1 class="header">WELCOME TO WORKSPACE</h1>
+      <h1 className="header">WELCOME TO WORKSPACE</h1>
       
       <Switch>
         <Route exact path="/" component={Login}>

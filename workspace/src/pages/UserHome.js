@@ -74,10 +74,10 @@ function UserHome(){
         
         <UserFeed feed={currItems}></UserFeed>
         
-        <div class='pageButton'><Button text='Prev Page' onClick={prevPage}></Button>
+        <div className='pageButton'><Button text='Prev Page' onClick={prevPage}></Button>
         {pageNum + 1}
         <Button text='Next Page' onClick={nextPage}></Button></div>
-        <div class='coolButton'><Link to ='/create'><Button text='Create Job Posting'></Button></Link>
+        <div className='coolButton'><Link to ='/create'><Button text='Create Job Posting'></Button></Link>
         <Button text='Refresh Feed' onClick={loadJob}></Button></div>
       </div>
   );

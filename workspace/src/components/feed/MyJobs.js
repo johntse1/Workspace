@@ -42,7 +42,7 @@ function MyJobs(props){
         return(
           <div key={props.post._id}>
             <h1>{props.post.title}</h1>
-            <Link to={{pathname: '/otherUser', state: props.post.user}} class='stuff'>{props.post.username}</Link>
+            <Link to={{pathname: '/otherUser', state: props.post.user}} className='stuff'>{props.post.username}</Link>
             <div>{props.post.text}</div>
             <div>{props.post.price}</div>
             <div>{props.post.status}</div>

@@ -73,9 +73,9 @@ function Profile() {
       <Tabs>
         <div className='bigboy'><div>
         {/* <h1>{prof[0]}({prof[1]})</h1> */}
-        <h1 class="profileusername">{my_profile["first_name"] + " " + my_profile["last_name"]}</h1>
-        <h2 class="profileemail">{my_profile["email"]}</h2>
-        <h2 class="profileid">{my_profile["id"]}</h2>
+        <h1 className="profileusername">{my_profile["first_name"] + " " + my_profile["last_name"]}</h1>
+        <h2 className="profileemail">{my_profile["email"]}</h2>
+        <h2 className="profileid">{my_profile["id"]}</h2>
         </div>
         <img src={my_profile['image']} className='picture'/>
         </div>

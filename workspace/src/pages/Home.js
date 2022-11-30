@@ -109,10 +109,10 @@ function Home() {
       <NavBar />
       
       <Feed feed={currItems}></Feed>
-      <div class='pageButton'><Button text='Prev Page' onClick={prevPage}></Button>
+      <div className='pageButton'><Button text='Prev Page' onClick={prevPage}></Button>
       {pageNum + 1}
       <Button text='Next Page' onClick={nextPage}></Button></div>
-      <div class='coolButton'><Button text='Refresh Feed' onClick={loadJob}></Button></div>
+      <div className='coolButton'><Button text='Refresh Feed' onClick={loadJob}></Button></div>
 
       <ToastContainer />
 

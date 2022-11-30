@@ -8,11 +8,11 @@ function User(props){
         console.log(props)
     }
     return(
-        <div class='post'>
-            <Link to={{pathname: '/otherUser', state: props.post._id}} class='stuff'><div>{props.post.first_name} {props.post.last_name}</div></Link>
-            <div class='stuff'>{props.post.description}</div>
-            <div class='stuff'>Skills: {props.post.skills.join(' ')}</div>
-            <div class='stuff'><Button text='Not interested' onClick={displayTitle}></Button></div>
+        <div className='post'>
+            <Link to={{pathname: '/otherUser', state: props.post._id}} className='stuff'><div>{props.post.first_name} {props.post.last_name}</div></Link>
+            <div className='stuff'>{props.post.description}</div>
+            <div className='stuff'>Skills: {props.post.skills.join(' ')}</div>
+            <div className='stuff'><Button text='Not interested' onClick={displayTitle}></Button></div>
         </div>
     );
 }

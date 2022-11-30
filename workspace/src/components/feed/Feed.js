@@ -5,7 +5,7 @@ import './feed.css';
 
 function Feed(props){
     return(
-        <div class='feed'>
+        <div className='feed'>
           {props.feed.map((item) => 
             <Post post={item} key={item._id}></Post>
           )}

@@ -61,7 +61,9 @@ function UserProfile() {
         <h1>{my_profile["first_name"] + " " + my_profile["last_name"]}</h1>
         <h2>{my_profile["email"]}</h2>
         <h2>{my_profile["id"]}</h2>
-
+        <div>
+        <img src={my_profile['image']} className='picture'/>
+        </div>
         <TabList>
           <Tab>About</Tab>
           <Tab>Reviews</Tab>

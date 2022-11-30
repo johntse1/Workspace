@@ -63,7 +63,7 @@ function Review(props){
                 <div className='form-control'>
                 <label>Text</label>
                 <form>
-                    <textarea class='textstuff' type='text'
+                    <textarea className='textstuff' type='text'
                     placeholder='Enter a description (optional)'
                     maxLength="200"
                     rows={5}
