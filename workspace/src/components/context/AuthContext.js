@@ -7,7 +7,9 @@ export const AuthContext = createContext();
 export const AuthContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState({});
 
+  //Checks whether user is logged in
   useEffect(() => {
+    //Checks if authentication is passed through firebase
     const unsub = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
       console.log(user);

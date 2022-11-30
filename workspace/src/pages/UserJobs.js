@@ -1,6 +1,4 @@
 import React from 'react'
-import Post from '../components/feed/Post.js'
-import Button from '../components/Button.js';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import { API_BASE_URL, API_GET_ME } from '../API_ENDPOINTS'

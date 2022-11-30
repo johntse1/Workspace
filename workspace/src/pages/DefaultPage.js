@@ -45,6 +45,10 @@ function Login() {
   const [USER_CONTRACTOR, setUSER_CONTRACTOR] = useState(false)
   const [USER_COORDINATES, setUSER_COORDINATES] = useState([])
   const [USER_IMAGES, setUSER_IMAGES] = useState()
+
+  const [loading,setLoading] = useState(false);
+  const [err,setErr] = useState(false);
+
   if ((localStorage.getItem('JWT_TOKEN') != null) && USER_CONTRACTOR == true) {
     console.log(USER_CONTRACTOR)
     //return <Redirect to="/profile"></Redirect>
@@ -75,6 +79,8 @@ function Login() {
   let API_SIGN_IN_URL = 'users/login'
   let API_SIGN_UP_URL = 'users/register'
 
+
+  
   const signin = () => {
     //This section is used to connect to Firebase
       const email = USER_EMAIL;
@@ -110,7 +116,7 @@ function Login() {
       })
   }
 
-  const registerUser2 = async () => {
+  const registerUser2 = async (e) => {
     const formdata = new FormData()
     formdata.append("image", USER_IMAGES)
     formdata.append("first_name", USER_FIRST_NAME)
@@ -124,18 +130,25 @@ function Login() {
 
 
     //Firebase initialization
-    const displayName = formdata.get('email');
-    const email = formdata.get('email');
-    const password = formdata.get('password');
-    const res = await createUserWithEmailAndPassword(auth, email, password);
-
-    await setDoc(doc(db, "users", res.user.uid), {
-      uid: res.user.uid,
-      displayName,
-      email,
-    });
-
-    await setDoc(doc(db, "userChats", res.user.uid), {});
+    try{
+      const displayName = formdata.get('email');
+      const email = formdata.get('email');
+      const password = formdata.get('password');
+      const res = await createUserWithEmailAndPassword(auth, email, password);
+      
+      await setDoc(doc(db, "users", res.user.uid), {
+        uid: res.user.uid,
+        displayName,
+        email,
+      });
+  
+      await setDoc(doc(db, "userChats", res.user.uid), {});
+    }
+    catch (err){
+      console.log(err);
+      setErr(true);
+      setLoading(false);
+    }
     //End of firebase initialization
     //Works
     axios({

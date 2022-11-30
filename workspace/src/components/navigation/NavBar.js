@@ -11,7 +11,7 @@ function NavBar(){
       }
     return(
         <ul class='uli'>
-            <li class='lii'><Link to='/home' class='navLink'>Home2</Link></li>
+            <li class='lii'><Link to='/home' class='navLink'>Home</Link></li>
             <li class='lii'><Link to='/profile' class='navLink'>My Profile</Link></li>
             <li class='lii'><Link to='/jobs' class='navLink'>Jobs</Link></li>
             <li class='lii'><Link to='/chat' class='navLink'>Chat</Link></li>

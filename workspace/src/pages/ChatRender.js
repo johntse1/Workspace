@@ -1,13 +1,12 @@
-import React, { useContext } from 'react'
 import Sidebar from '../components/chatStuff/Sidebar'
 import Chat from '../components/chatStuff/Chat'
-import { AuthContext } from '../components/context/AuthContext'
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import NavBar from '../components/navigation/NavBar'
 
-function DefaultChat(){
+function ChatRender(){
 
   return (
     <div className='home'>
+      <NavBar />
       <div className="container">
         <Sidebar/>
         <Chat/>
@@ -16,4 +15,4 @@ function DefaultChat(){
   )
 }
 
-export default DefaultChat
+export default ChatRender
