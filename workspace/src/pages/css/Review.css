@@ -1,0 +1,7 @@
+.textstuff {
+    resize:none;
+    width: 50%;
+}
+input[type=text]{
+    width:30%;
+}

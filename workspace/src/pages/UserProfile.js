@@ -6,6 +6,8 @@ import { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import NavBar from '../components/navigation/UserNavBar';
 import ReviewFeed from '../components/reviewStuff/ReviewFeed'
+import "./css/Profile.css";
+
 const prof = ['John Tse', '4.5', ['Fixing', 'Cleaning', 'Making'], 'A cool guy', ['Good worker', 'Quick Worker']]
 
 
@@ -58,11 +60,11 @@ function UserProfile() {
       <NavBar/>
       <Tabs>
         {/* <h1>{prof[0]}({prof[1]})</h1> */}
-        <h1>{my_profile["first_name"] + " " + my_profile["last_name"]}</h1>
-        <h2>{my_profile["email"]}</h2>
-        <h2>{my_profile["id"]}</h2>
         <div>
-        <img src={my_profile['image']} className='picture'/>
+          <img src={my_profile['image']} className='picture'/>
+          <h1 class="profileusername">{my_profile["first_name"] + " " + my_profile["last_name"]}</h1>
+          <h2 class="profileemail">email: {my_profile["email"]}</h2>
+          <h2 class="profileid">userId: {my_profile["id"]}</h2>
         </div>
         <TabList>
           <Tab>About</Tab>

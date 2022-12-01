@@ -1,0 +1,27 @@
+.profileusername{
+    text-align: center;
+}
+.profileemail{
+    text-align: center;
+}
+.profileid{
+    text-align: center;
+}
+
+.picture {
+    display:block;
+    justify-content: right;
+    align-self: right;
+    height:250px;
+    width:250px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: auto;
+    padding:2px;
+    border-radius: 10px;
+}
+
+.bigboy {
+    display:flex;
+    justify-content: space-between;
+}

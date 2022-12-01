@@ -20,8 +20,8 @@ import { Route, Link } from 'react-router-dom'
 import CreateJob from '../pages/CreateJob'
 import { API_BASE_URL, API_GET_ME } from '../API_ENDPOINTS'
 import NavBar from '../components/navigation/NavBar';
-import './supercoolcss.css';
 
+import './css/Home.css'
 
 function Home() {
   const [items, setItems] = useState([]);
@@ -50,7 +50,7 @@ function Home() {
       .then(function (response) {
         console.log(response.data)
         console.log("showing all posts with correct tags within 50 miles")
-        toast.dark("Loaded jobs within 50 miles")
+        toast.dark("Loading closest jobs near you.")
         makePages(response.data)
 
       }).catch(function (error) {
@@ -68,7 +68,7 @@ function Home() {
           console.log(error.response.status)
         });
       });
-      } 
+      }
   }
 
   const makePages = (arr) => {
@@ -82,7 +82,7 @@ function Home() {
       tempArr.push(page)
     }
     setItems(tempArr)
-    //console.log(tempArr)
+    console.log("This is temp"+ tempArr)
     //console.log('a')
     //console.log(items)
     setCurrItems(tempArr.at(pageNum))
@@ -104,6 +104,8 @@ function Home() {
     }
   }
 
+  //console.log('This is curr'+currItems);
+  
   return (
     <div className="App">
       <NavBar />

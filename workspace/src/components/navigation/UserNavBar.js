@@ -12,7 +12,7 @@ function UserNavBar(){
       }
     return(
         <ul className='uli'>
-            <li className='lii'><Link to='/userHome' className='navLink'>Home2</Link></li>
+            <li className='lii'><Link to='/userHome' className='navLink'>Home</Link></li>
             <li className='lii'><Link to='/userProfile' className='navLink'>My Profile</Link></li>
             <li className='lii'><Link to='/userjobs' className='navLink'>Jobs</Link></li>
             <li className='lii'><Link to='/chat' className='navLink'>Chat</Link></li>

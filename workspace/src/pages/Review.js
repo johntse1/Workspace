@@ -6,6 +6,8 @@ import NavBar from '../components/navigation/NavBar';
 import UserNavBar from '../components/navigation/UserNavBar';
 import { FaStar } from "react-icons/fa";
 import { Container, Radio, Rating } from "../components/reviewStuff/ratingStyles";
+import { toast, ToastContainer } from 'react-toastify';
+import "./css/Review.css"
 
 function Review(props){
     const [REVIEW_TITLE, setREVIEW_TITLE] = useState('')
@@ -44,6 +46,7 @@ function Review(props){
             //history.goBack()
         }).catch(function (error) {
             console.log(error.response)
+            toast.dark("You have already made a review.");
         })
       }
 
@@ -54,7 +57,7 @@ function Review(props){
             
                 <div className='form-control'>
                 <label>Title</label>
-                <input  type='text' placeholder='Enter review title'
+                <input type='text' placeholder='Enter review title'
                     value={REVIEW_TITLE}
                     onChange={(e) => setREVIEW_TITLE(e.target.value)}
                 />
@@ -62,16 +65,20 @@ function Review(props){
 
                 <div className='form-control'>
                 <label>Text</label>
+
                 <form>
                     <textarea className='textstuff' type='text'
-                    placeholder='Enter a description (optional)'
+                    placeholder='Write your review here!'
                     maxLength="200"
                     rows={5}
                     value={REVIEW_DESCRIPTION}
                     onChange={(e) => setREVIEW_DESCRIPTION(e.target.value)}
                     />
                 </form>
+
                 </div>
+                <ToastContainer>
+                </ToastContainer>
                 <Container>
                     {[...Array(5)].map((item, index) => {
                     const givenRating = index + 1;

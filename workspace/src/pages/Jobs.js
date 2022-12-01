@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import MyJobs from '../components/feed/MyJobs.js'
 import NavBar from '../components/navigation/NavBar';
+import './css/Jobs.css';
 
 function Jobs(){
     const [my_profile, setmy_profile] = useState([

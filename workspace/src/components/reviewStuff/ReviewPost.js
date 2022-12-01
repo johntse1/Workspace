@@ -9,8 +9,8 @@ function ReviewPost(props){
     }
 
     return(
-        <div key={props.post._id}>
-            <h2>{props.post.reviewer}</h2>
+        <div key={props.post.id}>
+            <h2>{props.post.reviewee}</h2>
             <h3>{props.post.title}</h3>
             <h3>{props.post.rating}/5</h3>
             <div>{props.post.text}</div>

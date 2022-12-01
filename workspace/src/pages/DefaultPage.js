@@ -17,6 +17,8 @@ import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "fire
 import { auth, db } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
 
+import './css/DefaultPage.css';
+
 function Login() {
 
   useEffect(() => {
@@ -263,6 +265,7 @@ function Login() {
             <label>Password</label>
             <input type='password' placeholder='Enter your Password'
               value={USER_PASSWORD}
+              minLength="6"
               onChange={(e) => setUSER_PASSWORD(e.target.value)}
             />
           </div>
@@ -317,8 +320,7 @@ function Login() {
           </div>
           <div className='form-control'>
             <label>Profile Pictures</label>
-            <input type="file" name="image" onChange={imagechangeHandler} multiple={false}
-            />
+            <input type="file" name="image" onChange={imagechangeHandler} multiple={false}></input>
           </div>
           <Button color='black' text='Register' onClick={registerUser2} />
           {/* <Button color='black' text='test' onClick={registerUser2} /> */}

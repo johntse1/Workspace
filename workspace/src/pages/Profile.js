@@ -7,8 +7,7 @@ import { Redirect } from 'react-router-dom';
 import NavBar from '../components/navigation/NavBar';
 import UserNavBar from '../components/navigation/UserNavBar';
 import ReviewFeed from '../components/reviewStuff/ReviewFeed'
-import './supercoolcss.css';
-import './Profile.css';
+import './css/Profile.css';
 const prof = ['John Tse', '4.5', ['Fixing', 'Cleaning', 'Making'], 'A cool guy', ['Good worker', 'Quick Worker']]
 
 
@@ -26,7 +25,7 @@ function Profile() {
   const [reviews, setReviews] = useState()
 
   const url = 'https://workspace.onrender.com/api/reviews/get'
-  
+
   useEffect(() => {
     const fetchData = async () => {
       let token = localStorage.getItem("JWT_TOKEN")
@@ -36,6 +35,7 @@ function Profile() {
       setReviews(reviewResponse.data)
       //console.log(response.data)
       console.log(reviewResponse.data)
+      console.log(response.data.contractor);
       setgot_profile(true)
     };
     fetchData();
@@ -71,14 +71,18 @@ function Profile() {
     <div className='App'>
       <div>{navBar()}</div>
       <Tabs>
-        <div className='bigboy'><div>
+        <div className='bigboy'>
         {/* <h1>{prof[0]}({prof[1]})</h1> */}
-        <h1 className="profileusername">{my_profile["first_name"] + " " + my_profile["last_name"]}</h1>
-        <h2 className="profileemail">{my_profile["email"]}</h2>
-        <h2 className="profileid">{my_profile["id"]}</h2>
+          <div>
+            <img src={my_profile['image']} className='picture'/>
+          </div>
+          <div>
+            <h1 className="profileusername">{my_profile["first_name"] + " " + my_profile["last_name"]}</h1>
+            <h2 className="profileemail">{my_profile["email"]}</h2>
+            <h2 className="profileid">{my_profile["id"]}</h2>
+          </div>
         </div>
-        <img src={my_profile['image']} className='picture'/>
-        </div>
+
         <TabList>
           <Tab>Skills</Tab>
           <Tab>About</Tab>

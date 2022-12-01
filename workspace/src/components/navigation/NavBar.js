@@ -2,13 +2,22 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import './nav.css';
 import { Redirect, Switch,useHistory } from "react-router-dom";
+import { getAuth, signOut } from "firebase/auth";
 
 function NavBar(){
     let history = useHistory()
     const logout =() => {
         localStorage.removeItem("JWT_TOKEN")
         history.push('/')
-      }
+    }
+    const auth = getAuth();
+    
+    signOut(auth).then(() => {
+    // Sign-out successful.
+    }).catch((error) => {
+    // An error happened.
+    });
+
     return(
         <ul className='uli'>
             <li className='lii'><Link to='/home' className='navLink'>Home</Link></li>

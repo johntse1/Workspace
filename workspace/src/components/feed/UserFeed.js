@@ -3,9 +3,10 @@ import Button from '../Button';
 import User from './User.js'
 
 function UserFeed(props){
+  console.log(props.feed);
     return(
         <div className='feed'>
-          {props.feed.map((item) => 
+          {typeof props.feed === 'undefined' ? <h1>No workers found</h1> : props.feed.map((item) => 
             <User post={item} key={item._id}></User>
           )}
         </div>
