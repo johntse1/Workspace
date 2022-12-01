@@ -7,6 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { API_SET_JOB, API_BASE_URL, API_GET_ME, API_GET_ALL_JOBS } from '../API_ENDPOINTS'
 import NavBar from '../components/navigation/NavBar';
 import UserNavBar from '../components/navigation/UserNavBar';
+import "./css/Jobs.css";
 
 function CreateJob() {
 
@@ -208,15 +209,16 @@ function CreateJob() {
 
         <div className='form-control'>
           <label>Tags</label>
-          <Select
-            isMulti
-            name="colors"
-            options={skills}
-            className="basic-multi-select"
-            classNamePrefix="select"
-            onChange={(e) => handleSelectChange(e)}
-
-          />
+          <div className='dropDown'>
+            <Select
+              isMulti
+              name="colors"
+              options={skills}
+              className="basic-multi-select"
+              classNamePrefix="select"
+              onChange={(e) => handleSelectChange(e)}
+            />
+          </div>
         </div>
 
         <div className='form-control'>
