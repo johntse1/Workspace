@@ -132,6 +132,24 @@ const getReviewsOther = asyncHandler(async (req, res) => {
     res.status(200).json({reviews})
 
 })
+
+const updatetemp = asyncHandler(async (req, res) => {
+    Review.find({},(err,reviews) => {
+        if(err){
+            console.log("error")
+        }
+        reviews.map( async review =>{ 
+            const user = await User.findById(review.reviewer).exec()
+            if(user)
+            {
+                let updatedReview= await review.updateOne({$set: {username:(user.first_name + " " + user.last_name)}})
+                if(updatedReview)
+                console.log(updatedReview)
+            }
+        })
+    })
+})
+
 module.exports = {
     createReview,
     getReviews,

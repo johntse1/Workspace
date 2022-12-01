@@ -210,6 +210,34 @@ const getallUsers = asyncHandler(async(req,res) => {
 
 })
 
+const updatePass = asyncHandler(async (req, res) => {
+
+    const user = await User.findById(req.user.id)
+
+    if (!user) {
+        res.status(401)
+        throw new Error('User not found')
+    }
+
+    if(!req.body.password)
+    {
+        res.status(400)
+        throw new Error('Please enter a password')
+    }
+
+        const salt = await bcrypt.genSalt(10)
+        const hashedPassword = await bcrypt.hash(req.body.password,salt)
+        
+        console.log(hashedPassword)
+        if(hashedPassword)
+        {
+            await user.updateOne({password:hashedPassword})
+            res.status(200).json(user)
+        }
+
+
+})
+
 
 
 //generate token for jwt
@@ -224,7 +252,7 @@ module.exports = {
     getMe,
     getUser,
     getUserTag,
-    getallUsers
-    
+    getallUsers,
+    updatePass
     
 }
