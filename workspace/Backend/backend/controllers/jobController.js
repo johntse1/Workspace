@@ -181,9 +181,6 @@ const updatetemp = asyncHandler(async (req, res) => {
             }
         })
     })
-
-
-
 })
 
 // @desc update jobs

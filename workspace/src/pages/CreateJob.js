@@ -34,7 +34,7 @@ function CreateJob() {
   const [USER_POST_DESCRIPTION, setUSER_POST_DESCRIPTION] = useState('')
   const [USER_TAGS, setUSER_TAGS] = useState([])
   const [USER_ADDRESS, setUSER_ADDRESS] = useState('')
-  const [USER_IMAGES, setUSER_IMAGES] = useState()
+  const [USER_IMAGES, setUSER_IMAGES] = useState([])
 
   if (localStorage.getItem('JWT_TOKEN') == null) {
     return <Redirect to="/"></Redirect>
@@ -88,10 +88,14 @@ function CreateJob() {
     let token = localStorage.getItem("JWT_TOKEN")
     const formdata = new FormData()
     // formdata.append("images", USER_IMAGES)
-    let files = USER_IMAGES
-    for (let i = 0; i < files.length; i++) {
-      formdata.append("images", files.item(i))
+    if(USER_IMAGES.length>=1)
+    {
+      let files = USER_IMAGES
+      for (let i = 0; i < files.length; i++) {
+        formdata.append("images", files.item(i))
+      }
     }
+   
 
     formdata.append("title", USER_TITLE)
     formdata.append("user", USER_ID)
