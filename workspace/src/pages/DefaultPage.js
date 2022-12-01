@@ -13,7 +13,7 @@ import Profile from '../pages/Profile'
 import Select from 'react-select'
 import { useEffect } from 'react';
 
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth, db } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
 
@@ -137,7 +137,10 @@ function Login() {
       const email = USER_EMAIL;
       const password = USER_PASSWORD;
       const res = await createUserWithEmailAndPassword(auth, email, password);
-      
+      await updateProfile(res.user,{
+        displayName
+      });
+
       await setDoc(doc(db, "users", res.user.uid), {
         uid: res.user.uid,
         displayName:displayName,
@@ -146,6 +149,7 @@ function Login() {
       
       await setDoc(doc(db, "userChats", res.user.uid), {});
     }
+    //throws error when users are present in firebase
     catch (err){
       console.log(err);
       setErr(true);
@@ -212,29 +216,25 @@ function Login() {
           <Tab>Log in</Tab>
           <Tab>Sign Up</Tab>
         </TabList>
+          <TabPanel>
+              <div className='form-control'>
+                <label>Email</label>
+                <input type='text' placeholder='Enter your Email'
+                  value={USER_EMAIL}
+                  onChange={(e) => setUSER_EMAIL(e.target.value)}
 
-        <TabPanel>
-          <div className='form-control'>
-            <label>Email</label>
-            <input type='text' placeholder='Enter your Email'
-              value={USER_EMAIL}
-              onChange={(e) => setUSER_EMAIL(e.target.value)}
+                />
+              </div>
 
-            />
-          </div>
-
-          <div className='form-control'>
-            <label>Password</label>
-            <input type='password' placeholder='Enter your Password'
-              value={USER_PASSWORD}
-              onChange={(e) => setUSER_PASSWORD(e.target.value)}
-            />
-          </div>
-          <Button color='black' text='Sign in' onClick={signin} />
-
-        </TabPanel>
-
-
+              <div className='form-control'>
+                <label>Password</label>
+                <input type='password' placeholder='Enter your Password'
+                  value={USER_PASSWORD}
+                  onChange={(e) => setUSER_PASSWORD(e.target.value)}
+                />
+              </div>
+              <Button color='black' text='Sign in' onClick={signin} />
+          </TabPanel>
         <TabPanel>
 
           <div className='form-control'>
@@ -271,14 +271,15 @@ function Login() {
           </div>
 
           <div className='form-control'>
-            <label>What are you?</label>
-            <Select
-              name="Contractor"
-              options={Contractor}
-              className="basic-multi-select"
-              classNamePrefix="select"
-              onChange={(e) => handleSelectChangeCon(e)}
-            />
+            <div className='dropDown'>
+              <label>What are you?</label>
+              <Select
+                name="Contractor"
+                options={Contractor}
+                className="basic-multi-select"
+                classNamePrefix="select"
+                onChange={(e) => handleSelectChangeCon(e)}/>
+            </div>
           </div>
 
           <div className='form-control'>
@@ -296,7 +297,7 @@ function Login() {
           <div className='form-control'>
             <label>Description</label>
             <form>
-              <textarea type='text'
+              <textarea type='text' class="textstuff"
                 placeholder='Enter a description (optional)'
                 value={USER_DESCRIPTION}
                 onChange={(e) => setUSER_DESCRIPTION(e.target.value)}
@@ -308,6 +309,7 @@ function Login() {
 
           <div className='form-control'>
             <label>Skills</label>
+            <div className='dropDown'>
             <Select
               isMulti
               name="colors"
@@ -315,8 +317,8 @@ function Login() {
               className="basic-single"
               classNamePrefix="select"
               onChange={(e) => handleSelectChange(e)}
-
             />
+            </div>
           </div>
           <div className='form-control'>
             <label>Profile Pictures</label>

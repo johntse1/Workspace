@@ -1,22 +1,24 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import {Link} from 'react-router-dom'
 import './nav.css';
 import { Redirect, Switch,useHistory } from "react-router-dom";
 import { getAuth, signOut } from "firebase/auth";
 
+import {AuthContext} from '../context/AuthContext';
+
+
 function NavBar(){
     let history = useHistory()
     const logout =() => {
+        const auth = getAuth();
         localStorage.removeItem("JWT_TOKEN")
         history.push('/')
+        signOut(auth);
+        console.log("firebase sign out occurred");
     }
-    const auth = getAuth();
-    
-    signOut(auth).then(() => {
-    // Sign-out successful.
-    }).catch((error) => {
-    // An error happened.
-    });
+
+    const {currentUser} = useContext(AuthContext);
+    console.log('This is the current user:'+currentUser);
 
     return(
         <ul className='uli'>

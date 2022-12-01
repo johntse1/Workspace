@@ -60,12 +60,17 @@ function UserProfile() {
       <NavBar/>
       <Tabs>
         {/* <h1>{prof[0]}({prof[1]})</h1> */}
-        <div>
-          <img src={my_profile['image']} className='picture'/>
-          <h1 class="profileusername">{my_profile["first_name"] + " " + my_profile["last_name"]}</h1>
-          <h2 class="profileemail">email: {my_profile["email"]}</h2>
-          <h2 class="profileid">userId: {my_profile["id"]}</h2>
+        <div className='bigboy'>
+          <div>
+            <img src={my_profile['image']} className='picture'/>
+          </div>
+          <div>
+            <h1 class="profileusername">{my_profile["first_name"] + " " + my_profile["last_name"]}</h1>
+            <h2 class="profileemail">email: {my_profile["email"]}</h2>
+            <h2 class="profileid">userId: {my_profile["id"]}</h2>
+          </div>
         </div>
+        
         <TabList>
           <Tab>About</Tab>
           <Tab>Reviews</Tab>

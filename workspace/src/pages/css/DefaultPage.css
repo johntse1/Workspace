@@ -3,5 +3,23 @@ input{
     margin: 8px 0;
     box-sizing: border-box;
     border: line;
+    width: 50%;
 }
 
+input[type=password]{
+    width: 30%;
+}
+
+.textstuff {
+    resize:none;
+    width: 50%;
+}
+
+.dropDown{
+    width: 30%;
+}
+
+.entireLogin{
+    margin-left: auto;
+    margin-right: auto;
+}

@@ -53,11 +53,11 @@ function Jobs(){
         }
       }
     return (
-        <div>
+        <div className='jobpanel'>
           <NavBar/>
             <Tabs>
                 <TabList>
-                    <h1>Jobs Page</h1>
+                    <h1 className='head'>Jobs Page</h1>
                     <Tab>Current Jobs</Tab>
                     <Tab>Past Jobs</Tab>
                 </TabList>

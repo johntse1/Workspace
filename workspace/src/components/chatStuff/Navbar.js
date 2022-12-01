@@ -9,7 +9,6 @@ const Navbar = () => {
   
   return (
     <div className='navbar'>
-      <span className="logo">Test Chat</span>
       <div className="user">
         <span>{currentUser.displayName}</span>
       </div>

@@ -6,6 +6,8 @@
 }
 .profileid{
     text-align: center;
+    margin-left: auto;
+    
 }
 
 .picture {
@@ -17,8 +19,8 @@
     margin-right: auto;
     margin-left: auto;
     margin-bottom: auto;
-    padding:2px;
-    border-radius: 10px;
+    padding:10px;
+    border-radius: 30px;
 }
 
 .bigboy {

@@ -7,6 +7,7 @@ function ChatRender(){
 
   const navBar = () =>{
     let contBool = Boolean(localStorage.getItem('contractor'))
+    console.log(contBool);
     if(contBool === true){
       return <NavBar/>
     }

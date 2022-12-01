@@ -58,18 +58,18 @@ function UserJobs(){
         }
       }
     return (
-        <div>
+        <div className='jobpanel'>
           <NavBar/>
             <Tabs>
                 <TabList>
-                    <h1>Jobs Page</h1>
+                    <h1 className='head'>Jobs Page</h1>
                     <Tab>Listed Jobs</Tab>
                     <Tab>Ongoing Jobs</Tab>
                     <Tab>Past Jobs</Tab>
                 </TabList>
 
                 <TabPanel>
-                <div>
+                    <div className='jobs'>
                         {incomplete_jobs.map((jobs) => 
                             <MyJobs post={jobs} key={jobs._id} setRequestData={setRequestData}></MyJobs>
                         )}
@@ -77,7 +77,7 @@ function UserJobs(){
                 </TabPanel>
                 
                 <TabPanel>
-                    <div>
+                    <div className='jobs'>
                         {active_jobs.map((jobs) => 
                             <MyJobs post={jobs} key={jobs._id} setRequestData={setRequestData}></MyJobs>
                         )}
@@ -85,7 +85,7 @@ function UserJobs(){
                 </TabPanel>
 
                 <TabPanel>
-                <div>
+                     <div className='jobs'>
                         {previous_jobs.map((jobs) => 
                             <MyJobs post={jobs} key={jobs._id} setRequestData={setRequestData}></MyJobs>
                         )}
