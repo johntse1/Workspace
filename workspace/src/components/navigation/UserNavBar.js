@@ -3,13 +3,17 @@ import {Link} from 'react-router-dom'
 import './nav.css';
 import Button from '../Button';
 import { Redirect, Switch,useHistory } from "react-router-dom";
+import { getAuth, signOut } from "firebase/auth";
 
 function UserNavBar(){
     let history = useHistory()
     const logout =() => {
+        const auth = getAuth();
         localStorage.removeItem("JWT_TOKEN")
         history.push('/')
-      }
+        signOut(auth);
+        console.log("firebase sign out occurred");
+    }
     return(
         <ul className='uli'>
             <li className='lii'><Link to='/userHome' className='navLink'>Home</Link></li>
