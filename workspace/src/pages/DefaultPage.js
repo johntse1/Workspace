@@ -18,7 +18,7 @@ import { auth, db, storage } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
 
 import './css/DefaultPage.css';
-import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
+import { getDownloadURL, uploadBytesResumable, ref } from 'firebase/storage';
 
 function Login() {
 
@@ -134,30 +134,43 @@ function Login() {
 
     //Firebase initialization
     try{
-
-      //Creates unique image name
-      const date = new Date().getTime();
-      const storageRef = ref(storage, `${displayName + date}`);
-      
       const displayName = USER_EMAIL;
       const email = USER_EMAIL;
       const password = USER_PASSWORD;
+      const file = USER_IMAGES;
       const res = await createUserWithEmailAndPassword(auth, email, password);
-
-
-
-      await updateProfile(res.user,{
-        displayName,
-        photoURL: getDownloadURL
-      });
-
-      await setDoc(doc(db, "users", res.user.uid), {
-        uid: res.user.uid,
-        displayName:displayName,
-        email,
-      });
       
-      await setDoc(doc(db, "userChats", res.user.uid), {});
+
+      //image name
+      const date = new Date().getTime();
+      const storageRef = ref(storage, `${displayName + date}`);
+      
+      await uploadBytesResumable(storageRef, file).then(() => {
+        console.log("This was run");
+        getDownloadURL(storageRef).then(async (downloadURL) => {
+          try {
+            //Update profile
+            await updateProfile(res.user, {
+              displayName,
+              photoURL: downloadURL,
+            });
+            //create user on firestore
+            await setDoc(doc(db, "users", res.user.uid), {
+              uid: res.user.uid,
+              displayName,
+              email,
+              photoURL: downloadURL,
+            });
+
+            //create empty user chats on firestore
+            await setDoc(doc(db, "userChats", res.user.uid), {});
+          } catch (err) {
+            console.log(err);
+            setErr(true);
+            setLoading(false);
+          }
+        });
+      });
     }
     //throws error when users are present in firebase
     catch (err){
