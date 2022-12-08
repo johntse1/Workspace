@@ -10,7 +10,7 @@ import NavBar from '../components/navigation/NavBar';
 import UserNavBar from '../components/navigation/UserNavBar';
 import ReviewFeed from '../components/reviewStuff/ReviewFeed'
 import OtherUserReviews from '../components/reviewStuff/OtherUserReviews'
-
+import './css/Profile.css';
 
 function OtherUser(props){
     //console.log(props.location.state)
@@ -57,12 +57,12 @@ function OtherUser(props){
             <Tabs>
                 <div className='bigboy'><div>
                 {/* <h1>{prof[0]}({prof[1]})</h1> */}
-                <h1>{profile["first_name"] + " " + profile["last_name"]}'s profile</h1>
-                <h2>{profile["email"]}</h2>
-                <h2>{profile["id"]}</h2>
+                <div><img src={profile['image']} className='picture'/></div>
+                <h1 className='profileusername'>{profile["first_name"] + " " + profile["last_name"]}'s profile</h1>
+                <h2 className='profileemail'>email: {profile["email"]}</h2>
+                <h2 className='profileid'>userId: {profile["id"]}</h2>
                 </div>
 
-                <img src={profile['image']} className='picture'/>
                 </div>
                 <TabList>
                 <Tab>Skills</Tab>

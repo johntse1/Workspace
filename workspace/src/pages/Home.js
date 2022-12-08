@@ -8,18 +8,11 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Redirect } from 'react-router-dom';
 
-import Popup from '../components/PopupRegister';
-import PopUpCreatePost from '../components/PopUpCreatePost';
-import { useHistory } from "react-router-dom";
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import DatePicker from "react-datepicker"
 import 'react-datepicker/dist/react-datepicker.css'
 import Post from '../components/feed/Post.js'
 import Feed from '../components/feed/Feed.js'
-import { Route, Link } from 'react-router-dom'
-import CreateJob from '../pages/CreateJob'
-import { API_BASE_URL, API_GET_ME } from '../API_ENDPOINTS'
 import NavBar from '../components/navigation/NavBar';
 
 import './css/Home.css'

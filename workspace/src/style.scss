@@ -12,18 +12,17 @@
     
     .sidebar {
       flex: 1;
-      background-color: darkgray;
+      background-color: gray;
       position: relative;
-
+      border-right: 1px solid white;
       .navbar {
         display: flex;
         align-items: center;
-        background-color: slategrey;
+        background-color: black;
         height: 50px;
         padding: 10px;
         justify-content: space-between;
-        color: #ddddf7;
-
+        color: white;
         .user {
           display: flex;
           gap: 10px;
@@ -46,7 +45,7 @@
         }
       }
       .search {
-        border-bottom: 1px solid gray;
+        border-bottom: 1px solid black;
 
         .searchForm {
           padding: 10px;
@@ -58,7 +57,7 @@
             outline: none;
 
             &::placeholder {
-              color: lightgray;
+              color: white;
             }
           }
         }
@@ -71,9 +70,8 @@
         gap: 10px;
         color: white;
         cursor: pointer;
-
         &:hover {
-          background-color: lightsteelblue;
+          background-color: lightgray;
         }
 
         img {
@@ -100,12 +98,12 @@
 
       .chatInfo {
         height: 50px;
-        background-color:   gray;
+        background-color:   black;
         display: flex;
         align-items: center;
-        justify-content: space-evenly;
+        justify-content: right;
         padding: 10px;
-        color: lightgray;
+        color: white;
       }
 
       .chatIcons {
@@ -119,7 +117,7 @@
       }
 
       .messages {
-        background-color: #ddddf7;
+        background-color: white;
         padding: 10px;
         height: calc(100% - 160px);
         overflow: auto;
@@ -147,9 +145,9 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
-
+            color: white;
             p {
-              background-color: white;
+              background-color: black;
               padding: 10px 20px;
               border-radius: 0px 10px 10px 10px;
               max-width: max-content;
@@ -166,7 +164,7 @@
             .messageContent {
               align-items: flex-end;
               p {
-                background-color: #8da4f1;
+                background-color: black;
                 color: white;
                 border-radius: 10px 0px 10px 10px;
               }

@@ -2,6 +2,7 @@ import React from 'react'
 import Button from '../Button';
 import {Link} from 'react-router-dom'
 import axios from 'axios'
+import './ReviewPost.css'
 
 function ReviewPost(props){
     const displayTitle = () =>{
@@ -10,10 +11,11 @@ function ReviewPost(props){
 
     return(
         <div key={props.post.id}>
-            <h2><Link to={{pathname: '/otherUser', state: props.post.reviewer}} className='stuff'>{props.post.username}</Link></h2>
-            <h3>{props.post.title}</h3>
-            <h3>{props.post.rating}/5</h3>
-            <div>{props.post.text}</div>
+            <h3 className='titleP'>Title: {props.post.title}</h3>
+            <h2 className='name'><Link to={{pathname: '/otherUser', state: props.post.reviewer}} className='stuff'>{props.post.username}</Link></h2>
+            <h3 className='rating'>Overall Rating: {props.post.rating}/5</h3>
+            <div className='description'>{props.post.text}</div>
+            <hr/>
         </div>
     );
 }
