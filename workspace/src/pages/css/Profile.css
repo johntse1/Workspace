@@ -1,17 +1,18 @@
 .profileusername{
-    text-align: center;
+    padding: 10px;
+    font-size: 28px;
 }
 .profileemail{
-    text-align: center;
+    padding: 10px;
+    font-size: 28px;
 }
 .profileid{
-    text-align: center;
-    margin-left: auto;
-    
+    padding: 10px;
+    font-size: 28px;
 }
 
 .picture {
-    display:block;
+    display:flex;
     justify-content: right;
     align-self: right;
     height:250px;
@@ -20,10 +21,15 @@
     margin-left: auto;
     margin-bottom: auto;
     padding:10px;
+    padding-left: 0px;
     border-radius: 30px;
 }
 
 .bigboy {
     display:flex;
-    justify-content: space-between;
+    justify-content: start;
+}
+
+.skill{
+    
 }

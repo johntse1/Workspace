@@ -1,27 +1,43 @@
 .post {
     border-radius: 25px;
     border: 2px solid #22251c;
-    padding: 20px;
+    padding: 5px;
     width: 30%;
     height: 50%; 
     justify-content: center;
     align-items: center;
     display:flex;
     flex-direction: column;
-    margin:20px;
+    margin:15px;
 }
 
-.stuff {
-    display: flex;
+.title{
+    font-size: 32px;
     
 }
 
+.user{
+    font-size: 24px;
+    font-family:Arial, Helvetica, sans-serif;
+    padding: 20px;
+}
+
+.description{
+    display: flex;
+    text-align: center;
+}
+
 .postImg {
-    width:100px;
-    height:100px;
+    width:200px;
+    height:200px;
+    border-radius: 20px;
+    padding: 10px;
 }
 
 .images {
     display: flex;
-    
+}
+
+.price{
+    font-size: 24px;
 }

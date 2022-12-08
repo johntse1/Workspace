@@ -43,7 +43,7 @@ function Review(props){
         }, { headers: { "Authorization": `Bearer ${token}` } })
         .then(function (response) {
             console.log(response)
-            //history.goBack()
+            history.goBack()
         }).catch(function (error) {
             console.log(error.response)
             toast.dark("You have already made a review.");
@@ -56,7 +56,7 @@ function Review(props){
             <div className='container'>
             
                 <div className='form-control'>
-                <label>Title</label>
+                <label className='title'>Title</label>
                 <input type='text' placeholder='Enter review title'
                     value={REVIEW_TITLE}
                     onChange={(e) => setREVIEW_TITLE(e.target.value)}
@@ -64,7 +64,7 @@ function Review(props){
                 </div>
 
                 <div className='form-control'>
-                <label>Text</label>
+                <label className='title'>Text</label>
 
                 <form>
                     <textarea className='textstuff' type='text'

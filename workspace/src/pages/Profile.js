@@ -78,8 +78,8 @@ function Profile() {
           </div>
           <div>
             <h1 className="profileusername">{my_profile["first_name"] + " " + my_profile["last_name"]}</h1>
-            <h2 className="profileemail">{my_profile["email"]}</h2>
-            <h2 className="profileid">{my_profile["id"]}</h2>
+            <h2 className="profileemail">email: {my_profile["email"]}</h2>
+            <h2 className="profileid">userId: {my_profile["id"]}</h2>
           </div>
         </div>
 

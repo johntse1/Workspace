@@ -6,8 +6,8 @@ import UserNavBar from '../components/navigation/UserNavBar'
 function ChatRender(){
 
   const navBar = () =>{
-    let contBool = localStorage.getItem('contractor')
-    console.log("Am i a contractor "+ contBool);
+    let contBool = Boolean(localStorage.getItem('contractor'))
+    console.log(contBool);
     if(contBool === true){
       return <NavBar/>
     }
@@ -17,7 +17,9 @@ function ChatRender(){
   }
   return (
     <div className='home'>
+      <br/>
       <div>{navBar()}</div>
+      <br/>
       <div className="container">
         <Sidebar/>
         <Chat/>
