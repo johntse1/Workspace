@@ -10,7 +10,7 @@ function ReviewPost(props){
 
     return(
         <div key={props.post.id}>
-            <h2>{props.post.reviewee}</h2>
+            <h2><Link to={{pathname: '/otherUser', state: props.post.reviewer}} className='stuff'>{props.post.username}</Link></h2>
             <h3>{props.post.title}</h3>
             <h3>{props.post.rating}/5</h3>
             <div>{props.post.text}</div>

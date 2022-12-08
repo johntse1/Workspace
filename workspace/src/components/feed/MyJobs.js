@@ -40,36 +40,42 @@ function MyJobs(props){
       //complete jobs for contractor
       if(props.post.status == 'Complete')
         return(
-          <div key={props.post._id}>
+          <div className='feed'>
+          <div key={props.post._id} className='post'>
             <h1>{props.post.title}</h1>
             <Link to={{pathname: '/otherUser', state: props.post.user}} className='stuff'>{props.post.username}</Link>
             <div>{props.post.text}</div>
             <div>{props.post.price}</div>
             <div>{props.post.status}</div>
             <Link to={{pathname: '/review', state: props.post._id}}><Button text='Review' onClick={displayTitle}></Button></Link>
+          </div>
           </div>)
       //jobs that were accepted and in progress
       if(props.post.status == 'in progress')
         return(
-          <div key={props.post._id}>
+          <div className='feed'>
+          <div key={props.post._id} className='post'>
             <h1>{props.post.title}</h1>
-            <div>{props.post.user}</div>
+            <Link to={{pathname: '/otherUser', state: props.post.user}} className='stuff'>{props.post.username}</Link>
             <div>{props.post.text}</div>
             <div>{props.post.price}</div>
             <div>{props.post.status}</div>
             <Button text='Mark as Complete' onClick={completeJob}></Button>
             <ToastContainer/>
+          </div>
           </div>)
       else
       {
         return(
-        <div key={props.post._id}>
+          <div className='feed'>
+        <div key={props.post._id} className='post'>
             <h1>{props.post.title}</h1>
-            <div>{props.post.user}</div>
+            <Link to={{pathname: '/otherUser', state: props.post.user}} className='stuff'>{props.post.username}</Link>
             <div>{props.post.text}</div>
             <div>{props.post.price}</div>
             <div>{props.post.status}</div>
             <Button text='Remove Job' onClick={removeJob}></Button>
+        </div>
         </div>
         )
       }
