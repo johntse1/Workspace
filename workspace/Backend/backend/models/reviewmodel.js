@@ -28,6 +28,9 @@ const reviewSchema = mongoose.Schema({
     title:{
         type:String,
         required:[true, 'Please add a title']
+    },
+    username:{
+        type:String
     }
 },
 {

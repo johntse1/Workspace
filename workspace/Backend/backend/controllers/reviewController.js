@@ -59,7 +59,8 @@ const createReview = asyncHandler(async (req, res) => {
             reviewee: job.acceptedby,
             text: req.body.text,
             rating: req.body.rating,
-            title: req.body.title
+            title: req.body.title,
+            username:req.user.first_name + " " + req.user.last_name
         })
         res.status(200).json(review)
     }
@@ -72,7 +73,9 @@ const createReview = asyncHandler(async (req, res) => {
             reviewee: job.user,
             text: req.body.text,
             rating: req.body.rating,
-            title: req.body.title
+            title: req.body.title,
+            username:req.user.first_name + " " + req.user.last_name
+
         })
         res.status(200).json(review)
     }

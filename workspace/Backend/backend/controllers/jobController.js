@@ -37,6 +37,22 @@ const setJobs = asyncHandler(async (req, res) => {
         res.status(401)
         throw new Error('Please add a text fields')
     }
+
+    if (!req.body.tags) {
+        req.files.forEach(image => {
+            try{
+                fs.unlinkSync(path.join(__dirname,'..','..','images',image.filename))
+            } catch(err){
+                console.log(err)
+                res.status(403)
+                throw new Error ("Failed to upload images")
+            }
+        })
+
+        res.status(406)
+        throw new Error('Please enter tag(s)')
+    }
+
     if (!req.body.title) {
         req.files.forEach(image => {
             try{
@@ -122,12 +138,21 @@ const setJobs = asyncHandler(async (req, res) => {
             throw new Error('Please enter another address')
         })
     }
+
+    let tags = req.body.tags
+    if(req.body.tags)
+    {
+        tags = tags.split(",")        
+    }
+
+    console.log(tags)
+
     const job = await Job.create({
         title: req.body.title,
         user: req.user.id,
         text: req.body.text,
         price: req.body.price,
-        tags: req.body.tags,
+        tags: tags,
         status: "Incomplete",
         acceptedby: null,
         location: coord,
@@ -141,17 +166,17 @@ const setJobs = asyncHandler(async (req, res) => {
     const user = await User.findById(req.user.id)
     if (user.contractor == false) {
         if (req.body.tags) {
-
+            console.log("bruh moment")
             let temp = user.skills
-
-            if (req.body.tags.length == 1) {
-                if (temp.includes(req.body.tags[0]) == false) {
-                    temp.push(req.body.tags[0])
+            console.log(tags)
+            if (tags.length === 1) {
+                if (temp.includes(req.body.tags) == false) {
+                    temp.push(tags[0])
                 }
             }
 
-            else if (req.body.tags.length > 1) {
-                for (const x of req.body.tags) {
+            else if (tags.length >1 ) {
+                for (const x of tags) {
                     if (temp.includes(x) == false) {
                         temp.push(x)
                     }
@@ -460,7 +485,6 @@ const getIncompleteJobs = asyncHandler(async (req, res) => {
         const jobs = await Job.find({ acceptedby: req.user.id, status: "Incomplete" }).sort({ createdAt: 'desc' }).exec()
         res.status(200).json(jobs)
     }
-
 })
 
 
@@ -480,5 +504,5 @@ module.exports = {
     getCurrentJobs,
     getPastJobs,
     getIncompleteJobs,
-    updatetemp
+    updatetemp,
 }
