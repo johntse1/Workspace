@@ -6,6 +6,7 @@ import axios from 'axios'
 import Button from '../components/Button'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Redirect } from 'react-router-dom';
 
 import Popup from '../components/PopupRegister';
 import PopUpCreatePost from '../components/PopUpCreatePost';
@@ -29,6 +30,7 @@ function Home() {
   const [pageNum, setNum] = useState(0);
   const [USER_COORDINATES, setUSER_COORDINATES] = useState([])
 
+  
 
   useEffect(() => {
     loadJob();
@@ -36,16 +38,18 @@ function Home() {
   const loadJob = () => {
     let cords = []
     let token = localStorage.getItem("JWT_TOKEN") 
+    let dist = 50
     if ('geolocation' in navigator) {
 
       navigator.geolocation.getCurrentPosition((position) => {
         // console.log("Latitude is :", position.coords.latitude);
         // console.log("Longitude is :", position.coords.longitude);
         cords = [parseFloat(position.coords.latitude), parseFloat(position.coords.longitude)]
+        setUSER_COORDINATES(cords)
       axios.post('https://workspace.onrender.com/api/jobs/getwithintag', 
       {
         coord:cords,
-        distance:50
+        distance:dist
       },{ headers: { "Authorization": `Bearer ${token}` } })
       .then(function (response) {
         console.log(response.data)
@@ -71,6 +75,9 @@ function Home() {
       }
   }
 
+  if (localStorage.getItem('JWT_TOKEN') == null) {
+    return <Redirect to="/"></Redirect>
+  }
   const makePages = (arr) => {
     let pageSize = 5
     let tempArr = []
@@ -104,15 +111,34 @@ function Home() {
     }
   }
 
+  const setDist = (num) => {
+    let token = localStorage.getItem("JWT_TOKEN") 
+    console.log(num + ' miles')
+    axios.post('https://workspace.onrender.com/api/jobs/getwithintag', 
+      {
+        coord:USER_COORDINATES,
+        distance:num
+      },{ headers: { "Authorization": `Bearer ${token}` } })
+      .then(function (response) {
+        console.log(response.data)
+        console.log("showing all posts with correct tags within " + num + " miles")
+        toast.dark("Loading closest jobs near you.")
+        makePages(response.data)
+
+      }).catch(function (error) {
+        console.log(error.response.status)
+      });
+    
+  }
   //console.log('This is curr'+currItems);
   
   return (
     <div className="App">
       <NavBar />
-      
+      {USER_COORDINATES.length === 0 ? <div></div> : <div className='coolButton'><Button text='20 miles' onClick={() => setDist(20)}></Button><Button text='30 miles' onClick={() => setDist(30)}></Button><Button text='40 miles' onClick={() => setDist(40)}></Button><Button text='50 miles' onClick={() => setDist(50)}></Button></div>}
       <Feed feed={currItems}></Feed>
       <div className='pageButton'><Button text='Prev Page' onClick={prevPage}></Button>
-      {pageNum + 1}
+      {pageNum + 1} 
       <Button text='Next Page' onClick={nextPage}></Button></div>
       <div className='coolButton'><Button text='Refresh Feed' onClick={loadJob}></Button></div>
 

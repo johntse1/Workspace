@@ -19,6 +19,7 @@ function UserNavBar(){
             <li className='lii'><Link to='/userHome' className='navLink'>Home</Link></li>
             <li className='lii'><Link to='/userProfile' className='navLink'>My Profile</Link></li>
             <li className='lii'><Link to='/userjobs' className='navLink'>Jobs</Link></li>
+            <li className='lii'><Link to ='/create' className='navLink'>Create Job Posting</Link></li>
             <li className='lii'><Link to='/chat' className='navLink'>Chat</Link></li>
             <li><Link className='logOut' onClick={logout}>Logout</Link></li>
         </ul>

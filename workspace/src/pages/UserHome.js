@@ -77,7 +77,7 @@ function UserHome(){
         <div className='pageButton'><Button text='Prev Page' onClick={prevPage}></Button>
         {pageNum + 1}
         <Button text='Next Page' onClick={nextPage}></Button></div>
-        <div className='coolButton'><Link to ='/create'><Button text='Create Job Posting'></Button></Link>
+        <div className='coolButton'>
         <Button text='Refresh Feed' onClick={loadJob}></Button></div>
       </div>
   );
