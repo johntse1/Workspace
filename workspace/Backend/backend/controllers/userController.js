@@ -166,7 +166,7 @@ const getUser = asyncHandler(async(req,res) => {
 
 const getUserTag = asyncHandler(async(req,res) => {
     const filter = { skills: { $in: req.user.skills }, contractor:true}
-    const users = await User.find(filter).select('_id first_name last_name description skills contractor')  
+    const users = await User.find(filter).select('_id first_name last_name description skills contractor image')  
 
     res.status(200).json(users)
 })
