@@ -108,7 +108,9 @@ function CreateJob() {
 
     axios({
       method: "post",
-      url: "https://workspace.onrender.com/api/jobs/set",
+      // url: "https://workspace.onrender.com/api/jobs/set",
+      url: "http://localhost:3000/api/jobs/set",
+
       data: formdata,
       headers: { "Content-Type": "multipart/form-data", "Authorization": `Bearer ${token}` }
     }).then(function (response) {
@@ -122,16 +124,22 @@ function CreateJob() {
       }
 
       if (error.response.status == 401) {
-        toast.error("Please add a text field")
+        toast.error("Failed to upload image to server")
       }
       if (error.response.status == 402) {
-        toast.error("Please add a title")
+        toast.error("Please add a tag to the listing")
       }
       if (error.response.status == 403) {
         toast.error("Please enter a price field")
       }
       if (error.response.status == 404) {
-        toast.error("Failed to upload to imgur")
+        toast.error("Please enter a title")
+      }
+      if (error.response.status == 405) {
+        toast.error("Please enter a price")
+      }
+      if (error.response.status == 406) {
+        toast.error("Failed to upload images to imgur")
       }
     })
 

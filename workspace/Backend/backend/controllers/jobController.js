@@ -29,12 +29,12 @@ const setJobs = asyncHandler(async (req, res) => {
                 fs.unlinkSync(path.join(__dirname,'..','..','images',image.filename))
             } catch(err){
                 console.log(err)
-                res.status(403)
+                res.status(401)
                 throw new Error ("Failed to upload images")
             }
         })
 
-        res.status(401)
+        res.status(402)
         throw new Error('Please add a text fields')
     }
 
@@ -44,12 +44,12 @@ const setJobs = asyncHandler(async (req, res) => {
                 fs.unlinkSync(path.join(__dirname,'..','..','images',image.filename))
             } catch(err){
                 console.log(err)
-                res.status(403)
+                res.status(401)
                 throw new Error ("Failed to upload images")
             }
         })
 
-        res.status(406)
+        res.status(403)
         throw new Error('Please enter tag(s)')
     }
 
@@ -59,11 +59,11 @@ const setJobs = asyncHandler(async (req, res) => {
                 fs.unlinkSync(path.join(__dirname,'..','..','images',image.filename))
             } catch(err){
                 console.log(err)
-                res.status(403)
+                res.status(401)
                 throw new Error ("Failed to upload images")
             }
         })
-        res.status(402)
+        res.status(404)
         throw new Error('Please add a title field')
     }
 
@@ -77,7 +77,7 @@ const setJobs = asyncHandler(async (req, res) => {
                 throw new Error ("Failed to upload images")
             }
         })
-        res.status(403)
+        res.status(405)
         throw new Error('Please add a price field')
     }
     console.log(req.files)
@@ -85,7 +85,6 @@ const setJobs = asyncHandler(async (req, res) => {
     if (req.files) {
         const CLIENT_ID = "ec5fa7976333d6b"
         const client = new ImgurClient({ clientId: CLIENT_ID });
-        console.log("ran")
         for (let i in req.files ) { 
             const response = await client.upload({
                 image: fs.createReadStream(path.join(__dirname, '..', '..', 'images', req.files[i].filename)),
@@ -97,8 +96,20 @@ const setJobs = asyncHandler(async (req, res) => {
             }
             else {
                 console.log(response)
-                // res.status(404)
-                // throw new Error ("Failed to upload images")
+                console.log("ran")
+                // temp
+                req.files.forEach(image => {
+                    try{
+                        fs.unlinkSync(path.join(__dirname,'..','..','images',image.filename))
+                    } catch(err){
+                        console.log(err)
+                        // res.status(403)
+                        // throw new Error ("Failed to upload images")
+                    }
+                })
+                //temp
+                res.status(406)
+                throw new Error ("Failed to upload images to imgur")
             }
         }
 
@@ -107,7 +118,7 @@ const setJobs = asyncHandler(async (req, res) => {
                 fs.unlinkSync(path.join(__dirname,'..','..','images',image.filename))
             } catch(err){
                 console.log(err)
-                res.status(403)
+                res.status(401)
                 throw new Error ("Failed to upload images")
             }
         })

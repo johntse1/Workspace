@@ -158,5 +158,6 @@ module.exports = {
     getReviews,
     updateReview,
     deleteReview,
-    getReviewsOther
+    getReviewsOther,
+    updatetemp
 }

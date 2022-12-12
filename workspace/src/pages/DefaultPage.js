@@ -4,7 +4,7 @@ import Button from '../components/Button'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { Redirect, useHistory, Route, useNavigate, Link} from "react-router-dom";
+import { Redirect, useHistory, Route, useNavigate, Link } from "react-router-dom";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import DatePicker from "react-datepicker"
@@ -36,7 +36,6 @@ function Login() {
 
 
   let history = useHistory()
-  let imgurclient = "ec5fa7976333d6b"
   const [JWT_TOKEN, setJWT_TOKEN] = useState('')
   const [USER_EMAIL, setUSER_EMAIL] = useState('')
   const [USER_PASSWORD, setUSER_PASSWORD] = useState('')
@@ -48,9 +47,11 @@ function Login() {
   const [USER_CONTRACTOR, setUSER_CONTRACTOR] = useState(false)
   const [USER_COORDINATES, setUSER_COORDINATES] = useState([])
   const [USER_IMAGES, setUSER_IMAGES] = useState()
+  const [button_clicked, setbutton_clicked] = useState(false)
 
-  const [loading,setLoading] = useState(false);
-  const [err,setErr] = useState(false);
+
+  const [loading, setLoading] = useState(false);
+  const [err, setErr] = useState(false);
 
   if ((localStorage.getItem('JWT_TOKEN') != null) && USER_CONTRACTOR == true) {
     console.log(USER_CONTRACTOR)
@@ -83,43 +84,56 @@ function Login() {
   let API_SIGN_UP_URL = 'users/register'
 
 
-  
+
   const signin = () => {
-    //This section is used to connect to Firebase
+    if (button_clicked == false) {
+      setbutton_clicked(true)
+      //This section is used to connect to Firebase
       const email = USER_EMAIL;
       const password = USER_PASSWORD;
       signInWithEmailAndPassword(auth, email, password);
-    //End of section used to connection to Firebase
-    
-    let url = API_BASE_URL + API_SIGN_IN_URL
-    axios.post(url,
-      {
-        email: USER_EMAIL,
-        password: USER_PASSWORD
-      })
-      .then(function (response) {
-        console.log(response)
-        toast.dark('Sign in successful')
-        setJWT_TOKEN(response.data.token)
-        localStorage.setItem('JWT_TOKEN', response.data.token)
-        localStorage.setItem('contractor', response.data.contractor)
-        localStorage.setItem('image', response.data.image)
-        //probably navigate to a new page here or smth
-        if (response.data.contractor == false) {
-          history.push('/userprofile')
-        }
-        else {
-          history.push('/profile')
-        }
-      }).catch(function (error) {
-        console.log(error.response.status)
-        if (error.response.status === 400) {
-          toast.warning('Invalid Login')
-        }
-      })
+      //End of section used to connection to Firebase
+
+      let url = API_BASE_URL + API_SIGN_IN_URL
+      axios.post(url,
+        {
+          email: USER_EMAIL,
+          password: USER_PASSWORD
+        })
+        .then(function (response) {
+          console.log(response)
+          toast.dark('Sign in successful')
+          setJWT_TOKEN(response.data.token)
+          localStorage.setItem('JWT_TOKEN', response.data.token)
+          localStorage.setItem('contractor', response.data.contractor)
+          localStorage.setItem('image', response.data.image)
+          setbutton_clicked(false)
+          //probably navigate to a new page here or smth
+          if (response.data.contractor == false) {
+            history.push('/userprofile')
+          }
+          else {
+            history.push('/profile')
+          }
+        }).catch(function (error) {
+          console.log(error.response.status)
+          if (error.response.status === 400) {
+            toast.warning('Invalid Login')
+            setbutton_clicked(false)
+          }
+        })
+    }
+
+    else {
+      toast.warning('Logging in to Workspace')
+    }
+
   }
 
   const registerUser2 = async (e) => {
+    if (button_clicked == false) {
+      setbutton_clicked(true)
+    
     const formdata = new FormData()
     formdata.append("image", USER_IMAGES)
     formdata.append("first_name", USER_FIRST_NAME)
@@ -133,18 +147,18 @@ function Login() {
 
 
     //Firebase initialization
-    try{
+    try {
       const displayName = USER_EMAIL;
       const email = USER_EMAIL;
       const password = USER_PASSWORD;
       const file = USER_IMAGES;
       const res = await createUserWithEmailAndPassword(auth, email, password);
-      
+
 
       //image name
       const date = new Date().getTime();
       const storageRef = ref(storage, `${displayName + date}`);
-      
+
       await uploadBytesResumable(storageRef, file).then(() => {
         console.log("This was run");
         getDownloadURL(storageRef).then(async (downloadURL) => {
@@ -168,15 +182,18 @@ function Login() {
             console.log(err);
             setErr(true);
             setLoading(false);
+            setbutton_clicked(false)
+
           }
         });
       });
     }
     //throws error when users are present in firebase
-    catch (err){
+    catch (err) {
       console.log(err);
       setErr(true);
       setLoading(false);
+      setbutton_clicked(false)
     }
     //End of firebase initialization
 
@@ -204,12 +221,20 @@ function Login() {
       console.log(error.response.status)
       if (error.response.status === 400) {
         toast.warning('Email already exists')
+        setbutton_clicked(false)
+
       }
 
       if (error.response.status === 401) {
         toast.warning('Please enter all fields')
+        setbutton_clicked(false)
+
       }
     })
+  }
+  else {
+    toast.dark("Registering User into Workspace..")
+  }
   }
 
   const handleSelectChange = (e) => {
@@ -239,25 +264,25 @@ function Login() {
           <Tab>Log in</Tab>
           <Tab>Sign Up</Tab>
         </TabList>
-          <TabPanel>
-              <div className='form-control'>
-                <label>Email</label>
-                <input type='text' placeholder='Enter your Email'
-                  value={USER_EMAIL}
-                  onChange={(e) => setUSER_EMAIL(e.target.value)}
+        <TabPanel>
+          <div className='form-control'>
+            <label>Email</label>
+            <input type='text' placeholder='Enter your Email'
+              value={USER_EMAIL}
+              onChange={(e) => setUSER_EMAIL(e.target.value)}
 
-                />
-              </div>
+            />
+          </div>
 
-              <div className='form-control'>
-                <label>Password</label>
-                <input type='password' placeholder='Enter your Password'
-                  value={USER_PASSWORD}
-                  onChange={(e) => setUSER_PASSWORD(e.target.value)}
-                />
-              </div>
-              <Button color='black' text='Sign in' onClick={signin} />
-          </TabPanel>
+          <div className='form-control'>
+            <label>Password</label>
+            <input type='password' placeholder='Enter your Password'
+              value={USER_PASSWORD}
+              onChange={(e) => setUSER_PASSWORD(e.target.value)}
+            />
+          </div>
+          <Button color='black' text='Sign In' onClick={signin} />
+        </TabPanel>
         <TabPanel>
 
           <div className='form-control'>
@@ -301,7 +326,7 @@ function Login() {
                 options={Contractor}
                 className="basic-multi-select"
                 classNamePrefix="select"
-                onChange={(e) => handleSelectChangeCon(e)}/>
+                onChange={(e) => handleSelectChangeCon(e)} />
             </div>
           </div>
 
@@ -333,19 +358,19 @@ function Login() {
           <div className='form-control'>
             <label>Skills</label>
             <div className='dropDown'>
-            <Select
-              isMulti
-              name="colors"
-              options={skills}
-              className="basic-single"
-              classNamePrefix="select"
-              onChange={(e) => handleSelectChange(e)}
-            />
+              <Select
+                isMulti
+                name="colors"
+                options={skills}
+                className="basic-single"
+                classNamePrefix="select"
+                onChange={(e) => handleSelectChange(e)}
+              />
             </div>
           </div>
           <div className='form-control'>
             <label>Profile Pictures</label>
-            <input type="file" name="image" onChange={imagechangeHandler} multiple={false}></input>
+            <input type="file" name="image" onChange={imagechangeHandler} multiple={false} accept=".jpg,.jpeg,.png" ></input>
           </div>
           <Button color='black' text='Register' onClick={registerUser2} />
           {/* <Button color='black' text='test' onClick={registerUser2} /> */}
