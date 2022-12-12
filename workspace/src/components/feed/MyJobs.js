@@ -16,8 +16,10 @@ function MyJobs(props){
         axios.delete(url, { headers: { "Authorization": `Bearer ${token}` } }).then(function (response) {
             console.log(response)
             props.setRequestData(new Date());
+            toast.dark("Job Removed")
           }).catch(function (error) {
             console.log(error)
+            toast.error("Job removal failed")
         })
         return <Redirect to='/'></Redirect>
 

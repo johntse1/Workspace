@@ -81,6 +81,31 @@ const setJobs = asyncHandler(async (req, res) => {
         throw new Error('Please add a price field')
     }
     console.log(req.files)
+    let coord = []
+    if (req.body.address) {
+        let base_url = "https://maps.googleapis.com/maps/api/geocode/json?"
+        let params = {
+            'key': process.env.GOOGLE_API_KEY,
+            'address': req.body.address
+        }
+        var options = {
+            'method': 'GET',
+            'url': base_url,
+            'params': params
+        }
+        await axios(options).then(function (response) {
+            if (response.data.results[0].geometry.location.lat) {
+                let lat = response.data.results[0].geometry.location.lat
+                let lon = response.data.results[0].geometry.location.lng
+                coord = [lat, lon]
+            }
+        }).catch(function (error) {
+            console.log(error)
+            res.status(400)
+            throw new Error('Please enter another address')
+        })
+    }
+
     let urls = []
     if (req.files) {
         const CLIENT_ID = "ec5fa7976333d6b"
@@ -125,30 +150,7 @@ const setJobs = asyncHandler(async (req, res) => {
     }
 
 
-    let coord = []
-    if (req.body.address) {
-        let base_url = "https://maps.googleapis.com/maps/api/geocode/json?"
-        let params = {
-            'key': process.env.GOOGLE_API_KEY,
-            'address': req.body.address
-        }
-        var options = {
-            'method': 'GET',
-            'url': base_url,
-            'params': params
-        }
-        await axios(options).then(function (response) {
-            if (response.data.results[0].geometry.location.lat) {
-                let lat = response.data.results[0].geometry.location.lat
-                let lon = response.data.results[0].geometry.location.lng
-                coord = [lat, lon]
-            }
-        }).catch(function (error) {
-            console.log(error)
-            res.status(400)
-            throw new Error('Please enter another address')
-        })
-    }
+
 
     let tags = req.body.tags
     if(req.body.tags)
@@ -448,7 +450,7 @@ const getJobsWithTagDistance = asyncHandler(async (req, res) => {
         tags: { $in: req.user.skills },
         status:"Incomplete"
     })
-        .sort("-score");
+        .sort({ createdAt: 'desc' }).exec();
     res.status(200).json(result)
 })
 
