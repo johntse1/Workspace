@@ -3,7 +3,7 @@ input{
     margin: 8px 0;
     box-sizing: border-box;
     border: line;
-    width: 10%;
+    width: 30%;
 }
 
 input[type=password]{
@@ -34,7 +34,7 @@ input[type=password]{
 
 .container{
     justify-content: left;
-    width: 30%;
+    width: 40%;
     margin: 0px;
 }
 
