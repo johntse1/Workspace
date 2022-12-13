@@ -60,28 +60,13 @@ const registerUser = asyncHandler(async (req,res) => {
                 imgurUrl = ""
         }
     }
-    let skills_temp = []
-    if(skills)
+    let skills_temp = req.body.skills
+    if(req.body.skills)
     {
-        if (!Array.isArray(skills))
-        {
-            skills_temp = skills.split(",")
-        }
-
-        else
-        {
-            if (skills[0].includes(","))
-            {
-                skills_temp = skills[0].split(",")
-            } 
-
-            else 
-            {
-                skills_temp = skills
-            }
-        }
+        skills_temp = skills_temp.split(",")
     }
-   
+
+    console.log(skills_temp)
 
     //create user 
     const user = await User.create({
@@ -91,7 +76,7 @@ const registerUser = asyncHandler(async (req,res) => {
         password: hashedPassword,
         birthday,
         description,
-        skills,
+        skills:skills_temp,
         rating,
         contractor,
         image:imgurUrl
@@ -106,7 +91,7 @@ const registerUser = asyncHandler(async (req,res) => {
             token: generateToken(user._id),
             birthday:user.birthday,
             description:user.description,
-            skills:skills_temp,
+            skills:user.skills,
             rating:user.rating,
             contractor: user.contractor,
             location: user.location,

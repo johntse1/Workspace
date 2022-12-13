@@ -204,6 +204,8 @@ function Login() {
     axios({
       method: "post",
       url: "https://workspace.onrender.com/api/users/register",
+      // url: "http://localhost:3000/api/users/register",
+
       data: formdata,
       headers: { "Content-Type": "multipart/form-data" }
     }).then(function (response) {
