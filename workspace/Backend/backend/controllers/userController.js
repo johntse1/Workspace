@@ -74,6 +74,11 @@ const registerUser = asyncHandler(async (req,res) => {
             {
                 skills_temp = skills[0].split(",")
             } 
+
+            else 
+            {
+                skills_temp = skills
+            }
         }
     }
    
