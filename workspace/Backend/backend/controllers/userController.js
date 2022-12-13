@@ -61,6 +61,23 @@ const registerUser = asyncHandler(async (req,res) => {
         }
     }
 
+    if(skills)
+    {
+        if (!Array.isArray(skills))
+        {
+            skills = skills.split(",")
+        }
+
+        else
+        {
+            if (skills[0].includes(","))
+            {
+                skills = skills[0].split(",")
+            } 
+        }
+    }
+   
+
     //create user 
     const user = await User.create({
         first_name,
