@@ -60,19 +60,19 @@ const registerUser = asyncHandler(async (req,res) => {
                 imgurUrl = ""
         }
     }
-
+    let skills_temp = []
     if(skills)
     {
         if (!Array.isArray(skills))
         {
-            skills = skills.split(",")
+            skills_temp = skills.split(",")
         }
 
         else
         {
             if (skills[0].includes(","))
             {
-                skills = skills[0].split(",")
+                skills_temp = skills[0].split(",")
             } 
         }
     }
@@ -101,7 +101,7 @@ const registerUser = asyncHandler(async (req,res) => {
             token: generateToken(user._id),
             birthday:user.birthday,
             description:user.description,
-            skills:user.skills,
+            skills:skills_temp,
             rating:user.rating,
             contractor: user.contractor,
             location: user.location,
