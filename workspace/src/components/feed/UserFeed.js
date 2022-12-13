@@ -1,6 +1,7 @@
-import React from 'react'
+import React from 'react';
 import Button from '../Button';
-import User from './User.js'
+import User from './User.js';
+import './feed.css';
 
 function UserFeed(props){
   console.log(props.feed);
