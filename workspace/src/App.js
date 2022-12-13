@@ -1,20 +1,23 @@
-import Home from './pages/Home'
 import {Link, Route} from 'react-router-dom'; 
+import {Switch,useHistory } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../src/components/context/AuthContext";
 //import NavBar from './components/navigation/NavBar';
 import Jobs from './pages/Jobs'
 import Profile from './pages/Profile'
 import ChatRender from "./pages/ChatRender";
 import Login from './pages/DefaultPage'
-import {Switch,useHistory } from "react-router-dom";
+import Home from './pages/Home'
+
 import CreateJob from './pages/CreateJob'
 import UserHome from './pages/UserHome'
 import UserProfile from './pages/UserProfile'
 import UserJobs from './pages/UserJobs'
 import OtherUser from './pages/OtherUser'
 import Review from './pages/Review'
+
 import './App.css';
-import { useContext } from "react";
-import { AuthContext } from "../src/components/context/AuthContext";
+import logo from "../src/components/WS.png";
 import "../src/style.scss";
 function App() {
   let history = useHistory()
@@ -31,8 +34,12 @@ function App() {
   };
   return (
     <div className = "App">
-      <h1 className="header">WELCOME TO WORKSPACE</h1>
-      
+      <div className='logohead'>
+        <img src={logo} className="logo"></img>
+        <h1 className="header">Workspace</h1>
+      </div>
+
+
       <Switch>
         <Route exact path="/" component={Login}>
         </Route>
@@ -43,6 +50,7 @@ function App() {
         
         {//Routes used for nav bar above
         }
+
         <Route exact path="/create" component={CreateJob} />
         <Route exact path="/userProfile" component={UserProfile} />
         <Route exact path="/userHome" component={UserHome} />

@@ -1,27 +1,30 @@
-import React, { useState } from 'react'
-import axios from 'axios'
-import Button from '../components/Button'
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
-import { Redirect, useHistory, Route, useNavigate, Link } from "react-router-dom";
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import 'react-tabs/style/react-tabs.css';
-import DatePicker from "react-datepicker"
-import 'react-datepicker/dist/react-datepicker.css'
-import Profile from '../pages/Profile'
-import Select from 'react-select'
+import React, { useState } from 'react';
 import { useEffect } from 'react';
 
+import { ToastContainer, toast } from 'react-toastify';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import { Redirect, useHistory, Route, useNavigate, Link } from "react-router-dom";
+
+
+import DatePicker from "react-datepicker";
+import Select from 'react-select';
+import axios from 'axios';
+import Button from '../components/Button';
+
+
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { getDownloadURL, uploadBytesResumable, ref } from 'firebase/storage';
 import { auth, db, storage } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
 
 import './css/DefaultPage.css';
-import { getDownloadURL, uploadBytesResumable, ref } from 'firebase/storage';
+import 'react-toastify/dist/ReactToastify.css';
+import 'react-tabs/style/react-tabs.css';
+import 'react-datepicker/dist/react-datepicker.css'
+
+import loginimg from "../../src/components/loginimg.jpg";
 
 function Login() {
-
   useEffect(() => {
     const getCords = async () => {
       navigator.geolocation.getCurrentPosition(function (position) {
@@ -256,9 +259,9 @@ function Login() {
   }
 
 
-
   return (
-    <div className='container'>
+    <div className='big'>
+      <div className='container'>
       <Tabs>
         <TabList>
           <Tab>Log in</Tab>
@@ -270,7 +273,6 @@ function Login() {
             <input type='text' placeholder='Enter your Email'
               value={USER_EMAIL}
               onChange={(e) => setUSER_EMAIL(e.target.value)}
-
             />
           </div>
 
@@ -378,7 +380,11 @@ function Login() {
         </TabPanel>
       </Tabs>
       <ToastContainer />
+      </div>
+      <div className='containerimg'>
+      </div>
     </div>
+    
   );
 }
 

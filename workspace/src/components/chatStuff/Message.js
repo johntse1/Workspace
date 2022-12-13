@@ -8,10 +8,6 @@ const Message = ({ message }) => {
 
   const ref = useRef();
 
-  useEffect(() => {
-    ref.current?.scrollIntoView({ behavior: "smooth" });
-  }, [message]);
-
   return (
     <div
       ref={ref}
@@ -26,7 +22,6 @@ const Message = ({ message }) => {
             }
             alt=""
           />
-        <span>just now</span>
       </div>
       <div className="messageContent">
         <p>{message.text}</p>
