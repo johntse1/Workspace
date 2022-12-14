@@ -127,13 +127,14 @@ function CreateJob() {
         toast.error("Failed to upload image to server")
       }
       if (error.response.status == 402) {
-        toast.error("Please add a tag to the listing")
+        toast.error("Please add a description")
       }
+      //this one
       if (error.response.status == 403) {
-        toast.error("Please enter a price field")
+        toast.error("Please enter a tag")
       }
       if (error.response.status == 404) {
-        toast.error("Please enter a title")
+        toast.error("Please enter a Job Name")
       }
       if (error.response.status == 405) {
         toast.error("Please enter a price")
@@ -163,8 +164,8 @@ function CreateJob() {
   }
 
   const imagechangeHandler = (e) => {
-    if (e.target.files.length > 5) {
-      alert("Only 5 files are accepted.")
+    if (e.target.files.length > 1) {
+      alert("Only 1 image is accepted.")
       e.target.value = null
     }
     else {

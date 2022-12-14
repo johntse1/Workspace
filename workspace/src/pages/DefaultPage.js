@@ -137,107 +137,108 @@ function Login() {
     if (button_clicked == false) {
       setbutton_clicked(true)
     
-    const formdata = new FormData()
-    formdata.append("image", USER_IMAGES)
-    formdata.append("first_name", USER_FIRST_NAME)
-    formdata.append("last_name", USER_LAST_NAME)
-    formdata.append("email", USER_EMAIL)
-    formdata.append("password", USER_PASSWORD)
-    formdata.append("birthday", USER_BIRTHDAY)
-    formdata.append("description", USER_DESCRIPTION)
-    formdata.append("skills", USER_SKILLS)
-    formdata.append("contractor", USER_CONTRACTOR)
+      const formdata = new FormData()
+      formdata.append("image", USER_IMAGES)
+      formdata.append("first_name", USER_FIRST_NAME)
+      formdata.append("last_name", USER_LAST_NAME)
+      formdata.append("email", USER_EMAIL)
+      formdata.append("password", USER_PASSWORD)
+      formdata.append("birthday", USER_BIRTHDAY)
+      formdata.append("description", USER_DESCRIPTION)
+      formdata.append("skills", USER_SKILLS)
+      formdata.append("contractor", USER_CONTRACTOR)
+
+      if(USER_PASSWORD.length<6){
+        toast("Your password was too short");
+        setbutton_clicked(false);
+      }
+      //Firebase initialization
+      try {
+        const displayName = USER_EMAIL;
+        const email = USER_EMAIL;
+        const password = USER_PASSWORD;
+        const file = USER_IMAGES;
+        const res = await createUserWithEmailAndPassword(auth, email, password);
 
 
-    //Firebase initialization
-    try {
-      const displayName = USER_EMAIL;
-      const email = USER_EMAIL;
-      const password = USER_PASSWORD;
-      const file = USER_IMAGES;
-      const res = await createUserWithEmailAndPassword(auth, email, password);
+        //image name
+        const date = new Date().getTime();
+        const storageRef = ref(storage, `${displayName + date}`);
 
+        await uploadBytesResumable(storageRef, file).then(() => {
+          console.log("This was run");
+          getDownloadURL(storageRef).then(async (downloadURL) => {
+            try {
+              //Update profile
+              await updateProfile(res.user, {
+                displayName,
+                photoURL: downloadURL,
+              });
+              //create user on firestore
+              await setDoc(doc(db, "users", res.user.uid), {
+                uid: res.user.uid,
+                displayName,
+                email,
+                photoURL: downloadURL,
+              });
 
-      //image name
-      const date = new Date().getTime();
-      const storageRef = ref(storage, `${displayName + date}`);
+              //create empty user chats on firestore
+              await setDoc(doc(db, "userChats", res.user.uid), {});
+            } catch (err) {
+              console.log(err);
+              setErr(true);
+              setLoading(false);
+              setbutton_clicked(false)
 
-      await uploadBytesResumable(storageRef, file).then(() => {
-        console.log("This was run");
-        getDownloadURL(storageRef).then(async (downloadURL) => {
-          try {
-            //Update profile
-            await updateProfile(res.user, {
-              displayName,
-              photoURL: downloadURL,
-            });
-            //create user on firestore
-            await setDoc(doc(db, "users", res.user.uid), {
-              uid: res.user.uid,
-              displayName,
-              email,
-              photoURL: downloadURL,
-            });
-
-            //create empty user chats on firestore
-            await setDoc(doc(db, "userChats", res.user.uid), {});
-          } catch (err) {
-            console.log(err);
-            setErr(true);
-            setLoading(false);
-            setbutton_clicked(false)
-
-          }
+            }
+          });
         });
-      });
-    }
-    //throws error when users are present in firebase
-    catch (err) {
-      console.log(err);
-      setErr(true);
-      setLoading(false);
-      setbutton_clicked(false)
-    }
-    //End of firebase initialization
-
-    //Works
-    axios({
-      method: "post",
-      url: "https://workspace.onrender.com/api/users/register",
-      data: formdata,
-      headers: { "Content-Type": "multipart/form-data" }
-    }).then(function (response) {
-      console.log(response)
-      toast.dark('Account successfully registered')
-      localStorage.setItem('JWT_TOKEN', response.data.token)
-      localStorage.setItem('contractor', response.data.contractor)
-      localStorage.setItem('image', response.data.image)
-
-      if (response.data.contractor == false) {
-        history.push('/userprofile')
       }
-      else {
-        history.push('/profile')
-      }
-
-    }).catch(function (error) {
-      console.log(error.response.status)
-      if (error.response.status === 400) {
-        toast.warning('Email already exists')
+      //throws error when users are present in firebase
+      catch (err) {
+        console.log(err);
+        setErr(true);
+        setLoading(false);
         setbutton_clicked(false)
-
       }
+      //End of firebase initialization
 
-      if (error.response.status === 401) {
-        toast.warning('Please enter all fields')
-        setbutton_clicked(false)
+      //Works
+      axios({
+        method: "post",
+        url: "https://workspace.onrender.com/api/users/register",
+        data: formdata,
+        headers: { "Content-Type": "multipart/form-data" }
+      }).then(function (response) {
+        console.log(response)
+        toast.dark('Account successfully registered')
+        localStorage.setItem('JWT_TOKEN', response.data.token)
+        localStorage.setItem('contractor', response.data.contractor)
+        localStorage.setItem('image', response.data.image)
 
-      }
-    })
-  }
-  else {
-    toast.dark("Registering User into Workspace..")
-  }
+        if (response.data.contractor == false) {
+          history.push('/userprofile')
+        }
+        else {
+          history.push('/profile')
+        }
+
+      }).catch(function (error) {
+        console.log(error.response.status)
+        if (error.response.status === 400) {
+          toast.warning('Email already exists')
+          setbutton_clicked(false)
+        }
+
+        if (error.response.status === 401) {
+          toast.warning('Please enter all fields')
+          setbutton_clicked(false)
+        }
+      })
+    }
+    else {
+      toast.dark("Registering User into Workspace..")
+    }
   }
 
   const handleSelectChange = (e) => {
@@ -381,10 +382,8 @@ function Login() {
       </Tabs>
       <ToastContainer />
       </div>
-      <div className='containerimg'>
-      </div>
+      <img src={loginimg} className="loginimg"></img>
     </div>
-    
   );
 }
 

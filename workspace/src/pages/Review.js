@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Button from '../components/Button';
-import { Redirect, useHistory, Route, Link } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import axios from 'axios'
 import NavBar from '../components/navigation/NavBar';
 import UserNavBar from '../components/navigation/UserNavBar';
@@ -20,9 +20,9 @@ function Review(props){
     if (localStorage.getItem('JWT_TOKEN') == null) {
         return <Redirect to="/"></Redirect>
       }
-    const displayTitle = () =>{
+    /*const displayTitle = () =>{
         console.log(props)
-    }
+    }*/
     const navBar = () =>{
         let contBool = localStorage.getItem('contractor')
         if(contBool){
@@ -94,7 +94,7 @@ function Review(props){
                             <Rating>
                                 <FaStar
                                     color={
-                                        givenRating < rate || givenRating == rate
+                                        givenRating < rate || givenRating === rate
                                         ? "rgb(255,215,0)"
                                         : "rgb(192,192,192)"
                                     }
