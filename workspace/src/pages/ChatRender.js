@@ -8,16 +8,10 @@ function ChatRender(){
   const navBar = () =>{
     let contBool = Boolean(localStorage.getItem('contractor'))
     console.log(contBool);
-    if(contBool == true){
-      return <NavBar/>
-    }
-    else{
-      return <UserNavBar/>
-    }
   }
   return (
     <div className='home'>
-      <div>{navBar()}</div>
+      <NavBar/>
       <div className="container">
         <Sidebar/>
         <Chat/>

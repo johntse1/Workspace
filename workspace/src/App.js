@@ -15,6 +15,7 @@ import UserProfile from './pages/UserProfile'
 import UserJobs from './pages/UserJobs'
 import OtherUser from './pages/OtherUser'
 import Review from './pages/Review'
+import ChatRenderUser from './pages/ChatRenderUser';
 
 import './App.css';
 import logo from "../src/components/WS.png";
@@ -48,7 +49,8 @@ function App() {
         <Route exact path="/jobs" component={Jobs} />
         <Route exact path="/chat" component={ChatRender}/>
         
-        {//Routes used for nav bar above
+        {//Routes used for navbar above
+         //Routers below are used for userNavBar
         }
 
         <Route exact path="/create" component={CreateJob} />
@@ -57,6 +59,7 @@ function App() {
         <Route exact path="/userJobs" component={UserJobs} />
         <Route exact path="/otherUser" component={OtherUser} />
         <Route exact path="/review" component={Review} />
+        <Route exact path="/userChat" component={ChatRenderUser}/>
       </Switch>
     </div>
 

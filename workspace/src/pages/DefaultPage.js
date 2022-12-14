@@ -203,18 +203,18 @@ function Login() {
       }
       //End of firebase initialization
 
-      //Works
-      axios({
-        method: "post",
-        url: "https://workspace.onrender.com/api/users/register",
-        data: formdata,
-        headers: { "Content-Type": "multipart/form-data" }
-      }).then(function (response) {
-        console.log(response)
-        toast.dark('Account successfully registered')
-        localStorage.setItem('JWT_TOKEN', response.data.token)
-        localStorage.setItem('contractor', response.data.contractor)
-        localStorage.setItem('image', response.data.image)
+    //Works
+    axios({
+      method: "post",
+      url: "https://workspace.onrender.com/api/users/register",
+      data: formdata,
+      headers: { "Content-Type": "multipart/form-data" }
+    }).then(function (response) {
+      console.log(response)
+      toast.dark('Account successfully registered')
+      localStorage.setItem('JWT_TOKEN', response.data.token)
+      localStorage.setItem('contractor', response.data.contractor)
+      localStorage.setItem('image', response.data.image)
 
         if (response.data.contractor == false) {
           history.push('/userprofile')
