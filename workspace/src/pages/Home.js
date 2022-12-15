@@ -9,9 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Redirect } from 'react-router-dom';
 
 import 'react-tabs/style/react-tabs.css';
-import DatePicker from "react-datepicker"
 import 'react-datepicker/dist/react-datepicker.css'
-import Post from '../components/feed/Post.js'
 import Feed from '../components/feed/Feed.js'
 import NavBar from '../components/navigation/NavBar';
 
@@ -23,7 +21,6 @@ function Home() {
   const [pageNum, setNum] = useState(0);
   const [USER_COORDINATES, setUSER_COORDINATES] = useState([])
 
-  
 
   useEffect(() => {
     loadJob();

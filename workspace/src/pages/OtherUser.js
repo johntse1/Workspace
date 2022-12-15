@@ -1,20 +1,16 @@
 import React from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
-import { API_BASE_URL, API_GET_ME } from '../API_ENDPOINTS'
 import axios from 'axios'
-import Button from '../components/Button';
 import { useEffect, useState } from 'react';
-import { Redirect } from 'react-router-dom';
 import NavBar from '../components/navigation/NavBar';
 import UserNavBar from '../components/navigation/UserNavBar';
-import ReviewFeed from '../components/reviewStuff/ReviewFeed'
 import OtherUserReviews from '../components/reviewStuff/OtherUserReviews'
 import './css/Profile.css';
 
 function OtherUser(props){
     //console.log(props.location.state)
-    const prof = ['John Tse', '4.5', ['Fixing', 'Cleaning', 'Making'], 'A cool guy', ['Good worker', 'Quick Worker']]
+    //const prof = ['John Tse', '4.5', ['Fixing', 'Cleaning', 'Making'], 'A cool guy', ['Good worker', 'Quick Worker']]
     const [profile, set_profile] = useState([
         {
           "first_name": "john",
@@ -59,7 +55,7 @@ function OtherUser(props){
                   <div className='bigboy'>
                     {/* <h1>{prof[0]}({prof[1]})</h1> */}
                       <div>
-                        <img src={profile['image']} className='picture'/>
+                        <img src={profile['image']} className='picture' alt=""/>
                       </div>
                       <div>
                         <h1 className='profileusername'>{profile["first_name"] + " " + profile["last_name"]}'s profile</h1>

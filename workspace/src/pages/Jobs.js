@@ -41,6 +41,7 @@ function Jobs(){
       if (localStorage.getItem('JWT_TOKEN') == null) {
         return <Redirect to="/"></Redirect>
       }
+      /*
       const checkjwt = async () => {
         if (localStorage.getItem("JWT_TOKEN") != null) {
           let token = localStorage.getItem("JWT_TOKEN")
@@ -51,7 +52,7 @@ function Jobs(){
               console.log(my_profile)
             })
         }
-      }
+      }*/
     return (
         <div className='jobpanel'>
           <NavBar/>

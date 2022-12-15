@@ -8,7 +8,8 @@ import NavBar from '../components/navigation/NavBar';
 import UserNavBar from '../components/navigation/UserNavBar';
 import ReviewFeed from '../components/reviewStuff/ReviewFeed'
 import './css/Profile.css';
-const prof = ['John Tse', '4.5', ['Fixing', 'Cleaning', 'Making'], 'A cool guy', ['Good worker', 'Quick Worker']]
+
+//const prof = ['John Tse', '4.5', ['Fixing', 'Cleaning', 'Making'], 'A cool guy', ['Good worker', 'Quick Worker']]
 
 
 function Profile() {
@@ -44,6 +45,7 @@ function Profile() {
   if (localStorage.getItem('JWT_TOKEN') == null) {
     return <Redirect to="/"></Redirect>
   }
+  /*
   const checkjwt = async () => {
     if (localStorage.getItem("JWT_TOKEN") != null) {
       let token = localStorage.getItem("JWT_TOKEN")
@@ -54,8 +56,8 @@ function Profile() {
           console.log(my_profile)
         })
     }
-  }
-   console.log(my_profile["contractor"])
+  }*/
+  //console.log(my_profile["contractor"])
 
    const navBar = () =>{
     let contBool = localStorage.getItem('contractor')
@@ -75,7 +77,7 @@ function Profile() {
           <div className='bigboy'>
           {/* <h1>{prof[0]}({prof[1]})</h1> */}
             <div>
-              <img src={my_profile['image']} className='picture'/>
+              <img src={my_profile['image']} className='picture' alt=""/>
             </div>
             <div>
               <h1 className="profileusername">{my_profile["first_name"] + " " + my_profile["last_name"]}</h1>

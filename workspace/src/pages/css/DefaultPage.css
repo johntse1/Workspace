@@ -14,9 +14,9 @@ input[type=password]{
     width: 200px;
 }
 
-.textstuff {
+.textstuffregister {
     resize:none;
-    width: 50%;
+    width: 30%;
 }
 
 .dropDown{

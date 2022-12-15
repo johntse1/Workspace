@@ -8,8 +8,6 @@ import NavBar from '../components/navigation/UserNavBar';
 import ReviewFeed from '../components/reviewStuff/ReviewFeed'
 import "./css/Profile.css";
 
-const prof = ['John Tse', '4.5', ['Fixing', 'Cleaning', 'Making'], 'A cool guy', ['Good worker', 'Quick Worker']]
-
 
 function UserProfile() {
   const [my_profile, setmy_profile] = useState([
@@ -42,7 +40,7 @@ function UserProfile() {
   if (localStorage.getItem('JWT_TOKEN') == null) {
     return <Redirect to="/"></Redirect>
   }
-  const checkjwt = async () => {
+  /*const checkjwt = async () => {
     if (localStorage.getItem("JWT_TOKEN") != null) {
       let token = localStorage.getItem("JWT_TOKEN")
       axios.get(API_BASE_URL + API_GET_ME, { headers: { "Authorization": `Bearer ${token}` } })
@@ -52,7 +50,7 @@ function UserProfile() {
           console.log(my_profile)
         })
     }
-  }
+  }*/
 
   return (
 
@@ -63,7 +61,7 @@ function UserProfile() {
         {/* <h1>{prof[0]}({prof[1]})</h1> */}
         <div className='bigboy'>
           <div>
-            <img src={my_profile['image']} className='picture'/>
+            <img src={my_profile['image']} className='picture' alt=""/>
           </div>
           <div>
             <h1 class="profileusername">{my_profile["first_name"] + " " + my_profile["last_name"]}</h1>

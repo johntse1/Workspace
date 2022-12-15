@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 
 import { ToastContainer, toast } from 'react-toastify';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import { Redirect, useHistory, Route, useNavigate, Link } from "react-router-dom";
+import { Redirect, useHistory} from "react-router-dom";
 
 
 import DatePicker from "react-datepicker";
@@ -22,7 +22,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import 'react-tabs/style/react-tabs.css';
 import 'react-datepicker/dist/react-datepicker.css'
 
-import loginimg from "../../src/components/loginimg.jpg";
 import upload from "../../src/components/photo.png";
 
 function Login() {
@@ -57,11 +56,11 @@ function Login() {
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState(false);
 
-  if ((localStorage.getItem('JWT_TOKEN') != null) && USER_CONTRACTOR == true) {
+  if ((localStorage.getItem('JWT_TOKEN') != null) && USER_CONTRACTOR === true) {
     console.log(USER_CONTRACTOR)
     //return <Redirect to="/profile"></Redirect>
   }
-  if ((localStorage.getItem('JWT_TOKEN') != null) && USER_CONTRACTOR == false) {
+  if ((localStorage.getItem('JWT_TOKEN') != null) && USER_CONTRACTOR === false) {
     return <Redirect to="/userprofile"></Redirect>
   }
 
@@ -90,7 +89,7 @@ function Login() {
 
 
   const signin = () => {
-    if (button_clicked == false) {
+    if (button_clicked === false) {
       setbutton_clicked(true)
       //This section is used to connect to Firebase
       const email = USER_EMAIL;
@@ -113,7 +112,7 @@ function Login() {
           localStorage.setItem('image', response.data.image)
           setbutton_clicked(false)
           //probably navigate to a new page here or smth
-          if (response.data.contractor == false) {
+          if (response.data.contractor === false) {
             history.push('/userprofile')
           }
           else {
@@ -135,7 +134,7 @@ function Login() {
   }
 
   const registerUser2 = async (e) => {
-    if (button_clicked == false) {
+    if (button_clicked === false) {
       setbutton_clicked(true)
     
       const formdata = new FormData()
@@ -343,13 +342,14 @@ function Login() {
               isClearable
               showYearDropdown
               placeholderText='Enter your birthday'
+              react-datepicker_close-icon
             ></DatePicker>
           </div>
 
           <div className='form-control'>
             <label>Description</label>
             <form>
-              <textarea type='text' class="textstuff"
+              <textarea type='text' class="textstuffregister"
                 placeholder='Enter a description (optional)'
                 value={USER_DESCRIPTION}
                 onChange={(e) => setUSER_DESCRIPTION(e.target.value)}
