@@ -131,10 +131,10 @@ function Home() {
       {USER_COORDINATES.length === 0 ? <div></div> : <div className='coolButton'><Button text='20 miles' onClick={() => setDist(20)}></Button><Button text='30 miles' onClick={() => setDist(30)}></Button><Button text='40 miles' onClick={() => setDist(40)}></Button><Button text='50 miles' onClick={() => setDist(50)}></Button></div>}
       <Feed feed={currItems}></Feed>
       <div className='pageButton'><Button text='Prev Page' onClick={prevPage}></Button>
-      {pageNum + 1} 
+      {pageNum + 1}
       <Button text='Next Page' onClick={nextPage}></Button></div>
       <div className='coolButton'><Button text='Refresh Feed' onClick={loadJob}></Button></div>
-
+      <div className='bottom'></div>
       <ToastContainer />
 
     </div>

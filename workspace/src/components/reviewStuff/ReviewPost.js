@@ -10,11 +10,11 @@ function ReviewPost(props){
     }
 
     return(
-        <div key={props.post.id}>
-            <h3 className='titleP'>Title: {props.post.title}</h3>
+        <div key={props.post.id} className="postindiv">
+            <h3 className='titleP'>{props.post.title}</h3>
             <h2 className='name'><Link to={{pathname: '/otherUser', state: props.post.reviewer}} className='stuff'>{props.post.username}</Link></h2>
             <h3 className='rating'>Overall Rating: {props.post.rating}/5</h3>
-            <div className='description'>{props.post.text}</div>
+            <div className='description1'>{props.post.text}</div>
             <hr/>
         </div>
     );

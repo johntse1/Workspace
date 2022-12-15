@@ -70,7 +70,7 @@ function Profile() {
   return (
     <div className='App'>
       <div>{navBar()}</div>
-      <div className='bigboy'>
+      <div className='container1'>
         <Tabs>
           <div className='bigboy'>
           {/* <h1>{prof[0]}({prof[1]})</h1> */}
@@ -78,7 +78,7 @@ function Profile() {
               <img src={my_profile['image']} className='picture'/>
             </div>
             <div>
-              <h1 className="profileusername">Name: {my_profile["first_name"] + " " + my_profile["last_name"]}</h1>
+              <h1 className="profileusername">{my_profile["first_name"] + " " + my_profile["last_name"]}</h1>
               <h2 className="profileemail">email: {my_profile["email"]}</h2>
               <h2> {got_profile? my_profile["description"]: ""}</h2>
             </div>
@@ -96,9 +96,6 @@ function Profile() {
               {my_profile["skills"].map((skill) => <h2 key={skill}>{skill}</h2>)}
             </div>: ""}
           
-
-
-
           </TabPanel>
           <TabPanel className="tab">
             <ReviewFeed feed={reviews}></ReviewFeed>

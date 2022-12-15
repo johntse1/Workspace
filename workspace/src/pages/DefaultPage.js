@@ -23,6 +23,7 @@ import 'react-tabs/style/react-tabs.css';
 import 'react-datepicker/dist/react-datepicker.css'
 
 import loginimg from "../../src/components/loginimg.jpg";
+import upload from "../../src/components/photo.png";
 
 function Login() {
   useEffect(() => {
@@ -372,8 +373,15 @@ function Login() {
             </div>
           </div>
           <div className='form-control'>
-            <label>Profile Pictures</label>
-            <input type="file" name="image" onChange={imagechangeHandler} multiple={false} accept=".jpg,.jpeg,.png" ></input>
+            <label>Profile Picture</label>
+            <input type="file" name="image" onChange={imagechangeHandler} multiple={false} accept=".jpg,.jpeg,.png" 
+              required
+              style={{display:"none"}}
+              id="file"
+            ></input>
+          <label htmlFor='file' className='label'>
+            <img src={upload} className="uploadregister"/>
+          </label>
           </div>
           <Button color='black' text='Register' onClick={registerUser2} />
           {/* <Button color='black' text='test' onClick={registerUser2} /> */}

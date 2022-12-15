@@ -1,5 +1,5 @@
 .profileusername{
-    padding: 5px;
+    padding: 1px;
     font-size: 28px;
 }
 .profileemail{
@@ -23,15 +23,21 @@
     padding-left: 0px;
     border-radius: 15px;
     margin-top: 10px;
-    border:  1px solid black;
 }
 
 .bigboy {
     display:block;
     justify-content: center;
     text-align: center;
+    background-color: lightgray;
 }
 
 .tab{
     height: 100%;
+}
+
+.container1{
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }

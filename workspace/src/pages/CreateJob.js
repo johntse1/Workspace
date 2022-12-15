@@ -178,7 +178,7 @@ function CreateJob() {
   return (
     <div>
       <div>{navBar()}</div>
-      <div className='container'>
+      <div className='containercreate'>
         <div className='form-control'>
           <label>Job Name</label>
           <input type='text' placeholder='Enter the job name'
@@ -206,14 +206,14 @@ function CreateJob() {
         <div className='form-control'>
           <label>Description</label>
           <form>
-            <textarea type='text' className='textstuff'
-              placeholder='Enter a description (optional)'
+            <textarea type='text' className='textareajob'
+              placeholder='Enter a description about your problem (max 200 words)'
               maxLength="200"
               rows={5}
-              cols={800}
               value={USER_POST_DESCRIPTION}
               onChange={(e) => setUSER_POST_DESCRIPTION(e.target.value)}
-            />
+              required
+            ></textarea>
           </form>
         </div>
 
@@ -237,6 +237,7 @@ function CreateJob() {
           className='input'
           style={{display:"none"}}
           id="file"
+          required
           />
           <label htmlFor='file' className='label'>
             <img src={upload} className="upload"/>

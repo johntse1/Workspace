@@ -58,6 +58,7 @@ function UserProfile() {
 
     <div className='App'>
       <NavBar/>
+      <div className='container1'>
       <Tabs>
         {/* <h1>{prof[0]}({prof[1]})</h1> */}
         <div className='bigboy'>
@@ -67,7 +68,6 @@ function UserProfile() {
           <div>
             <h1 class="profileusername">{my_profile["first_name"] + " " + my_profile["last_name"]}</h1>
             <h2 class="profileemail">email: {my_profile["email"]}</h2>
-            <h2 class="profileid">userId: {my_profile["id"]}</h2>
           </div>
         </div>
         
@@ -86,6 +86,7 @@ function UserProfile() {
 
         </TabPanel>
       </Tabs>
+      </div>
     </div>
   );
 }

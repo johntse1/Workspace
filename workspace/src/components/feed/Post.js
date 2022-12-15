@@ -25,12 +25,14 @@ function Post(props){
       }
     return(
         <div key={props.post._id} className='post'>
-            <h2 className='title'>{props.post.title}</h2>
-            <Link to={{pathname: '/otherUser', state: props.post.user}} className='user'>{props.post.username}</Link>
-            <div className='description'>{props.post.text}</div>
             <div className='images'>{props.post.images.map(image => <img src={image} className='postImg'/>)}</div>
+            <h2 className='title'>{props.post.title}</h2>
+            <span className='user'><Link to={{pathname: '/otherUser', state: props.post.user}}>{props.post.username}</Link></span>
+            <br/>
+            <div className='description'>{props.post.text}</div>
+            <br/>
             <div className='price'>Price: ${props.post.price}</div>
-            <Button text='I want this job' onClick={acceptJob} className='stuff'></Button>
+            <Button text='I want this job' onClick={acceptJob}></Button>
             <ToastContainer></ToastContainer>
         </div>
 

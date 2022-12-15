@@ -54,46 +54,41 @@ function OtherUser(props){
     return(
         <div>
             <div>{navBar()}</div>
-            <Tabs>
-                <div className='bigboy'><div>
-                {/* <h1>{prof[0]}({prof[1]})</h1> */}
-                <div><img src={profile['image']} className='picture'/></div>
-                <h1 className='profileusername'>{profile["first_name"] + " " + profile["last_name"]}'s profile</h1>
-                <h2 className='profileemail'>email: {profile["email"]}</h2>
-                <h2 className='profileid'>userId: {profile["id"]}</h2>
-                </div>
-
-                </div>
-                <TabList>
-                <Tab>Skills</Tab>
-                <Tab>About</Tab>
-                <Tab>Reviews</Tab>
-                </TabList>
-
-                <TabPanel>
-                {/* <h2>{prof[2].map((item, i) => <div key={i}>{item}</div>)}</h2> */}
-                {got_profile?  
-                <div>
-                    {profile["skills"].map((skill) => <h2 key={skill}>{skill}</h2>)}
-                </div>: ""}
-                
+            <div className='bigboy'>
+              <Tabs>
+                  <div className='bigboy'>
+                    {/* <h1>{prof[0]}({prof[1]})</h1> */}
+                      <div>
+                        <img src={profile['image']} className='picture'/>
+                      </div>
+                      <div>
+                        <h1 className='profileusername'>{profile["first_name"] + " " + profile["last_name"]}'s profile</h1>
+                        <h2 className='profileemail'>email: {profile["email"]}</h2>
+                        <h2> {got_profile? profile["description"]: ""}</h2>
+                      </div>
+                  </div>
 
 
+                  <TabList>
+                  <Tab>Skills</Tab>
+                  <Tab>Reviews</Tab>
+                  </TabList>
 
-                </TabPanel>
-                <TabPanel>
-                {/* <h2>{prof[3]}</h2> */}
-                <h2> {got_profile? profile["description"]: ""}</h2>
+                  <TabPanel>
+                  {/* <h2>{prof[2].map((item, i) => <div key={i}>{item}</div>)}</h2> */}
+                  {got_profile?  
+                  <div>
+                      {profile["skills"].map((skill) => <h2 key={skill}>{skill}</h2>)}
+                  </div>: ""}
+                  </TabPanel>
 
-                </TabPanel>
-                <TabPanel>
-                  <OtherUserReviews feed={reviews}></OtherUserReviews>
-                
-
-                </TabPanel>
-            </Tabs>
+                  <TabPanel>
+                    <OtherUserReviews feed={reviews}></OtherUserReviews>
+                  
+                  </TabPanel>
+              </Tabs>
+            </div>
         </div>
-
     );
 }
 

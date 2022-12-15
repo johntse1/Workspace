@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import Button from '../components/Button';
+import Button from '../Button';
 import { Redirect, useHistory } from "react-router-dom";
 import axios from 'axios'
-import NavBar from '../components/navigation/NavBar';
-import UserNavBar from '../components/navigation/UserNavBar';
+import NavBar from '../navigation/NavBar';
+import UserNavBar from '../navigation/UserNavBar';
 import { FaStar } from "react-icons/fa";
-import { Container, Radio, Rating } from "../components/reviewStuff/ratingStyles";
+import { Container, Radio, Rating } from "./ratingStyles";
 import { toast, ToastContainer } from 'react-toastify';
-import "./css/Review.css"
+import "./Review.css"
 
 function Review(props){
     const [REVIEW_TITLE, setREVIEW_TITLE] = useState('')
@@ -53,13 +53,14 @@ function Review(props){
     return(
         <div>
             <div>{navBar()}</div>
-            <div className='container'>
+            <div className='containerreview'>
             
                 <div className='form-control'>
                 <label className='title'>Title</label>
-                <input type='text' placeholder='Enter review title'
+                <input type='text' placeholder='Please enter the title:'
                     value={REVIEW_TITLE}
                     onChange={(e) => setREVIEW_TITLE(e.target.value)}
+                    required
                 />
                 </div>
 
@@ -68,42 +69,42 @@ function Review(props){
 
                 <form>
                     <textarea className='textstuff' type='text'
-                    placeholder='Write your review here!'
+                    placeholder='Give a short explanation about why you gave your score (max 200 words)'
                     maxLength="200"
                     rows={5}
                     value={REVIEW_DESCRIPTION}
                     onChange={(e) => setREVIEW_DESCRIPTION(e.target.value)}
-                    />
+                    ></textarea>
                 </form>
 
                 </div>
                 <ToastContainer>
                 </ToastContainer>
-                <Container>
-                    {[...Array(5)].map((item, index) => {
-                    const givenRating = index + 1;
-                    return (
-                    <label>
-                        <Radio
-                        type="radio"
-                        value={givenRating}
-                        onClick={() => {
-                            setRate(givenRating);
-                        }}
-                        />
-                            <Rating>
-                                <FaStar
-                                    color={
-                                        givenRating < rate || givenRating === rate
-                                        ? "rgb(255,215,0)"
-                                        : "rgb(192,192,192)"
-                                    }
-                                />
-                            </Rating>
-                            </label>
-                        );
-                    })}
-                </Container>
+                    <Container>
+                        {[...Array(5)].map((item, index) => {
+                        const givenRating = index + 1;
+                        return (
+                        <label>
+                            <Radio
+                            type="radio"
+                            value={givenRating}
+                            onClick={() => {
+                                setRate(givenRating);
+                            }}
+                            />
+                                <Rating>
+                                    <FaStar
+                                        color={
+                                            givenRating < rate || givenRating === rate
+                                            ? "rgb(255,215,0)"
+                                            : "rgb(192,192,192)"
+                                        }
+                                    />
+                                </Rating>
+                                </label>
+                            );
+                        })}
+                    </Container>
                 <Button text='Submit' onClick={setReview} ></Button>
             </div>
         </div>

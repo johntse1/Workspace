@@ -14,7 +14,7 @@ import UserHome from './pages/UserHome'
 import UserProfile from './pages/UserProfile'
 import UserJobs from './pages/UserJobs'
 import OtherUser from './pages/OtherUser'
-import Review from './pages/Review'
+import Review from './components/reviewStuff/Review'
 import ChatRenderUser from './pages/ChatRenderUser';
 
 import './App.css';

@@ -1,6 +1,6 @@
 .textstuff {
     resize:none;
-    width: 50%;
+    width: 40%;
 }
 input[type=text]{
     width:30%;
@@ -11,6 +11,7 @@ input[type=text]{
     text-align: left;
 }
 
-.rating{
-    margin-left: auto;
+.containerreview{
+    width: 40%;
 }
+

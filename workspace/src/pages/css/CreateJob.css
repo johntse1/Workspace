@@ -1,5 +1,4 @@
-.container{
-}
+
 .upload{
     width: 75px;
     height: 75px;
@@ -10,4 +9,13 @@
 .label{
     width: 75px;
     height: 75px;
+}
+
+.containercreate{
+    width: 50%;
+    margin: 0px;
+}
+
+.textareajob{
+    width: 30%;
 }
