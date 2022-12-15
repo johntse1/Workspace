@@ -30,15 +30,15 @@ input[type=password]{
 
 .big{
     display: flex;
+    height: 50%;
 }
 
 .container{
-    justify-content: left;
     width: 40%;
     margin: 0px;
-}
 
-.loginimg{
-    min-width: 70%;
-    max-height: 1100px;
+}
+.tabs{
+    align-items: center;
+    justify-content: center;
 }

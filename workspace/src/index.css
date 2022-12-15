@@ -27,7 +27,7 @@ body {
 .container {
   max-width: 100%;
   margin: 30px auto;
-  overflow: visible;
+  overflow: disabled;
   max-height: 100%;
   border-radius: 5px;
 }

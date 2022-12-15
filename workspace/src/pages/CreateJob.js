@@ -7,7 +7,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import { API_SET_JOB, API_BASE_URL, API_GET_ME, API_GET_ALL_JOBS } from '../API_ENDPOINTS'
 import NavBar from '../components/navigation/NavBar';
 import UserNavBar from '../components/navigation/UserNavBar';
-import "./css/Jobs.css";
+import './css/CreateJob.css';
+import upload from "../components/photo.png";
 
 function CreateJob() {
 
@@ -164,7 +165,7 @@ function CreateJob() {
   }
 
   const imagechangeHandler = (e) => {
-    if (e.target.files.length > 1) {
+    if (e.target.files.length > 2) {
       alert("Only 1 image is accepted.")
       e.target.value = null
     }
@@ -178,7 +179,6 @@ function CreateJob() {
     <div>
       <div>{navBar()}</div>
       <div className='container'>
-
         <div className='form-control'>
           <label>Job Name</label>
           <input type='text' placeholder='Enter the job name'
@@ -210,6 +210,7 @@ function CreateJob() {
               placeholder='Enter a description (optional)'
               maxLength="200"
               rows={5}
+              cols={800}
               value={USER_POST_DESCRIPTION}
               onChange={(e) => setUSER_POST_DESCRIPTION(e.target.value)}
             />
@@ -232,8 +233,14 @@ function CreateJob() {
 
         <div className='form-control'>
           <label>Upload Images</label>
-          <input type="file" name="images" onChange={imagechangeHandler} multiple={true} max={5} maxLength={5} accept=".jpg,.jpeg,.png"
+          <input type="file" onChange={imagechangeHandler} multiple={true} max={5} maxLength={5} accept=".jpg,.jpeg,.png"
+          className='input'
+          style={{display:"none"}}
+          id="file"
           />
+          <label htmlFor='file' className='label'>
+            <img src={upload} className="upload"/>
+          </label>
         </div>
 
 

@@ -7,9 +7,8 @@ import { ToastContainer, toast } from 'react-toastify';
 
 function MyJobs(props){
     const displayTitle = () =>{
-        console.log(props)
+        console.log("Current props are: " + props)
     }
-
     const removeJob = () =>{
         let url = 'https://workspace.onrender.com/api/jobs/delete/' + props.post._id
         let token = localStorage.getItem("JWT_TOKEN")

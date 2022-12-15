@@ -263,7 +263,7 @@ function Login() {
   return (
     <div className='big'>
       <div className='container'>
-      <Tabs>
+      <Tabs className="tabs">
         <TabList>
           <Tab>Log in</Tab>
           <Tab>Sign Up</Tab>
@@ -382,7 +382,6 @@ function Login() {
       </Tabs>
       <ToastContainer />
       </div>
-      <img src={loginimg} className="loginimg"></img>
     </div>
   );
 }

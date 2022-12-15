@@ -70,47 +70,43 @@ function Profile() {
   return (
     <div className='App'>
       <div>{navBar()}</div>
-      <Tabs>
-        <div className='bigboy'>
-        {/* <h1>{prof[0]}({prof[1]})</h1> */}
-          <div>
-            <img src={my_profile['image']} className='picture'/>
+      <div className='bigboy'>
+        <Tabs>
+          <div className='bigboy'>
+          {/* <h1>{prof[0]}({prof[1]})</h1> */}
+            <div>
+              <img src={my_profile['image']} className='picture'/>
+            </div>
+            <div>
+              <h1 className="profileusername">Name: {my_profile["first_name"] + " " + my_profile["last_name"]}</h1>
+              <h2 className="profileemail">email: {my_profile["email"]}</h2>
+              <h2> {got_profile? my_profile["description"]: ""}</h2>
+            </div>
           </div>
-          <div>
-            <h1 className="profileusername">{my_profile["first_name"] + " " + my_profile["last_name"]}</h1>
-            <h2 className="profileemail">email: {my_profile["email"]}</h2>
-            <h2 className="profileid">userId: {my_profile["id"]}</h2>
-          </div>
-        </div>
 
-        <TabList>
-          <Tab>Skills</Tab>
-          <Tab>About</Tab>
-          <Tab>Reviews</Tab>
-        </TabList>
+          <TabList >
+            <Tab>Skills</Tab>
+            <Tab>Reviews</Tab>
+          </TabList>
 
-        <TabPanel>
-          {/* <h2>{prof[2].map((item, i) => <div key={i}>{item}</div>)}</h2> */}
-          {got_profile?  
-          <div>
-            {my_profile["skills"].map((skill) => <h2 key={skill}>{skill}</h2>)}
-          </div>: ""}
-         
-
-
-
-        </TabPanel>
-        <TabPanel>
-          {/* <h2>{prof[3]}</h2> */}
-          <h2> {got_profile? my_profile["description"]: ""}</h2>
-
-        </TabPanel>
-        <TabPanel>
-          <ReviewFeed feed={reviews}></ReviewFeed>
+          <TabPanel className="tab">
+            {/* <h2>{prof[2].map((item, i) => <div key={i}>{item}</div>)}</h2> */}
+            {got_profile?  
+            <div>
+              {my_profile["skills"].map((skill) => <h2 key={skill}>{skill}</h2>)}
+            </div>: ""}
           
 
-        </TabPanel>
-      </Tabs>
+
+
+          </TabPanel>
+          <TabPanel className="tab">
+            <ReviewFeed feed={reviews}></ReviewFeed>
+            
+
+          </TabPanel>
+        </Tabs>
+      </div>
     </div>
   );
 }

@@ -32,7 +32,6 @@ function Post(props){
             <div className='price'>Price: ${props.post.price}</div>
             <Button text='I want this job' onClick={acceptJob} className='stuff'></Button>
             <ToastContainer></ToastContainer>
-
         </div>
 
     );

@@ -64,7 +64,7 @@ function Review(props){
                 </div>
 
                 <div className='form-control'>
-                <label className='title'>Text</label>
+                <label className='title'>Description</label>
 
                 <form>
                     <textarea className='textstuff' type='text'

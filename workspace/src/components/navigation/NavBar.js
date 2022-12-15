@@ -22,10 +22,12 @@ function NavBar(){
 
     return(
         <ul className='uli'>
-            <li className='lii'><Link to='/home' className='navLink'>Home</Link></li>
-            <li className='lii'><Link to='/profile' className='navLink'>My Profile</Link></li>
-            <li className='lii'><Link to='/jobs' className='navLink'>Jobs</Link></li>
-            <li className='lii'><Link to='/chat' className='navLink'>Chat</Link></li>
+            <div className='centernav'>
+                <li className='lii'><Link to='/home' className='navLink'>Home</Link></li>
+                <li className='lii'><Link to='/profile' className='navLink'>My Profile</Link></li>
+                <li className='lii'><Link to='/jobs' className='navLink'>Jobs</Link></li>
+                <li className='lii'><Link to='/chat' className='navLink'>Chat</Link></li>
+            </div>
             <li><Link className='logOut' onClick={logout}>Logout</Link></li>
         </ul>
     );

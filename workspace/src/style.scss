@@ -11,9 +11,10 @@
     
     .sidebar {
       flex: 1;
-      background-color: gray;
+      background-color: lightgray;
       position: relative;
       border-right: 1px solid white;
+      width: 10%;
       .navbar {
         display: flex;
         align-items: center;
@@ -52,16 +53,16 @@
           input {
             background-color: transparent;
             border: none;
-            color: white;
+            color: black;
             outline: none;
 
             &::placeholder {
-              color: white;
+              color: black;
             }
           }
         }
       }
-
+      
       .userChat {
         padding: 10px;
         display: flex;
@@ -70,7 +71,7 @@
         color: white;
         cursor: pointer;
         &:hover {
-          background-color: lightgray;
+          background-color: gray;
         }
 
         img {
@@ -87,7 +88,7 @@
           }
           p {
             font-size: 14px;
-            color: lightgray;
+            color: black;
           }
         }
       }
@@ -129,6 +130,7 @@
               object-fit: cover;
             }
           }
+          
           .messageContent {
             max-width: 80%;
             display: flex;
@@ -178,7 +180,7 @@
           font-size: 18px;
 
           &::placeholder {
-            color: lightgray;
+            color: gray;
           }
         }
 

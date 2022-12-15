@@ -1,20 +1,19 @@
 .profileusername{
-    padding: 10px;
+    padding: 5px;
     font-size: 28px;
 }
 .profileemail{
-    padding: 10px;
-    font-size: 28px;
+    padding: 5px;
+    font-size: 20px;
 }
 .profileid{
-    padding: 10px;
+    padding: 5px;
     font-size: 28px;
 }
 
 .picture {
     display:flex;
-    justify-content: right;
-    align-self: right;
+    justify-content: center;
     height:250px;
     width:250px;
     margin-right: auto;
@@ -22,14 +21,17 @@
     margin-bottom: auto;
     padding:10px;
     padding-left: 0px;
-    border-radius: 30px;
+    border-radius: 15px;
+    margin-top: 10px;
+    border:  1px solid black;
 }
 
 .bigboy {
-    display:flex;
-    justify-content: start;
+    display:block;
+    justify-content: center;
+    text-align: center;
 }
 
-.skill{
-    
+.tab{
+    height: 100%;
 }

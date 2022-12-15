@@ -11,37 +11,36 @@ import {
 import { db, storage } from "../../firebase";
 import { v4 as uuid } from "uuid";
 
+
 const Input = () => {
   const [text, setText] = useState("");
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
 
   const handleSend = async () => {
-    if(text==null){
-    }
-    await updateDoc(doc(db, "chats", data.chatId), {
-      messages: arrayUnion({
-        id: uuid(),
-        text,
-        senderId: currentUser.uid,
-        date: Timestamp.now(),
-      }),
-    });
-
-    await updateDoc(doc(db, "userChats", currentUser.uid), {
-      [data.chatId + ".lastMessage"]: {
-        text,
-      },
-      [data.chatId + ".date"]: serverTimestamp(),
-    });
-
-    await updateDoc(doc(db, "userChats", data.user.uid), {
-      [data.chatId + ".lastMessage"]: {
-        text,
-      },
-      [data.chatId + ".date"]: serverTimestamp(),
-    });
-    setText("");
+      await updateDoc(doc(db, "chats", data.chatId), {
+        messages: arrayUnion({
+          id: uuid(),
+          text,
+          senderId: currentUser.uid,
+          date: Timestamp.now(),
+        }),
+      });
+  
+      await updateDoc(doc(db, "userChats", currentUser.uid), {
+        [data.chatId + ".lastMessage"]: {
+          text,
+        },
+        [data.chatId + ".date"]: serverTimestamp(),
+      });
+  
+      await updateDoc(doc(db, "userChats", data.user.uid), {
+        [data.chatId + ".lastMessage"]: {
+          text,
+        },
+        [data.chatId + ".date"]: serverTimestamp(),
+      });
+      setText("");
   };
   return (
     <div className="input">
@@ -50,9 +49,18 @@ const Input = () => {
         placeholder="Send a message!"
         onChange={(e) => setText(e.target.value)}
         value={text}
+        onKeyDown = {(e)=> {
+          if(e.key==='Enter'){
+            //console.log("working");
+            setText(e.target.value);
+            handleSend();
+          }
+        }
+      }
       />
       <div className="send">
-        <button onClick={handleSend}>Send</button>
+        <input type="button" onClick={handleSend} value="Send"
+        />
       </div>
     </div>
   );

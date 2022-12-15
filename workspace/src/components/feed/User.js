@@ -1,8 +1,8 @@
 import React from 'react'
 import Button from '../Button';
 import {Link} from 'react-router-dom'
-import { toast } from 'react-toastify';
-import './post.css'
+import { toast, ToastContainer } from 'react-toastify';
+import './userPost.css'
 
 function User(props){
     const displayTitle = () =>{
@@ -12,10 +12,11 @@ function User(props){
     return(
         <div className='post'>
             <Link to={{pathname: '/otherUser', state: props.post._id}} className='stuff'><div>{props.post.first_name} {props.post.last_name}</div></Link>
-            <div className='images'><img src={props.post.image} className='postImg'/></div>
-            <div className='stuff'>{props.post.description}</div>
+            <div className='postImg'><img src={props.post.image} className='postImg'/></div>
+            <div className='description'>{props.post.description}</div>
             <div className='stuff'>Skills: {props.post.skills.join(' ')}</div>
             <div className='stuff'><Button text='Not interested' onClick={displayTitle}></Button></div>
+            <ToastContainer></ToastContainer>
         </div>
     );
 }
