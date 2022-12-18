@@ -5,8 +5,8 @@ import { API_BASE_URL, API_GET_ME } from '../API_ENDPOINTS'
 import axios from 'axios'
 import { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
-import MyJobs from '../components/feed/MyJobs.js'
-import NavBar from '../components/navigation/UserNavBar';
+import UserNavBar from '../components/navigation/UserNavBar';
+import MyJobsUser from '../components/feed/MyJobsUser';
 
 
 function UserJobs(){
@@ -59,7 +59,7 @@ function UserJobs(){
       }
     return (
         <div className='jobpanel'>
-          <NavBar/>
+          <UserNavBar/>
             <Tabs>
                 <TabList>
                     <h1 className='head'>Jobs Page</h1>
@@ -71,7 +71,7 @@ function UserJobs(){
                 <TabPanel>
                     <div className='jobs'>
                         {incomplete_jobs.map((jobs) => 
-                            <MyJobs post={jobs} key={jobs._id} setRequestData={setRequestData}></MyJobs>
+                            <MyJobsUser post={jobs} key={jobs._id} setRequestData={setRequestData}></MyJobsUser>
                         )}
                     </div>
                 </TabPanel>
@@ -79,7 +79,7 @@ function UserJobs(){
                 <TabPanel>
                     <div className='jobs'>
                         {active_jobs.map((jobs) => 
-                            <MyJobs post={jobs} key={jobs._id} setRequestData={setRequestData}></MyJobs>
+                            <MyJobsUser post={jobs} key={jobs._id} setRequestData={setRequestData}></MyJobsUser>
                         )}
                     </div>
                 </TabPanel>
@@ -87,7 +87,7 @@ function UserJobs(){
                 <TabPanel>
                      <div className='jobs'>
                         {previous_jobs.map((jobs) => 
-                            <MyJobs post={jobs} key={jobs._id} setRequestData={setRequestData}></MyJobs>
+                            <MyJobsUser post={jobs} key={jobs._id} setRequestData={setRequestData}></MyJobsUser>
                         )}
                     </div>
                 </TabPanel>

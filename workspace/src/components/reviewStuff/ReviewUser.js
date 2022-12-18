@@ -9,7 +9,7 @@ import { Container, Radio, Rating } from "./ratingStyles";
 import { toast, ToastContainer } from 'react-toastify';
 import "./Review.css"
 
-function Review(props){
+function ReviewUser(props){
     const [REVIEW_TITLE, setREVIEW_TITLE] = useState('')
     const [REVIEW_DESCRIPTION, setREVIEW_DESCRIPTION] = useState('')
     const [rate, setRate] = useState(1);
@@ -31,7 +31,8 @@ function Review(props){
         else{
           return <NavBar/>
         }
-      }*/
+      }
+      */
       const setReview = () => {
         let token = localStorage.getItem("JWT_TOKEN")
         console.log(url + props.location.state)
@@ -52,7 +53,7 @@ function Review(props){
 
     return(
         <div>
-            <div><NavBar/></div>
+            <div><UserNavBar/></div>
             <div className='containerreview'>
             
                 <div className='form-control'>
@@ -111,4 +112,4 @@ function Review(props){
     );
 }
 
-export default Review;
+export default ReviewUser;

@@ -15,6 +15,8 @@ import UserProfile from './pages/UserProfile'
 import UserJobs from './pages/UserJobs'
 import OtherUser from './pages/OtherUser'
 import Review from './components/reviewStuff/Review'
+import ReviewUser from './components/reviewStuff/ReviewUser'
+
 import ChatRenderUser from './pages/ChatRenderUser';
 
 import './App.css';
@@ -48,7 +50,8 @@ function App() {
         <Route exact path="/profile" component={Profile} />
         <Route exact path="/jobs" component={Jobs} />
         <Route exact path="/chat" component={ChatRender}/>
-        
+        <Route exact path="/review" component={Review} />
+
         {//Routes used for navbar above
          //Routers below are used for userNavBar
         }
@@ -58,7 +61,7 @@ function App() {
         <Route exact path="/userHome" component={UserHome} />
         <Route exact path="/userJobs" component={UserJobs} />
         <Route exact path="/otherUser" component={OtherUser} />
-        <Route exact path="/review" component={Review} />
+        <Route exact path="/reviewUser" component={ReviewUser} />
         <Route exact path="/userChat" component={ChatRenderUser}/>
       </Switch>
     </div>
