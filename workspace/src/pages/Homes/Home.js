@@ -3,17 +3,17 @@
 
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import Button from '../components/Button'
+import Button from '../../components/Button'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Redirect } from 'react-router-dom';
 
 import 'react-tabs/style/react-tabs.css';
 import 'react-datepicker/dist/react-datepicker.css'
-import Feed from '../components/feed/Feed.js'
-import NavBar from '../components/navigation/NavBar';
+import Feed from '../../components/feed/Feed.js'
+import NavBar from '../../components/navigation/NavBar';
 
-import './css/Home.css'
+import '../css/Home.css'
 
 function Home() {
   const [items, setItems] = useState([]);

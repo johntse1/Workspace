@@ -1,13 +1,13 @@
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
-import { API_BASE_URL, API_GET_ME } from '../API_ENDPOINTS'
+import { API_BASE_URL, API_GET_ME } from '../../API_ENDPOINTS'
 import axios from 'axios'
 import { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
-import NavBar from '../components/navigation/NavBar';
-import UserNavBar from '../components/navigation/UserNavBar';
-import ReviewFeed from '../components/reviewStuff/ReviewFeed'
-import './css/Profile.css';
+import NavBar from '../../components/navigation/NavBar';
+import UserNavBar from '../../components/navigation/UserNavBar';
+import ReviewFeed from '../../components/reviewStuff/ReviewFeed'
+import '../css/Profile.css';
 
 //const prof = ['John Tse', '4.5', ['Fixing', 'Cleaning', 'Making'], 'A cool guy', ['Good worker', 'Quick Worker']]
 

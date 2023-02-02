@@ -1,15 +1,15 @@
 import React from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
-import { API_BASE_URL, API_GET_ME } from '../API_ENDPOINTS'
+import { API_BASE_URL, API_GET_ME } from '../../API_ENDPOINTS'
 import axios from 'axios'
 import { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
-import UserNavBar from '../components/navigation/UserNavBar';
-import MyJobsUser from '../components/feed/MyJobsUser';
+import MyJobs from '../../components/feed/MyJobs.js'
+import NavBar from '../../components/navigation/NavBar';
+import '../css/Jobs.css';
 
-
-function UserJobs(){
+function Jobs(){
     const [my_profile, setmy_profile] = useState([
         {
           "first_name": "john",
@@ -20,9 +20,8 @@ function UserJobs(){
       ]);
       const [got_profile,setgot_profile] = useState(null)
       const [active_jobs, setActive_Jobs] = useState([])
-      const [requestData, setRequestData] = useState(new Date());
       const [previous_jobs, setPrevious_Jobs] = useState([])
-      const [incomplete_jobs, setIncomplete_Jobs] = useState([])
+      const [requestData, setRequestData] = useState(new Date());
 
       useEffect(() => {
         const fetchData = async () => {
@@ -34,18 +33,15 @@ function UserJobs(){
           setActive_Jobs(jobsList.data)
           const prevjobsList = await axios.get('https://workspace.onrender.com/api/jobs/getpast', { headers: { "Authorization": `Bearer ${token}` } })
           setPrevious_Jobs(prevjobsList.data)
-          //console.log(prevjobsList.data)
-          const incompletejobList = await axios.get('https://workspace.onrender.com/api/jobs/getincomplete ', { headers: { "Authorization": `Bearer ${token}` } })
-          setIncomplete_Jobs(incompletejobList.data)
-          //console.log(incompletejobList.data)
           console.log(jobsList.data)
         };
         fetchData();
       }, [requestData]);
-
+    
       if (localStorage.getItem('JWT_TOKEN') == null) {
         return <Redirect to="/"></Redirect>
       }
+      /*
       const checkjwt = async () => {
         if (localStorage.getItem("JWT_TOKEN") != null) {
           let token = localStorage.getItem("JWT_TOKEN")
@@ -56,45 +52,36 @@ function UserJobs(){
               console.log(my_profile)
             })
         }
-      }
+      }*/
     return (
         <div className='jobpanel'>
-          <UserNavBar/>
+          <NavBar/>
             <Tabs>
                 <TabList>
                     <h1 className='head'>Jobs Page</h1>
-                    <Tab>Listed Jobs</Tab>
-                    <Tab>Ongoing Jobs</Tab>
+                    <Tab>Current Jobs</Tab>
                     <Tab>Past Jobs</Tab>
                 </TabList>
-
+                    
                 <TabPanel>
-                    <div className='jobs'>
-                        {incomplete_jobs.map((jobs) => 
-                            <MyJobsUser post={jobs} key={jobs._id} setRequestData={setRequestData}></MyJobsUser>
-                        )}
-                    </div>
-                </TabPanel>
-                
-                <TabPanel>
-                    <div className='jobs'>
+                    <div>
                         {active_jobs.map((jobs) => 
-                            <MyJobsUser post={jobs} key={jobs._id} setRequestData={setRequestData}></MyJobsUser>
+                            <MyJobs post={jobs} key={jobs._id} setRequestData={setRequestData}></MyJobs>
                         )}
                     </div>
                 </TabPanel>
 
                 <TabPanel>
-                     <div className='jobs'>
+                    <div>
                         {previous_jobs.map((jobs) => 
-                            <MyJobsUser post={jobs} key={jobs._id} setRequestData={setRequestData}></MyJobsUser>
+                            <MyJobs post={jobs} key={jobs._id} setRequestData={setRequestData}></MyJobs>
                         )}
                     </div>
                 </TabPanel>
             </Tabs>
-
+            
         </div>
     );
 }
 
-export default UserJobs;
+export default Jobs;

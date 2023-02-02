@@ -3,10 +3,10 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import axios from 'axios'
 import { useEffect, useState } from 'react';
-import NavBar from '../components/navigation/NavBar';
-import UserNavBar from '../components/navigation/UserNavBar';
-import OtherUserReviews from '../components/reviewStuff/OtherUserReviews'
-import './css/Profile.css';
+import NavBar from '../../components/navigation/NavBar';
+import UserNavBar from '../../components/navigation/UserNavBar';
+import OtherUserReviews from '../../components/reviewStuff/OtherUserReviews'
+import '../css/Profile.css';
 
 function OtherUser(props){
     //console.log(props.location.state)

@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import Button from '../components/Button'
+import Button from '../../components/Button'
 
 import 'react-toastify/dist/ReactToastify.css';
 import 'react-tabs/style/react-tabs.css';
 import 'react-datepicker/dist/react-datepicker.css'
 
-import NavBar from '../components/navigation/UserNavBar';
+import NavBar from '../../components/navigation/UserNavBar';
 import axios from 'axios'
-import UserFeed from '../components/feed/UserFeed.js'
+import UserFeed from '../../components/feed/UserFeed.js'
 
 
 

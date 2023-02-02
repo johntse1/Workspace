@@ -3,21 +3,21 @@ import {Switch,useHistory } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../src/components/context/AuthContext";
 //import NavBar from './components/navigation/NavBar';
-import Jobs from './pages/Jobs'
-import Profile from './pages/Profile'
-import ChatRender from "./pages/ChatRender";
+import Jobs from './pages/Jobs/Jobs'
+import Profile from './pages/Profiles/Profile'
+import ChatRender from "./pages/ChatRenders/ChatRender";
 import Login from './pages/DefaultPage'
-import Home from './pages/Home'
+import Home from './pages/Homes/Home'
 
 import CreateJob from './pages/CreateJob'
-import UserHome from './pages/UserHome'
-import UserProfile from './pages/UserProfile'
-import UserJobs from './pages/UserJobs'
-import OtherUser from './pages/OtherUser'
+import UserHome from './pages/Homes/UserHome'
+import UserProfile from './pages/Profiles/UserProfile'
+import UserJobs from './pages/Jobs/UserJobs'
+import OtherUser from './pages/Profiles/OtherUser'
 import Review from './components/reviewStuff/Review'
 import ReviewUser from './components/reviewStuff/ReviewUser'
 
-import ChatRenderUser from './pages/ChatRenderUser';
+import ChatRenderUser from './pages/ChatRenders/ChatRenderUser';
 
 import './App.css';
 import logo from "../src/components/WS.png";

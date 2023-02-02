@@ -1,7 +1,7 @@
-import Sidebar from '../components/chatStuff/Sidebar'
-import Chat from '../components/chatStuff/Chat'
-import NavBar from '../components/navigation/NavBar'
-import UserNavBar from '../components/navigation/UserNavBar'
+import Sidebar from '../../components/chatStuff/Sidebar'
+import Chat from '../../components/chatStuff/Chat'
+import NavBar from '../../components/navigation/NavBar'
+import UserNavBar from '../../components/navigation/UserNavBar'
 
 function ChatRender(){
 
